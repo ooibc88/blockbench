@@ -11,7 +11,5 @@ hyperledger-fabric respectively. Both needs `sudo` privilege.
 
 ## Others
 + Notes on implementing and deploying:
-    + [Smart contracts in Ethereum](ethereum/contracts.md)
+    + [Smart contracts in Ethereum & Parity](ethereum/contracts.md)
     + [Chaincode in Hyperledger](hyperledger/contracts.md)
-
-+ Benchmarking results and post-processing scripts can be found in [results](results) directory
