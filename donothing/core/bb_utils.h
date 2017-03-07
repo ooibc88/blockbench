@@ -9,6 +9,8 @@
 
 namespace BBUtils {
 
+enum class SmartContractType { KVStore, DoNothing, SmallBank };
+
 inline std::string encode_hex(unsigned int c) {
   std::ostringstream stm;
   stm << std::hex << c;
@@ -45,7 +47,8 @@ inline std::vector<std::string> split(const std::string &s, char delim) {
   return elems;
 }
 
-inline std::string get_json_field(const std::string &json, const std::string &key) {
+inline std::string get_json_field(const std::string &json,
+                                  const std::string &key) {
   auto key_pos = json.find(key);
   auto quote_sign_pos_1 = json.find('\"', key_pos + 1);
   auto quote_sign_pos_2 = json.find('\"', quote_sign_pos_1 + 1);
@@ -55,7 +58,7 @@ inline std::string get_json_field(const std::string &json, const std::string &ke
 }
 
 inline std::vector<std::string> get_list_field(const std::string &json,
-                                          const std::string &key) {
+                                               const std::string &key) {
   auto key_pos = json.find(key);
   auto quote_sign_pos_1 = json.find('\"', key_pos + 1);
   auto quote_sign_pos_2 = json.find('[', quote_sign_pos_1 + 1);
@@ -84,12 +87,12 @@ inline std::string left_padding_string(const std::string &str) {
   }
 }
 
-inline std::string send_jsonrpc_request(const std::string& endpoint,
-                                     const std::string& request_header,
-                                     const std::string& request_data) {
+inline std::string send_jsonrpc_request(const std::string &endpoint,
+                                        const std::string &request_header,
+                                        const std::string &request_data) {
   return RestClient::post(endpoint, request_header, request_data).body;
 }
 
-} // BBUtils
+}  // BBUtils
 
-#endif // BLOCKBENCH_BB_UTILS_H_
+#endif  // BLOCKBENCH_BB_UTILS_H_

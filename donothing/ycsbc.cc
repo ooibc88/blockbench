@@ -135,7 +135,7 @@ int main(const int argc, const char *argv[]) {
   wl.Init(props);
 
   const int num_threads = stoi(props.GetProperty("threadcount", "1"));
-  const int txrate = stoi(props.GetProperty("threadcount", "10"));
+  const int txrate = stoi(props.GetProperty("txrate", "10"));
 
   utils::Timer<double> stat_timer;
 
@@ -189,10 +189,26 @@ string ParseCommandLine(int argc, const char *argv[],
       argindex++;
     } else if (strcmp(argv[argindex], "-txrate") == 0) {
       argindex++;
+      if (argindex >= argc) {
+        UsageMessage(argv[0]);
+        exit(0);
+      }
       props.SetProperty("txrate", argv[argindex]);
       argindex++;
-    } else if (strcmp(argv[argindex], "-wait_time") == 0) {
+    } else if (strcmp(argv[argindex], "-wl") == 0) {
       argindex++;
+      if (argindex >= argc) {
+        UsageMessage(argv[0]);
+        exit(0);
+      }
+      props.SetProperty("workload", argv[argindex]);
+      argindex++;
+    } else if (strcmp(argv[argindex], "-wt") == 0) {
+      argindex++;
+      if (argindex >= argc) {
+        UsageMessage(argv[0]);
+        exit(0);
+      }
       props.SetProperty("deploy_wait", argv[argindex]);
       argindex++;
     } else if (strcmp(argv[argindex], "-P") == 0) {
@@ -229,11 +245,13 @@ void UsageMessage(const char *command) {
   cout << "Usage: " << command << " [options]" << endl;
   cout << "Options:" << endl;
   cout << "  -threads n: execute using n threads (default: 1)" << endl;
-  cout << "  -wait_time t: wait timein second before start to submit "
+  cout << "  -wt deploytime: waiting time in second before start to submit "
           "transactions for deployment the smart "
           "contract/chaincode" << endl;
   cout << "  -db dbname: specify the name of the DB to use (e.g., hyperledger)"
        << endl;
+  cout << "  -wl workload: specify the type of smart contract to run (choices: "
+          "ycsb, donothing, smallbank. By default: donothing)" << endl;
   cout << "  -P propertyfile: load properties from the given file. Multiple "
           "files can" << endl;
   cout << "                   be specified, and will be processed in the order "

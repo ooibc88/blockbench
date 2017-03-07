@@ -16,7 +16,7 @@ namespace ycsbc {
 class EVMDB : public DB {
  public:
   EVMDB(const std::string &endpoint, const std::string &dbname,
-        unsigned deploy_wait_sec);
+        const std::string &wl_name, unsigned deploy_wait_sec);
 
   void Init(std::unordered_map<std::string, double> *pendingtx,
             SpinLock *lock) {
@@ -54,6 +54,7 @@ class EVMDB : public DB {
   std::vector<std::string> poll_tx_by_hash(std::string block_hash);
 
   BBUtils::EVMUtils::EVMType evmtype_;
+  BBUtils::SmartContractType sctype_;
 };
 
 }  // ycsbc

@@ -9,17 +9,23 @@ using namespace BBUtils::EVMUtils;
 namespace ycsbc {
 
 EVMDB::EVMDB(const string &endpoint, const string &dbname,
-             unsigned deploy_wait_sec)
+             const string &wl_name, unsigned deploy_wait_sec)
     : endpoint_(endpoint),
       evmtype_(dbname == "ethereum" ? EVMType::Ethereum : EVMType::Parity) {
+  if (wl_name == "ycsb") {
+    sctype_ = BBUtils::SmartContractType::KVStore;
+  } else if (wl_name == "smallbank") {
+    sctype_ = BBUtils::SmartContractType::SmallBank;
+  } else {
+    sctype_ = BBUtils::SmartContractType::DoNothing;
+  }
   from_address_ = get_from_address(endpoint_);
   if (evmtype_ == EVMType::Parity) unlock_address(endpoint_, from_address_);
-  auto receipt = deploy_smart_contract(endpoint_, from_address_,
-                                       SmartContractType::DoNothing);
+  auto receipt = deploy_smart_contract(endpoint_, from_address_, sctype_);
   std::this_thread::sleep_for(std::chrono::seconds(deploy_wait_sec));
   to_address_ = lookup_smart_contract_address_or_die(endpoint_, receipt);
   cout << "to address: " << to_address_ << endl;
-  cout << "Smart contract deploy ready" << endl;
+  cout << "Smart contract " + wl_name + " deploy ready" << endl;
 }
 
 /// ignore table
@@ -30,7 +36,9 @@ int EVMDB::Read(const string &table, const string &key,
   if (evmtype_ == EVMType::Parity) unlock_address(endpoint_, from_address_);
   double start_time = utils::time_now();
   std::string txn_hash =
-      submit_do_nothing_txn(endpoint_, from_address_, to_address_);
+      (sctype_ == BBUtils::SmartContractType::DoNothing)
+          ? submit_do_nothing_txn(endpoint_, from_address_, to_address_)
+          : submit_get_txn(endpoint_, key, from_address_, to_address_);
   txlock_->lock();
   (*pendingtx_)[txn_hash] = start_time;
   txlock_->unlock();
@@ -49,7 +57,9 @@ int EVMDB::Update(const string &table, const string &key,
 
   double start_time = utils::time_now();
   std::string txn_hash =
-      submit_do_nothing_txn(endpoint_, from_address_, to_address_);
+      (sctype_ == BBUtils::SmartContractType::DoNothing)
+          ? submit_do_nothing_txn(endpoint_, from_address_, to_address_)
+          : submit_set_txn(endpoint_, key, val, from_address_, to_address_);
   txlock_->lock();
   (*pendingtx_)[txn_hash] = start_time;
   txlock_->unlock();

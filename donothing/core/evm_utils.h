@@ -13,7 +13,6 @@ namespace BBUtils {
 namespace EVMUtils {
 
 enum class EVMType { Ethereum, Parity };
-enum class SmartContractType { KVStore, DoNothing };
 
 inline std::string encode_string(const std::string& str) {
   std::string utf8_encoded = encode_str_hex(str);
@@ -35,8 +34,7 @@ std::vector<std::string> poll_txs_by_block_hash(const std::string& endpoint,
 std::vector<std::string> poll_txs_by_block_number(const std::string& endpoint,
                                                   int block_number);
 
-void unlock_address(const std::string& endpoint,
-                           const std::string& address);
+void unlock_address(const std::string& endpoint, const std::string& address);
 
 ///
 /// send a deploy transaction and return its receipt
@@ -59,6 +57,21 @@ std::string lookup_smart_contract_address_or_die(const std::string& endpoint,
 std::string submit_do_nothing_txn(const std::string& endpoint,
                                   const std::string& from_address,
                                   const std::string& to_address);
+
+///
+/// submit a async set transaction to the server
+/// @return transaction hash returned by server
+std::string submit_set_txn(const std::string& endpoint, const std::string& key,
+                           const std::string& val,
+                           const std::string& from_address,
+                           const std::string& to_address);
+
+///
+/// submit a async get transaction to the server
+/// @return transaction hash returned by server
+std::string submit_get_txn(const std::string& endpoint, const std::string& key,
+                           const std::string& from_address,
+                           const std::string& to_address);
 
 }  //  EVMUtils
 }  //  BBUtils
