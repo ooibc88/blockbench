@@ -1,0 +1,18 @@
+[parity]
+chain = "chain_spec.json"
+base_path = "/home/jingo/parity-test/chain-data"
+[network]
+port = 30300
+[rpc]
+port = 8545
+apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts"]
+[account]
+password = ["node.pwds"]
+[footprint]
+num_verifiers = 8
+[mining]
+reseal_on_txs = "none"
+gas_floor_target = "0xf0000000000000"
+usd_per_tx = "0.0"
+tx_gas_limit = "0xf0000000000000"
+engine_signer = "0xbaa984160be2e533d5d116a384a664b72008bc3c"
