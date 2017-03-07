@@ -32,6 +32,7 @@ for individual layers.
 
 ### C++ libraries
 * [restclient-cpp](https://github.com/mrtazz/restclient-cpp)
+* [libcurl](https://curl.haxx.se/libcurl/)
 
 ### Node.js libraries
 * [Web3.js](https://github.com/ethereum/web3.js/)
