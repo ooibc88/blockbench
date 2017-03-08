@@ -4,34 +4,44 @@ BlockBench is the first benchmarking framework for private blockchain systems.
 It serves as a fair means of comparison for different platforms and enables deeper understanding
 of different system design choices.
 
-BlockBench provides both [Macro-benchmark](src/macro) for overall performance and [Micro-benchmark](src/micro)
-for individual layers.
+BlockBench comes with both [macro benchmark workloads](src/macro) for evaluating the overall performance and
+[micro benchmark workloads](src/micro) for evaluating performance of individual layers. 
 
-## Workloads Provided
+## Workloads 
 
 ### Macro-benchmark
 
-* YCSB (KVStore)
-* SmallBank (OLTP)
+* YCSB (KVStore).
+* SmallBank (OLTP).
 
 ### Micro-benchmark
 
-* DoNothing (consensus layer)
-* IOHeavy (data model layer, read/write oriented)
-* Analytics (data model layer, analytical query oriented)
-* CPUHeavy (execution layer)
+* DoNothing (consensus layer).
+* IOHeavy (data model layer, read/write oriented).
+* Analytics (data model layer, analytical query oriented).
+* CPUHeavy (execution layer).
 
 ## Source file structure
 
-+ Smart contract sources are in [benchmark/contracts](benchmark/contracts) directory
-+ Instructions and scripts to run benchmarks for Ethereum, Hyperledger and Pairty are in [ethereum](benchmark/ethereum),
-[hyperledger](benchmark/hyperledger) and [parity](benchmark/pairty) directories respectively.
++ Smart contract sources are in [benchmark/contracts](benchmark/contracts) directory.
++ Instructions and scripts to run benchmarks for Ethereum, Hyperledger and Parity are in [ethereum](benchmark/ethereum),
+[hyperledger](benchmark/hyperledger) and [parity](benchmark/parity) directories respectively.
 + Drivers for benchmark workloads are in [src](src) directory.
 
 ## Dependency
 
 ### C++ libraries
 * [restclient-cpp](https://github.com/mrtazz/restclient-cpp)
+
+Note: we patched this library to include the "Expect: " header in POST requests, which considerably improves the speed for
+processing RPC request at Parity. 
+  + The patch file is include in [benchmark/parity](benchmark/parity) folder.
+  + To patch: go to top-level directory of restclient-cpp, then:
+
+        `patch -p4 < $BLOCK_BENCH_HOME/benchmark/parity/patch_restclient`
+
+  + The installation can then proceed as normal. 
+
 * [libcurl](https://curl.haxx.se/libcurl/)
 
 ### Node.js libraries

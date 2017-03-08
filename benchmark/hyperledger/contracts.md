@@ -59,7 +59,7 @@ hash of:
 
 + The source code
 + Init arguments passed to constructor
-+ The path used during deployment. Thus, the same source code with the same init argumments but deployed
++ The path used during deployment. Thus, the same source code with the same init arguments but deployed
 using two different paths are considered as different.   
 
 **vs. Ethereum contracts.** Unlike [Ethereum contracts](../ethereum/contracts.md), a chaincodeID is not bound
@@ -103,7 +103,7 @@ arguments are different).
 **IMPORANT.** As of now, this method works only for Go chaincode. There's a problem with Git communication for
 Java chaincode implementation (Git cloning exits with error code 128). 
 
-1. Create a repostiory, say `<username>/chaincode-dev` on Github. 
+1. Create a repository, say `<username>/chaincode-dev` on Github. 
 2. Add the chaincode directory, say `test` to it. 
 3. Specify the following path name when deploying (either using CLI or REST interface as above):
 
@@ -120,7 +120,7 @@ to Ethereum, it is vastly simpler, because *no encoding is needed*.
 Hyperledger programming model takes string inputs and relies on the contract logic to parse them. This way, a
 method invocation simply consists of a method name and a list of string as arguments. Suppose the contract
 implements a method `set(string[] args)`.  Invoking this method with two strings "hello" and "world" is done
-as follos: 
+as follows: 
 
 ```
 curl -X POST -d \

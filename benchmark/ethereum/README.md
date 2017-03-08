@@ -26,7 +26,7 @@ operations are performed.
     + Smallbank: `$ETH_HOME/../src/smallbank/ycsb`
 + `$BENCHMARK`: name of the benchmark (ycsb or smallbank)
 
-Each network is initlized with different genesis block. There are a set of pre-defined genesis blocks for
+Each network is initialized with different genesis block. There are a set of pre-defined genesis blocks for
 different network sizes:
 
 + `$ETH_HOME/CustomGenesis_<nservers>.json`: contains the genesis block for experiments using `nservers`. 

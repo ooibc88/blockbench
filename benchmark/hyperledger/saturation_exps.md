@@ -5,7 +5,7 @@ To launch experiments with varying client request rates, we use
 
 ## Main variables
 
-The `exps.py` scripts containscontains the following global variables:
+The `exps.py` scripts contains the following global variables:
 
 1. `NNODES`: a list containing the numbers of nodes
 
@@ -14,7 +14,7 @@ The `exps.py` scripts containscontains the following global variables:
 3. `RATES`: a list containing number of requests per second per thread. 
 
 4. `EXPS`: list of tuple (#threads,rate) which is preferred to `THREADS` and `RATES` lists when only a small
-set from `THREADS.RATES` list is being considerd. 
+set from `THREADS.RATES` list is being considered. 
 
 ## Other settings
 

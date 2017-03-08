@@ -11,7 +11,7 @@ will generate the following files:
 + `config.tom.[1..<#nodes>]`: multiple config files each contain network parameter for the node, such as who
 are the signer, mining parameters, etc. 
 
-## Other imporatnt files
+## Other important files
 + `keys`: directory contains all the keys for the accounts
 + `node.pwds`: password strings
 
@@ -60,7 +60,7 @@ representing `(#threads, rate)` to be run.
 + `DATA_DIR`, `LOG_DIR`: data and log directory for the **servers**
 + `PARITY_EXE`: where the Parity executable is
 + `CLIENT_LOG`: directory where the client's logs go
-+ `enode_command`, `add_peer`, `parition_cmd`, `kill_cmd`: string formatted OS commands
++ `enode_command`, `add_peer`, `partition_cmd`, `kill_cmd`: string formatted OS commands
 + `TIMEOUT`: applicable to the security benchmark
 
 ### Run scripts
@@ -91,7 +91,7 @@ killing clients and server processes.
 
 Each benchmark has it own configuration file:
 + `config_[ycsb/smallbank/donothing].py`: for [YCSB/Smallbank/DoNothing] benchmark, fixed number of clients and server
-+ `config_saturation.py`: for the staturation benchmark, using YCSB
++ `config_saturation.py`: for the saturation benchmark, using YCSB
 + `config_security.py`: for the security benchmark, using YCSB
 + `config_scale.py`: for the scale benchmark with the same number of servers and clients, using YCSB
 + `config_scale_fix_8.py`: for the scale benchmark with fixed number of clients (8), using YCSB
