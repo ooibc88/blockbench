@@ -4,7 +4,7 @@ Need to deploy the ioheavy smart contract first.
 The source code of ioheavy smart contract source code in Solidity is `blockbench/benchmark/contracts/ethereum/ioheavy.sol` as a reference.
 
 * use `node deploy.js` to deploy the smart contract into blockchain(ethereum/parity). It will output the deployed smart contract address
-into stdout.
+into `stdout`.
 
 # Run
 

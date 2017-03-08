@@ -16,7 +16,7 @@ We provide several workloads to stress the layers in order to understand their i
   ./driver -db parity -threads 1 -P workloads/workloada.spec -txrate 5 -endpoint localhost:8545 -wl donothing -wt 20
   ```
 
-* Data model layer - IOHeavy & Analytic
+* Data model layer - IOHeavy & Analytics
 
   * [IOHeavy](ioheavy/README.md) workload description.
   * [Analytic](analytic/README.md) workload description.

@@ -33,14 +33,15 @@ BlockBench comes with both [macro benchmark workloads](src/macro) for evaluating
 ### C++ libraries
 * [restclient-cpp](https://github.com/mrtazz/restclient-cpp)
 
-Note: we patched this library to include the "Expect: " header in POST requests, which considerably improves the speed for
-processing RPC request at Parity. 
-  + The patch file is include in [benchmark/parity](benchmark/parity) folder.
-  + To patch: go to top-level directory of restclient-cpp, then:
+  Note: we patched this library to include the "Expect: " header in POST requests, which considerably improves the speed for
+  processing RPC request at Parity. 
+
+    + The patch file is include in [benchmark/parity](benchmark/parity) folder.
+    + To patch: go to top-level directory of restclient-cpp, then:
 
         `patch -p4 < $BLOCK_BENCH_HOME/benchmark/parity/patch_restclient`
 
-  + The installation can then proceed as normal. 
+    + The installation can then proceed as normal. 
 
 * [libcurl](https://curl.haxx.se/libcurl/)
 

@@ -9,9 +9,9 @@ extracting statistics from the blockchain data:
 
 * Q1: Compute the total transaction values committed between block i and block j.
 
-* Q2: Compute the largest transaction value involing a given account between block i and block j.
+* Q2: Compute the largest transaction value involving a given account between block i and block j.
 
-For Ethereum and Pairty the queries are implemented using JSON-RPC. Ethereum and Pairty share the same driver.
+For Ethereum and Parity the queries are implemented using JSON-RPC. Ethereum and Parity share the same driver.
 For Hyperledger we develop our own chaincode to implement the similar logic.
 To see more details, please refer to the README file in each individual directory for each system.
 
