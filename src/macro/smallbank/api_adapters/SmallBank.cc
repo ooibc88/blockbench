@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 
-#include "smallbank_api.h"
+#include "SmallBank.h"
 #include "utils/chaincode_apis.h"
 #include "utils/timer.h"
 
@@ -24,7 +24,7 @@ string SmallBank::get_json_field(const std::string &json,
 
 vector<string> SmallBank::find_tx(string json){
   vector<string> ss;
-  int key_pos = json.find("txid");
+  unsigned int key_pos = json.find("txid");
   while (key_pos!=string::npos){
     auto quote_sign_pos_1 = json.find('\"', key_pos + 1);
     auto quote_sign_pos_2 = json.find('\"', quote_sign_pos_1 + 1);

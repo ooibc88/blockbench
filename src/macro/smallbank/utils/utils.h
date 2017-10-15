@@ -1,19 +1,13 @@
-//
-//  utils.h
-//  YCSB-C
-//
-//  Created by Jinglei Ren on 12/5/14.
-//  Copyright (c) 2014 Jinglei Ren <jinglei@ren.systems>.
-//
-
-#ifndef YCSB_C_UTILS_H_
-#define YCSB_C_UTILS_H_
+#ifndef OLTP_C_UTILS_H_
+#define OLTP_C_UTILS_H_
 
 #include <cstdint>
 #include <random>
 #include <algorithm>
 #include <exception>
 #include <atomic>
+#include "timer.h"
+
 class SpinLock {
   std::atomic_flag locked = ATOMIC_FLAG_INIT;
 
@@ -86,6 +80,13 @@ inline std::string Trim(const std::string &str) {
       [](int c){ return std::isspace(c); }).base());
 }
 
+inline void sleep(double t){
+  timespec req;
+  req.tv_sec = (int) t; 
+  req.tv_nsec = (int64_t)(1e9 * (t - (int64_t)t)); 
+  nanosleep(&req, NULL); 
+}
+
 } // utils
 
-#endif // YCSB_C_UTILS_H_
+#endif // OLTP_C_UTILS_H_
