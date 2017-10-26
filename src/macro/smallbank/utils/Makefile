@@ -10,4 +10,4 @@ all: $(SOURCES) $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	$(RM) $(OBJECTS)
+	$(RM) *.o
