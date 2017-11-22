@@ -34,7 +34,7 @@ void UsageMessage(const char *command);
 bool StrStartWith(const char *str, const char *pre);
 string ParseCommandLine(int argc, const char *argv[], utils::Properties &props);
 
-SpinLock txlock_;
+SpinLock spinlock_, txlock_;
 std::unordered_map<string, double> pendingtx; 
 
 void ClientThread(DB* sb, const int num_ops, const int txrate) {
@@ -42,7 +42,7 @@ void ClientThread(DB* sb, const int num_ops, const int txrate) {
   UniformGenerator acc_gen(1, 100000);
   UniformGenerator bal_gen(1, 10);
   double tx_sleep_time = 1.0 / txrate;
-  for (int i = 0; i < num_ops; ++i) { 
+  for (int i = 0; i < num_ops; ++i) {
     auto op = op_gen.Next();
     switch (op) {
       case 1:
@@ -72,7 +72,6 @@ void ClientThread(DB* sb, const int num_ops, const int txrate) {
 
 int StatusThread(DB* sb, string dbname, string endpoint, double interval, int start_block_height){
   int cur_block_height = start_block_height;
-
   long start_time;
   long end_time;
   int txcount = 0;
@@ -88,10 +87,8 @@ int StatusThread(DB* sb, string dbname, string endpoint, double interval, int st
   while(true){
     start_time = time_now(); 
     int tip = sb->get_tip_block_number(); 
-    
     if (tip==-1) // fail
       sleep(interval); 
-
     while (cur_block_height + confirm_duration <= tip) {      
       vector<string> txs = sb->poll_tx(cur_block_height); 
       cout << "polled block " << cur_block_height << " : " << txs.size() 
@@ -103,7 +100,6 @@ int StatusThread(DB* sb, string dbname, string endpoint, double interval, int st
         string s = (dbname == "ethereum" || dbname == "parity")
                       ? tmp.substr(1, tmp.length() - 2)  // get rid of ""
                        : tmp; 
-        //std::cout << "txs:" << s << std::endl;
         if (pendingtx.find(s)!=pendingtx.end()){ 
           txcount++; 
           latency += (block_time - pendingtx[s]); 
@@ -124,7 +120,7 @@ int StatusThread(DB* sb, string dbname, string endpoint, double interval, int st
     //sleep in nanosecond
     utils::sleep(interval - (end_time - start_time) / 1000000000.0);
   }
-  return 0;
+return 0;
 }
 
 DB* CreateDB(std::string dbname, std::string endpoint) {
@@ -202,12 +198,7 @@ string ParseCommandLine(int argc, const char *argv[],
         UsageMessage(argv[0]);
         exit(0);
       }
-      if(strcmp("quorum",argv[argindex]) == 0) {
-          props.SetProperty("dbname", "ethereum");
-      } else {
-          props.SetProperty("dbname", argv[argindex]);
-      }
-      //props.SetProperty("dbname", argv[argindex]);
+      props.SetProperty("dbname", argv[argindex]);
       argindex++;
     } else if (strcmp(argv[argindex], "-endpoint") == 0) {
       argindex++;

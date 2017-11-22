@@ -26,11 +26,11 @@ unsigned int EVMDB::get_tip_block_number(){
 }
 
 void EVMDB::add_to_queue(string json){
-  /*double start_time = time_now();
+  double start_time = time_now();
   string txn_hash = get_json_field(json, "message"); 
   txlock_->lock(); 
   (*pendingtx_)[txn_hash] = start_time;
-  txlock_->unlock();*/
+  txlock_->unlock();
 }
 
 // no error handler, assume always success
@@ -42,14 +42,14 @@ void EVMDB::deploy(const std::string& dbname, const std::string& endpoint) {
   evmtype_ = (dbname == "parity") ? EVMType::Parity : EVMType::Ethereum;
   if (evmtype_ == EVMType::Parity) unlock_address(endpoint_, from_address_);
   auto receipt = deploy_smart_contract(endpoint_, from_address_, "smallbank");
-  int deploy_wait_sec = 10;
+  int deploy_wait_sec = 20;
   while(to_address_.size() < 10) {
     std::this_thread::sleep_for(std::chrono::seconds(deploy_wait_sec));
     to_address_ = lookup_smart_contract_address_or_die(endpoint_, receipt);
     cout << "to address: " << to_address_ << endl; 
     deploy_wait_sec = 10;
   }
-  sleep(2);  
+  //sleep(2);  
 }
 
 void EVMDB::Amalgate(unsigned acc1, unsigned acc2) {

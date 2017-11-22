@@ -11,7 +11,7 @@ contract SmallBank {
     mapping(string=>uint) savingStore;
     mapping(string=>uint) checkingStore;
 
-    function almagate(string arg0, string arg1) {
+    function almagate(string arg0, string arg1) public {
        uint bal1 = savingStore[arg0];
        uint bal2 = checkingStore[arg1];
        
@@ -19,7 +19,7 @@ contract SmallBank {
        savingStore[arg1] = bal1 + bal2;
     }
 
-    function getBalance(string arg0) constant returns (uint balance) {
+    function getBalance(string arg0) public constant returns (uint balance) {
         uint bal1 = savingStore[arg0];
         uint bal2 = checkingStore[arg0];
         
@@ -27,21 +27,21 @@ contract SmallBank {
         return balance;
     }
     
-    function updateBalance(string arg0, uint arg1) {
+    function updateBalance(string arg0, uint arg1) public {
         uint bal1 = checkingStore[arg0];
         uint bal2 = arg1;
         
         checkingStore[arg0] = bal1 + bal2;
     }
     
-    function updateSaving(string arg0, uint arg1) {
+    function updateSaving(string arg0, uint arg1) public {
         uint bal1 = savingStore[arg0];
         uint bal2 = arg1;
         
         savingStore[arg0] = bal1 + bal2;
     }
     
-    function sendPayment(string arg0, string arg1, uint arg2) {
+    function sendPayment(string arg0, string arg1, uint arg2) public {
         uint bal1 = checkingStore[arg0];
         uint bal2 = checkingStore[arg1];
         uint amount = arg2;
@@ -53,7 +53,7 @@ contract SmallBank {
         checkingStore[arg1] = bal2;
     }
     
-    function writeCheck(string arg0, uint arg1) {
+    function writeCheck(string arg0, uint arg1) public {
         uint bal1 = checkingStore[arg0];
         uint bal2 = savingStore[arg0];
         uint amount = arg1;
@@ -65,27 +65,4 @@ contract SmallBank {
             checkingStore[arg0] = bal1 - amount;
         }
     }
-    
-    function uintToBytes(uint v) internal constant returns (bytes20 ret) {
-        if (v == 0) {
-            ret = '00000000000000000000';
-        }
-        else {
-            while (v > 0) {
-                ret = bytes20(uint(ret) / (2 ** 8));
-                ret |= bytes20(((v % 10) + 48) * 2 ** (8 * 19));
-                v /= 10;
-            }
-        }
-        return ret;
-    }
-    
-    function bytesToUint(bytes20 arg) internal constant returns (uint v) {
-        for (uint i = 0; i < arg.length; i++) {
-            v = v * 10 + (uint(arg[i]) - 48);
-        }
-        return v;
-    }
 }
-
-

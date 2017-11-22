@@ -5,7 +5,7 @@ SUBDIRS=api_adapters utils
 OBJECTS=api_adapters/SmallBank.o api_adapters/EVMDB.o utils/timer.o
 EXEC=driver
 
-all: clean $(SUBDIRS) $(EXEC)
+all: $(SUBDIRS) $(EXEC)
 
 $(SUBDIRS):
 	$(MAKE) -C $@
