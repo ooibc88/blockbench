@@ -283,7 +283,7 @@ std::vector<std::string> poll_txs_by_block_hash(const std::string &endpoint,
 std::vector<std::string> poll_txs_by_block_number(const std::string &endpoint,
                                                   int block_number) {
   std::string request = GET_BLOCK_BY_NUMBER_PREFIX +
-                        std::to_string(block_number) +
+                        ("0x" + encode_hex(block_number)) +
                         GET_BLOCK_BY_NUMBER_SUFFIX;
 
   auto r = send_jsonrpc_request(endpoint, REQUEST_HEADERS, request);
