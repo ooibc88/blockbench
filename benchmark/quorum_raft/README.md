@@ -29,6 +29,7 @@ operations are performed.
     + YCSB: `$QUO_HOME/../../src/kystore`
     + Smallbank: `$QUO_HOME/../../src/smallbank`
 + `$BENCHMARK`: name of the benchmark (ycsb or smallbank)
++ `$QUORUM`: the directory of Quorum Binaries, which are placed in $QUORUM_REPO_ROOT/build/bin
 
 Each network is initialized with different genesis block. There are a set of pre-defined genesis blocks for
 different network sizes:
