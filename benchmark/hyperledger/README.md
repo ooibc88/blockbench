@@ -36,9 +36,10 @@ each different network sizes:
 There are 3 steps in running an experiment: peer startup, client startup, and finally
 cleaning up. Scripts for these steps are included in `$HL_HOME`. The top-level script:
 
-    run-bench.sh <nservers> <nthreads> <nclients> [-drop]
+    run-bench.sh <nservers> <nthreads> <nclients> <txrate> [-drop]
 
-will start `nservers` peers, `nclients` clients each running with `nthreads`. The outputs are stored in
+will start `nservers` peers, `nclients` clients each running with `nthreads`, each thread issuing `txrate` transactions
+per second. The outputs are stored in
 `$LOG_DIR`. If `-drop` is specified, 4 servers will be killed after the clients are running for about 250s.  
 
 ### Starting peers
@@ -86,17 +87,17 @@ client processes should be killed explicitly with `stop-all.sh`.
     + Change `LOG_DIR` in `env.sh` to correct location, say `result_same_s_same_c`
     + Start it (e.g. X=8): 
 
-        `. run-bench.sh 8 32 8`
+        `. run-bench.sh 8 32 8 10`
 
     This will start 8 peers (on first 8 nodes in `$HOSTS`) and 8 clients (on 4 first 4 nodes in `$CLIENTS`).
-    Each client runs `driver` process with 32 threads. The clients output logs to
+    Each client runs `driver` process with 32 threads, each thread issuing 10 transactions per seconds. The clients output logs to
     `result_same_s_same_c/exp_8_servers` directory, with the file format `client_<peer_host>_16`.   
 
 2. Running with fixed number of clients and varying number of servers: 
     + Change `LOG_DIR` in `env.sh` to correct location, say `result_fixed_c`
     + Start it (X=16): 
 
-        `. run-bench.sh 16 32 8`
+        `. run-bench.sh 16 32 8 10`
 
     This will start 16 peers (on first 16 nodes in `$HOSTS`) and 8 clients (on 4 first 4 nodes in
     `$CLIENTS`). Each client runs `driver` process with 32 threads. The clients output logs to
@@ -107,7 +108,7 @@ client processes should be killed explicitly with `stop-all.sh`.
     + Change `LOG_DIR` in `env.sh` to correct location, say `result_fixed_c_drop_4`
     + Start it (X=16): 
 
-        `. run-bench.sh 16 32 8 -drop`
+        `. run-bench.sh 16 32 8 10 -drop`
 
     This will start 16 peers (on first 16 nodes in `$HOSTS`) and 8 clients (on 4 first 4 nodes in
     `$CLIENTS`). Each client runs `driver` process with 32 threads. At 250th second, 4 peers are killed off,
