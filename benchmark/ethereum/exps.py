@@ -2,6 +2,7 @@
 
 import os
 import time
+import sys
 
 # running experiments
 RATES=[8]
@@ -52,13 +53,13 @@ if __name__=='__main__':
   os.system(cp_cmd)
   change_config(1)
   for n in NNODES:
-    if len(sys.argv)>1 and sys.argv[1]=='-security'
+    if len(sys.argv)>1 and sys.argv[1]=='-security':
       run_exp(n,True)
     else:
       run_exp(n, False)
 
   # do-nothing option
-  if len(sys.arg)>1 and sys.argv[1]=='-donothing':
+  if len(sys.argv)>1 and sys.argv[1]=='-donothing':
     time.sleep(10)
     cp_cmd = 'cp env_donothing.sh env.sh'
     os.system(cp_cmd)
