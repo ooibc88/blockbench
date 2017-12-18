@@ -252,6 +252,10 @@ std::string compose_get_transaction(const std::string &txn_hash) {
 }
 
 unsigned int get_tip_block_number(const std::string &endpoint) {
+  auto r = send_jsonrpc_request(endpoint, REQUEST_HEADERS, GET_BLOCKNUMBER);
+  if (r.find("Failed") != std::string::npos) 
+    return -1;
+
   return decode_hex(get_json_field(
       send_jsonrpc_request(endpoint, REQUEST_HEADERS, GET_BLOCKNUMBER),
       "result"));
