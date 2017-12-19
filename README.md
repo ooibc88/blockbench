@@ -46,6 +46,7 @@ BlockBench comes with both [macro benchmark workloads](src/macro) for evaluating
 * [libcurl](https://curl.haxx.se/libcurl/)
 
 ### Node.js libraries
+* Go to [micro](src/micro) directory and use `npm install` to install the dependency libraries
 * [Web3.js](https://github.com/ethereum/web3.js/)
 * [zipfian](https://www.npmjs.com/package/zipfian)
 * [bignumber.js](https://www.npmjs.com/package/bignumber.js)

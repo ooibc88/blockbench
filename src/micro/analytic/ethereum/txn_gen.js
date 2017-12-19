@@ -15,7 +15,8 @@ function gen_txns() {
     var x = Math.floor(Math.random() * len); 
     var y = Math.floor(Math.random() * len); 
     try {
-      web3.personal.unlockAccountAndSendTransaction({
+      web3.personal.unlockAccount(accounts[x], "");
+      web3.personal.sendTransaction({
         from: accounts[x],
         to: accounts[y],
         value: 1,

@@ -21,7 +21,7 @@ function get_max(block_num) {
     "jsonrpc": "2.0",
       "method": "eth_getBlockByNumber",
       "params": 
-    [block_num.toString(), true],
+    ["0x"+block_num.toString(), true],
       "id": 3
   });
 

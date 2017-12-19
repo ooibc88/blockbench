@@ -25,3 +25,7 @@ We provide several workloads to stress the layers in order to understand their i
 * Execution layer - CPUHeavy
 
   [CPUHeavy](cpuheavy/README.md) workload description.
+
+## Node.js dependency libraries 
+* Use `npm install` to install the dependency libraries
+* For all ethereum experiments, use [start_ethereum.sh](ethereum_script/start_ethereum.sh) to start geth client first.

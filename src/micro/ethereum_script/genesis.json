@@ -1,0 +1,28 @@
+{
+  "config": {
+        "chainId": 10,
+        "homesteadBlock": 0,
+        "eip155Block": 0,
+        "eip158Block": 0
+    },
+  "alloc": {
+    "0x12f029d57082315085bfb4d4d8345c92c5cdd881": {"balance": "888888888888"}, 
+    "0x5e6c130dcc56495f22842c1853b18a9bed464033": {"balance": "888888888888"}, 
+    "0x5ee89873ac0081ec1227bb5cec31508c761cb8be": {"balance": "888888888888"}, 
+    "0x88c65c5ca67b70a75d62bf6e160d2b0c21fff246": {"balance": "888888888888"}, 
+    "0xef900bbbaae5a961677568b85df30b291cd8f553": {"balance": "888888888888"}, 
+    "0x459c956fceee8d04fc770b01f9a640fff5c0b622": {"balance": "888888888888"}, 
+    "0xd5214baf93444abda6c3e291099764cb5d65b006": {"balance": "888888888888"}, 
+    "0x887a5bb2ee499e3b452bd8385d57c7c4cbfbcfbb": {"balance": "888888888888"}, 
+    "0x5defa977d0702be63ffdbae8a876bba889c0e0aa": {"balance": "888888888888"}, 
+    "0x1434974002bae55e91ae50cafde3fc8c92aec746": {"balance": "888888888888"}  
+  },
+  "coinbase"   : "0x0000000000000000000000000000000000000000",
+  "difficulty" : "0x01",
+  "extraData"  : "",
+  "gasLimit"   : "0xff000000000000",
+  "nonce"      : "0x0000000000000042",
+  "mixhash"    : "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "parentHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "timestamp"  : "0x00"
+}
