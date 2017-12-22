@@ -3,13 +3,13 @@ var http = require('http');
 var start_block = parseInt(process.argv[2]);
 var end_block = parseInt(process.argv[3]);
 
-var max = -1;
+var total = 0;
 
 var timestamp;
 
-function get_max(block_num) {
+function get_total(block_num) {
   if (block_num == start_block-1) {
-    console.log(max);
+    console.log("the total transaction values: " + total);
     console.log("Latency: "+((new Date().getTime()-timestamp)/1000)+" sec");
     process.exit();
   }
@@ -44,12 +44,15 @@ function get_max(block_num) {
     });
     res.on('end', function(){
       // console.log("timestamp: "+(new Date().getTime()));
-      // console.log(body)
+      if(JSON.parse(body)["result"] == null) {
+        console.log("Err: There is not so many block minted!");
+        process.exit();
+      }
       ret = JSON.parse(body)["result"].transactions;
       for (var i in ret) {
-        max = max > ret[i].value ? max : ret[i].value;
+        total = total + parseInt(ret[i].value, 16);
       }
-      get_max(block_num-1);
+      get_total(block_num-1);
     });
   });
 
@@ -62,4 +65,4 @@ function get_max(block_num) {
 }
 
 timestamp = new Date().getTime();
-get_max(end_block);
+get_total(end_block);

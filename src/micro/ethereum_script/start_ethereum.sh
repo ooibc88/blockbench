@@ -1,6 +1,8 @@
 #!/bin/bash
 ETH_DATA=`dirname ${BASH_SOURCE-$0}`/../data
-echo $ETH_DATA
+cd `dirname ${BASH_SOURCE-$0}`
+pwd 
+
 killall geth
 
 rm -rf $ETH_DATA/{geth,keystore}

@@ -10,7 +10,7 @@ var timestamp;
 
 function get_max(block_num) {
   if (block_num == start_block-1) {
-    console.log("the largest transaction value: " + max);
+    console.log("the largest account balance: " + max);
     console.log("Latency: "+((new Date().getTime()-timestamp)/1000)+" sec");
     process.exit();
   }
@@ -20,9 +20,9 @@ function get_max(block_num) {
 
   var post_data = JSON.stringify({
     "jsonrpc": "2.0",
-      "method": "eth_getBlockByNumber",
+      "method": "eth_getBalance",
       "params": 
-    ["0x"+block_num.toString(), true],
+    [acc, "0x" + block_num.toString()],
       "id": 3
   });
 
@@ -45,18 +45,15 @@ function get_max(block_num) {
     });
     res.on('end', function(){
       // console.log("timestamp: "+(new Date().getTime()));
-      // console.log(body)
-      if(JSON.parse(body)["result"] == null) {
+      // console.log(body);
+      if(JSON.parse(body)["result"] == "\u003cnil\u003e") {
         console.log("Err: There is not so many block minted!");
         process.exit();
       }
-      ret = JSON.parse(body)["result"].transactions;
-      for (var i in ret) {
-        if (ret[i].from == acc) {
-          val = parseInt(ret[i].value, 16);
-          max = max > val ? max : val;
-        }
-      }
+      ret = JSON.parse(body).result;
+      ret = parseInt(ret, 16);
+      max = max > ret ? max : ret;
+      //console.log(ret);
       get_max(block_num-1);
     });
   });

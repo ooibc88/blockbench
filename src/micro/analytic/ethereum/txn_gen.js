@@ -14,12 +14,13 @@ function gen_txns() {
   for (var i = 0; i < TXNS_PER_BLOCK; ++i) {
     var x = Math.floor(Math.random() * len); 
     var y = Math.floor(Math.random() * len); 
+    var val = Math.floor(Math.random() * 100); 
     try {
       web3.personal.unlockAccount(accounts[x], "");
       web3.personal.sendTransaction({
         from: accounts[x],
         to: accounts[y],
-        value: 1,
+        value: val,
         gasPrice: 0,
         gas: 100000
       });

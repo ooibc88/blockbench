@@ -4,7 +4,7 @@
     "description": "A Framework for Analyzing Private Blockchains.",
     "main": "",
     "scripts": {
-        "start": "echo please read README.md"
+        "start": "./ethereum_script/start_ethereum.sh"
     },
     "keywords": [
         "ethereum",
