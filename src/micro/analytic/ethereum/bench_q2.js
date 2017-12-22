@@ -22,7 +22,7 @@ function get_max(block_num) {
     "jsonrpc": "2.0",
       "method": "eth_getBalance",
       "params": 
-    [acc, block_num.toString()],
+    [acc, "0x" + block_num.toString()],
       "id": 3
   });
 
@@ -45,8 +45,10 @@ function get_max(block_num) {
     });
     res.on('end', function(){
       // console.log("timestamp: "+(new Date().getTime()));
+      // console.log(body);
       ret = JSON.parse(body).result;
       max = max > ret ? max : ret;
+      //console.log(ret);
       get_max(block_num-1);
     });
   });
