@@ -12,4 +12,4 @@ Need to populate the blockchain system using some pre-generated transactions bef
 
 * Q2: `node bench_q2.js start_block end_block account` queries Q2(largest transaction value) for account `account` from block `start_block` to block `end_block`.(for example: `node bench_q2.js 3 100 0x12f029d57082315085bfb4d4d8345c92c5cdd881`)
 
-* Q3: `node bench_q3.js start_block end_block account` queries Q3(largest account balance) for account `account` from block `start_block` to block `end_block`.(for example: `node bench_q2.js 3 100 0x12f029d57082315085bfb4d4d8345c92c5cdd881`)
+* Q3: `node bench_q3.js start_block end_block account` queries Q3(largest account balance) for account `account` from block `start_block` to block `end_block`.(for example: `node bench_q3.js 3 100 0x12f029d57082315085bfb4d4d8345c92c5cdd881`)

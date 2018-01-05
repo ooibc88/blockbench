@@ -1,5 +1,5 @@
 # Prepare
-At first, use [start_ethereum.sh](../../ethereum_script/start_ethereum.sh) to start geth client, then open another terminal to do next step
+At first, use `npm start` or [start_ethereum.sh](../../ethereum_script/start_ethereum.sh) to start geth client, then open another terminal to do next step
 
 # Experiment Setup
 
