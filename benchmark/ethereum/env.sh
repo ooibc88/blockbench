@@ -1,4 +1,4 @@
-ETH_HOME=/home/$USER/blockbench/benchmark/ethereum
+ETH_HOME=/home/$USER/nfsmount/blockbench/benchmark/ethereum
 HOSTS=$ETH_HOME/hosts
 CLIENTS=$ETH_HOME/clients
 ETH_DATA=/home/$USER/eth
