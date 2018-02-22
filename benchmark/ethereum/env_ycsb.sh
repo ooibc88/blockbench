@@ -1,8 +1,9 @@
 ETH_HOME=/home/$USER/nfsmount/blockbench/benchmark/ethereum
 HOSTS=$ETH_HOME/hosts
+RPC_PORT=8545
 CLIENTS=$ETH_HOME/clients
 ETH_DATA=/home/$USER/eth
-LOG_DIR=$ETH_HOME/donothing_ycsb
+LOG_DIR=$ETH_HOME/ycsb_logs
 EXE_HOME=$ETH_HOME/../../src/macro/kvstore
 BENCHMARK=ycsb
 USER=bcuser
