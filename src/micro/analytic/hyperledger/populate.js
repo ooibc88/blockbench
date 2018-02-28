@@ -1,6 +1,10 @@
 var http = require('http');
 const batch_size = 3;
 var total_size = parseInt(process.argv[2]);
+var chainCodeID = "4caae8cf2298bbcc8d3e1f8ef57ea1c7f0f78d1b6b96a93822666c8a9d39c3ddb97f3ea36a4b79ac303a1b9296510450a2516b75b0cc86183b7141a593d004bf";
+if (process.argv.length >= 4) {
+  chainCodeID = process.argv[3];
+}
 
 var zipfGenerator = require('zipfian').getGenerator(99999);
 function gen_acc(n) {
@@ -42,7 +46,7 @@ function invoke(func, args) {
     "params": {
       "type": 1,
       "chaincodeID":{
-      "name":"4caae8cf2298bbcc8d3e1f8ef57ea1c7f0f78d1b6b96a93822666c8a9d39c3ddb97f3ea36a4b79ac303a1b9296510450a2516b75b0cc86183b7141a593d004bf"
+	"name" : chainCodeID
       },
       "ctorMsg": {
         "function": func,
