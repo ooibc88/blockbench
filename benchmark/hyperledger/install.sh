@@ -14,10 +14,16 @@ if [ $ARCH == "aarch64" ]; then
 elif [ $ARCH == "x86_64" ]; then
         ARCH="amd64"
 fi
-GOTAR="go1.9.3.linux-$ARCH.tar.gz"
+
+if ! [ -d "$HL_DATA" ]; then
+	mkdir -p $HL_DATA
+fi
 cd $HL_DATA
+
+GOTAR="go1.9.3.linux-$ARCH.tar.gz"
 wget https://storage.googleapis.com/golang/$GOTAR
 tar -zxvf $GOTAR
+export GOPATH=`pwd`/go
 
 git clone https://github.com/facebook/rocksdb.git
 cd rocksdb
@@ -25,7 +31,7 @@ git checkout v4.1
 PORTABLE=1 make shared_lib
 sudo INSTALL_PATH=/usr/local make install-shared
 
-cd $HL_DATA
+cd $HL_DATA/go
 mkdir -p src/github.com/hyperledger
 cd src/github.com/hyperledger
 if [ $ARCH == "arm64" ]; then
