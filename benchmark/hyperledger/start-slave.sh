@@ -23,6 +23,6 @@ rm -rf $CORE_PEER_FILE_SYSTEM_PATH
 mkdir -p $CORE_PEER_FILE_SYSTEM_PATH
 cd $HL_SOURCE/build/bin
 export LD_LIBRARY_PATH=/usr/local/lib
-export GOPATH=$HL_DATA
+export GOPATH=$HL_DATA/go
 HOST=`hostname`
 nohup $PEER node start > $HL_DATA/hl_log_slave_$HOST 2>&1 &
