@@ -9,6 +9,7 @@ sleep 3
 i=0
 for host in `cat $HOSTS`; do
   if [[ $i -lt $1 ]]; then
+    echo start mining on node $host
     ssh -oStrictHostKeyChecking=no $USER@$host $ETH_HOME/start-mining.sh
     echo done node $host
   fi
