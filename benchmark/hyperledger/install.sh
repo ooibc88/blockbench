@@ -24,6 +24,7 @@ GOTAR="go1.9.3.linux-$ARCH.tar.gz"
 wget https://storage.googleapis.com/golang/$GOTAR
 tar -zxvf $GOTAR
 export GOPATH=`pwd`/go
+export PATH=$PATH:`pwd`/go/bin
 
 git clone https://github.com/facebook/rocksdb.git
 cd rocksdb
