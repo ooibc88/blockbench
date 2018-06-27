@@ -212,7 +212,7 @@ peer:
         touchMaxNodes: 100
 
     # Path on the file system where peer will store data
-    fileSystemPath: hyperledger/production
+    fileSystemPath: data/hyperledger/production
     # rocksdb configurations
     db:
         maxLogFileSize: 10485760

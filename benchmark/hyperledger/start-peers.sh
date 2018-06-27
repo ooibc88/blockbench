@@ -1,5 +1,5 @@
 #!/bin/bash
-#args: nnodes
+# Args: number of nodes
 cd `dirname ${BASH_SOURCE-$0}`
 . env.sh
 

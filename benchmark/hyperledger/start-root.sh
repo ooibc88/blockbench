@@ -19,7 +19,9 @@ export CORE_PBFT_GENERAL_MODE=batch
 
 rm -rf $CORE_PEER_FILE_SYSTEM_PATH
 mkdir -p $CORE_PEER_FILE_SYSTEM_PATH
+mkdir -p $LOG_DIR
 export GOPATH=$HL_DATA/go
+export PATH=$PATH:$HL_DATA/go/bin
 export LD_LIBRARY_PATH=/usr/local/lib
 HOST=`hostname`
-nohup $PEER node start > $HL_DATA/hl_log_root_$HOST 2>&1 &
+nohup $PEER node start > $LOG_DIR/hl_log_root_$HOST 2>&1 &
