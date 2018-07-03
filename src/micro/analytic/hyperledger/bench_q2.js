@@ -1,5 +1,10 @@
 var http = require('http');
 
+var chainCodeID = "4caae8cf2298bbcc8d3e1f8ef57ea1c7f0f78d1b6b96a93822666c8a9d39c3ddb97f3ea36a4b79ac303a1b9296510450a2516b75b0cc86183b7141a593d004bf";
+if (process.argv.length >= 6) {
+  chainCodeID = process.argv[5];
+}
+
 function gen_acc(n) {
   var zeros = "00000000000000000000"
   var str = n.toString();
@@ -12,7 +17,7 @@ var post_data = JSON.stringify({
   "params": {
     "type": 1,
     "chaincodeID":{
-      "name":"4caae8cf2298bbcc8d3e1f8ef57ea1c7f0f78d1b6b96a93822666c8a9d39c3ddb97f3ea36a4b79ac303a1b9296510450a2516b75b0cc86183b7141a593d004bf"
+	"name" : chainCodeID
     },
     "ctorMsg": {
       "function":"QueryAccount",
