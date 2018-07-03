@@ -9,6 +9,8 @@ else
 	NP=$1
 fi
 
+echo "Starting nodes ($NP) ..."
+
 CONFIG=hl_consensus_$NP".yaml"
 for peer in `cat $HOSTS`; do
   scp $CONFIG $peer:$HL_SOURCE/consensus/pbft/config.yaml  

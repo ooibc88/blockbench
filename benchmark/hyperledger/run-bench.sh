@@ -22,6 +22,7 @@ sleep 5
 BACK=$!
 #sleep 100
 #python partition.py $NNODES
+echo "Waiting for PID $BACK ..."
 wait $BACK
 ./stop-peers.sh
 sleep 5

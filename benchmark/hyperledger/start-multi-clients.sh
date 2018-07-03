@@ -13,6 +13,8 @@ DROP=$5
 cd `dirname ${BASH_SOURCE-$0}`
 . env.sh
 
+echo "Starting multi-clients ($NCLIENTS) ..."
+
 let i=0
 let K=$NCLIENTS/2
 for client in `cat $CLIENTS`; do
