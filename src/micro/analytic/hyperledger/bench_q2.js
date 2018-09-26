@@ -7,7 +7,7 @@ if (process.argv.length >= 6) {
 
 function gen_acc(n) {
   var zeros = "00000000000000000000"
-  var str = n.toString();
+  var str = n.toString(16);
   return "0x"+zeros.slice(str.length)+str;
 }
 

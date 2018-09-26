@@ -22,7 +22,7 @@ function get_max(block_num) {
     "jsonrpc": "2.0",
       "method": "eth_getBalance",
       "params": 
-    [acc, "0x" + block_num.toString()],
+    [acc, "0x" + block_num.toString(16)],
       "id": 3
   });
 
