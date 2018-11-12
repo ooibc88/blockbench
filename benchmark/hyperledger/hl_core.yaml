@@ -212,7 +212,7 @@ peer:
         touchMaxNodes: 100
 
     # Path on the file system where peer will store data
-    fileSystemPath: /data/dinhtta/hyperledger/production
+    fileSystemPath: /tmp/hyperledger/production
     # rocksdb configurations
     db:
         maxLogFileSize: 10485760

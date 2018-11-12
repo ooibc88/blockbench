@@ -20,9 +20,8 @@ sleep 5
 
 ./start-multi-clients.sh $NCLIENTS $NNODES $NTHREADS $TXRATE $DROP &
 BACK=$!
-#sleep 100
-#python partition.py $NNODES
-echo "Waiting for PID $BACK ..."
+sleep 100
+python partition.py $NNODES
 wait $BACK
 ./stop-peers.sh
 sleep 5
