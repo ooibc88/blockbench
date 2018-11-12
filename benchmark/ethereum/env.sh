@@ -7,6 +7,8 @@ EXE_HOME=$ETH_HOME/../../src/macro/kvstore
 BENCHMARK=ycsb
 USER=bcuser
 RPCPORT='8000'
+PRIVATEKEY=$ETH_HOME/privKey
+PWD="1
 
 ##comment these out for smallbank
 #EXE_HOME=$ETH_HOME/../../src/smallbank/ethereum/ycsb
