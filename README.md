@@ -45,6 +45,11 @@ BlockBench comes with both [macro benchmark workloads](src/macro) for evaluating
 
 * [libcurl](https://curl.haxx.se/libcurl/)
 
+* Docker-Container
+  The `container` folder contains a Dockerfile that creates a Docker
+container with all required C++ dependencies. You can use this Container
+to build the kvstore workload
+
 ### Node.js libraries
 Go to [micro](src/micro) directory and use `npm install` to install the dependency libraries
 * [Web3.js](https://github.com/ethereum/web3.js/)
