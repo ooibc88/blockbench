@@ -4,10 +4,11 @@ cd `dirname ${BASH_SOURCE-$0}`
 . env.sh
 
 let i=0
-let IDX=$1/2
+let IDX=$1/2 #$1 is #clients, we take only half of them 
+echo starting clients
 for client in `cat $CLIENTS`; do
   if [[ $i -lt $IDX ]]; then
-    echo $client index $i
+    echo starting client $client  threads=$3 clientNo=$i nservers=$2 txrate=$4
 #  ssh -oStrictHostKeyChecking=no $client 'cd /users/dinhtta/blockchain-perf/ethereum ; ./start-clients.sh '$3 $i $2
     ssh -oStrictHostKeyChecking=no $client $ETH_HOME/start-clients.sh $3 $i $2 $4
   fi
@@ -35,9 +36,10 @@ if [[ $5 == "-drop" ]]; then
   done
 else
   let M=$2*10+240
+  echo "sleeping $M seconds before killing drivers (clients)"
   sleep $M
   for client in `cat $CLIENTS`; do
-    echo $client index $i
+    echo killing client $client
     ssh -oStrictHostKeyChecking=no $client 'killall -KILL driver' 
     let i=$i+1
   done

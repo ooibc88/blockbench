@@ -22,13 +22,19 @@ for i in range(0, filenum):
     j = 0
     for line in lines:
         if line.find('latency') != -1:
-            latency = float(line.split(' ')[-2])
-            latency_arr[j] += latency
+            tokens = line.split(' ')
+            idx = tokens.index('latency')
+            if idx >= 0 and idx+2 < len(tokens):
+                latency = float(tokens[idx+2])
+                latency_arr[j] += latency
 
         elif line.find('Throughput') != -1:
-            tp = float(line.split(' ')[-1])
-            throughput_arr[j] += tp
-            j = j+1
+            tokens = line.split(' ')
+            idx = tokens.index('Throughput')
+            if idx >= 0 and idx+1 < len(tokens):
+                tp = float(tokens[idx+1])
+                throughput_arr[j] += tp
+                j = j + 1
 
 for la, tp in zip(latency_arr, throughput_arr):
     print la/filenum, tp

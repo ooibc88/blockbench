@@ -26,6 +26,7 @@ var sorter = sorterContract.new(
         var timenow = new Date().getTime();
         console.log(result.args.size.toString(10) + " numbers sorted. took "
           + (timenow - timestamp)/1000 + " sec");
+	process.exit();
       });
 
       function sendTxn(size, signature) {
