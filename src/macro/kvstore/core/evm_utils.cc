@@ -251,7 +251,7 @@ std::string compose_get_transaction(const std::string &txn_hash) {
   return GET_TXN_PREFIX + txn_hash + GET_TXN_SUFFIX;
 }
 
-unsigned int get_tip_block_number(const std::string &endpoint) {
+int get_tip_block_number(const std::string &endpoint) {
   auto r = send_jsonrpc_request(endpoint, REQUEST_HEADERS, GET_BLOCKNUMBER);
   if (r.find("Failed") != std::string::npos) 
     return -1;

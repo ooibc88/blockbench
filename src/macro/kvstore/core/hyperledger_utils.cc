@@ -137,7 +137,7 @@ int find_tip(std::string json) {
   return stoi(sval);
 }
 
-unsigned int get_tip_block_number(const std::string &endpoint) {
+int get_tip_block_number(const std::string &endpoint) {
   std::string request =
       endpoint.substr(0, endpoint.find("/chaincode")) + CHAIN_END_POINT;
   return find_tip(RestClient::get(request).body);

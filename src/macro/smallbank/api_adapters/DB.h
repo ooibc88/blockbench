@@ -32,7 +32,7 @@ class DB {
 
   ~DB() {}
 
-  virtual unsigned int get_tip_block_number()=0;
+  virtual int get_tip_block_number()=0;
   virtual vector<string> poll_tx(int block_number)=0;
   //virtual int find_tip(string json)=0;
   //virtual vector<string> find_tx(string json)=0; 

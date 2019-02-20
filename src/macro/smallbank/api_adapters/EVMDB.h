@@ -41,7 +41,7 @@ class EVMDB : public DB {
 
   ~EVMDB() {}
 
-  unsigned int get_tip_block_number();
+  int get_tip_block_number();
   vector<string> poll_tx(int block_number);
   //int find_tip(string json);
   //vector<string> find_tx(string json); 
