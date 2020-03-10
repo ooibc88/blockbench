@@ -7,6 +7,8 @@ of different system design choices.
 BlockBench comes with both [macro benchmark workloads](src/macro) for evaluating the overall performance and
 [micro benchmark workloads](src/micro) for evaluating performance of individual layers. 
 
+*** A new version for Fabric 1.0 upward will be released soon ***
+
 ## Workloads 
 
 ### Macro-benchmark
