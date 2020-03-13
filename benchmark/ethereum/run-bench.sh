@@ -9,6 +9,7 @@ cd `dirname ${BASH_SOURCE-$0}`
 ./start-all.sh $1 
 
 let M=240+40*$1
+echo "Sleeping $M seconds to allow network to bootstrap"
 sleep $M
 
 ./start-multi-clients.sh $3 $1 $2 $4 $5 
