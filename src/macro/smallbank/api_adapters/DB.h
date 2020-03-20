@@ -4,6 +4,8 @@
 #include <string>
 #include "utils/timer.h"
 #include "utils/utils.h"
+#include "utils/spinlock.h"
+
 #include <unordered_map>
 #include <vector>
 using std::unordered_map; 

@@ -1,0 +1,4 @@
+[33m2020-03-20 15:49:53.069 +08 [main] InitCmd -> WARN 001[0m CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+[33m2020-03-20 15:49:53.073 +08 [main] SetOrdererEnv -> WARN 002[0m CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+[34m2020-03-20 15:49:53.076 +08 [chaincodeCmd] checkChaincodeCmdParams -> INFO 003[0m Using default escc
+[34m2020-03-20 15:49:53.076 +08 [chaincodeCmd] checkChaincodeCmdParams -> INFO 004[0m Using default vscc

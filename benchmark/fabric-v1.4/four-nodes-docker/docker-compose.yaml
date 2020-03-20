@@ -1,0 +1,144 @@
+#
+# Copyright IBM Corp All Rights Reserved
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+version: '2'
+
+networks:
+  basic:
+
+services:
+  orderer:
+    container_name: orderer.example.com
+    image: hyperledger/fabric-orderer:1.4.2
+    environment:
+      - ORDERER_GENERAL_LOGLEVEL=info
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp/orderer/msp
+      - ORDERER_FILELEDGER_LOCATION=/tmp/hyperledger/orderer
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
+    command: /bin/bash -c 'orderer '
+    ports:
+      - 7041:7050
+    volumes:
+        - ./channel_artifacts/:/etc/hyperledger/configtx
+        - ./crypto_config/ordererOrganizations/example.com/orderers/orderer.example.com/:/etc/hyperledger/msp/orderer
+        - ./crypto_config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/:/etc/hyperledger/msp/peerOrg1
+    networks:
+      - basic
+
+  peer0.org1.example.com:
+    container_name: peer0.org1.example.com
+    image: hyperledger/fabric-peer:1.4.2
+    environment:
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_PEER_ID=peer0.org1.example.com
+      - CORE_LOGGING_PEER=debug
+      - CORE_CHAINCODE_LOGGING_LEVEL=debug
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
+      - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=four-nodes-docker_basic
+
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: /bin/bash -c 'peer node start'
+    ports:
+      - 7051:7051
+      - 7052:7052
+      - 7053:7053
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto_config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/msp/peer
+        - ./crypto_config/peerOrganizations/org1.example.com/users:/etc/hyperledger/msp/users
+    depends_on:
+      - orderer
+    networks:
+      - basic
+
+  peer1.org1.example.com:
+    container_name: peer1.org1.example.com
+    image: hyperledger/fabric-peer:1.4.2
+    environment:
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_PEER_ID=peer1.org1.example.com
+      - CORE_LOGGING_PEER=debug
+      - CORE_CHAINCODE_LOGGING_LEVEL=debug
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
+      - CORE_PEER_ADDRESS=peer1.org1.example.com:7051
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=four-nodes-docker_basic
+
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: /bin/bash -c 'peer node start '
+    ports:
+      - 8051:7051
+      - 8052:7052
+      - 8053:7053
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto_config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/msp/peer
+        - ./crypto_config/peerOrganizations/org1.example.com/users:/etc/hyperledger/msp/users
+    depends_on:
+      - orderer
+    networks:
+      - basic
+
+  peer2.org1.example.com:
+    container_name: peer2.org1.example.com
+    image: hyperledger/fabric-peer:1.4.2
+    environment:
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_PEER_ID=peer2.org1.example.com
+      - CORE_LOGGING_PEER=debug
+      - CORE_CHAINCODE_LOGGING_LEVEL=debug
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
+      - CORE_PEER_ADDRESS=peer2.org1.example.com:7051
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=four-nodes-docker_basic
+
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: /bin/bash -c 'peer node start'
+    ports:
+      - 6051:7051
+      - 6052:7052
+      - 6053:7053
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto_config/peerOrganizations/org1.example.com/peers/peer2.org1.example.com/msp:/etc/hyperledger/msp/peer
+        - ./crypto_config/peerOrganizations/org1.example.com/users:/etc/hyperledger/msp/users
+    depends_on:
+      - orderer
+    networks:
+      - basic
+
+  peer3.org1.example.com:
+    container_name: peer3.org1.example.com
+    image: hyperledger/fabric-peer:1.4.2
+    environment:
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_PEER_ID=peer3.org1.example.com
+      - CORE_LOGGING_PEER=debug
+      - CORE_CHAINCODE_LOGGING_LEVEL=debug
+      - CORE_PEER_LOCALMSPID=Org1MSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
+      - CORE_PEER_ADDRESS=peer3.org1.example.com:7051
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=four-nodes-docker_basic
+
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: /bin/bash -c 'peer node start'
+    ports:
+      - 9051:7051
+      - 9052:7052
+      - 9053:7053
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto_config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/msp:/etc/hyperledger/msp/peer
+        - ./crypto_config/peerOrganizations/org1.example.com/users:/etc/hyperledger/msp/users
+    depends_on:
+      - orderer
+    networks:
+      - basic

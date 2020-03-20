@@ -27,7 +27,7 @@ BlockBench comes with both [macro benchmark workloads](src/macro) for evaluating
 
 + Smart contract sources are in [benchmark/contracts](benchmark/contracts) directory.
 + Instructions and scripts to run benchmarks for Ethereum, Hyperledger , Parity and Quorum are in [ethereum](benchmark/ethereum),
-[hyperledger](benchmark/hyperledger) , [parity](benchmark/parity) , [quorum_raft](benchmark/quorum_raft) and [quorum_vote](benchmark/quorum_vote) directories respectively.
+[hyperledger fabric v0.6](benchmark/hyperledger) , [hyperledgre fabric v1.4](benchmark/fabric-v1.4)[parity](benchmark/parity) , [quorum_raft](benchmark/quorum_raft) and [quorum_vote](benchmark/quorum_vote) directories respectively.
 + Drivers for benchmark workloads are in [src](src) directory.
 
 ## Dependency
@@ -52,9 +52,11 @@ Go to [micro](src/micro) directory and use `npm install` to install the dependen
 * [Web3.js](https://github.com/ethereum/web3.js/)
 * [zipfian](https://www.npmjs.com/package/zipfian)
 * [bignumber.js](https://www.npmjs.com/package/bignumber.js)
+* [fabric-v1.4 SDK](https://github.com/hyperledger/fabric-sdk-node/tree/release-1.4)
 
 ### Blockchain 
 * [geth(ethereum)](https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-Ubuntu)
 * [geth(parity)](https://github.com/paritytech/parity/wiki/Setup)
 * [geth(quorum)](https://github.com/jpmorganchase/quorum/wiki/Getting-Set-Up)
-* [hyperledger](https://github.com/hyperledger/fabric/tree/v0.6)
+* [hyperledger v0.6](https://github.com/hyperledger/fabric/tree/v0.6)
+* [hyperledger v1.4](https://github.com/hyperledger/fabric/tree/release-1.4)

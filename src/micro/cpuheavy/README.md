@@ -8,4 +8,5 @@ To see more details, please refer to the README file in each individual director
 ## Details
 
 + [ethereum/parity](ethereum/README.md) CPUHeavy driver
-+ [hyperledger](hyperledger/README.md) CPUHeavy driver
++ [hyperledger v0.6](hyperledger/README.md) CPUHeavy driver
++ [hyperledger fabric v1.4](fabric-v1.4/README.md) CPUHeavy driver

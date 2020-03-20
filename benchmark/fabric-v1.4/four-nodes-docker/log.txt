@@ -1,0 +1,4 @@
+[33m2020-03-20 15:35:34.058 +08 [main] InitCmd -> WARN 001[0m CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+[33m2020-03-20 15:35:34.061 +08 [main] SetOrdererEnv -> WARN 002[0m CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+[34m2020-03-20 15:35:34.062 +08 [channelCmd] InitCmdFactory -> INFO 003[0m Endorser and orderer connections initialized
+[34m2020-03-20 15:35:34.497 +08 [channelCmd] executeJoin -> INFO 004[0m Successfully submitted proposal to join channel

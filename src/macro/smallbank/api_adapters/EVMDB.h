@@ -5,9 +5,13 @@
 #include "DB.h"
 #include "utils/timer.h"
 #include "utils/utils.h"
+#include "utils/spinlock.h"
+
 #include <unordered_map>
 #include <vector>
 #include <cassert>
+
+
 using std::unordered_map; 
 using std::string; 
 using std::vector; 
