@@ -5,11 +5,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $DIR # Enter into the script directory
 . env.sh
 
+CC_SRC_PATH=../../../../benchmark/contracts/fabric-v1.4/donothing
+CC_NAME=donothing
+
 rm -rf ${GOPATH}/src/${CC_NAME}
 cp -r ${CC_SRC_PATH} ${GOPATH}/src/${CC_NAME}
 
-CC_SRC_PATH=../../../../benchmark/contracts/fabric-v1.4/donothing
-CC_NAME=donothing
 echo "CCNAME: " ${CC_NAME}
 
 for peer_addr in "${PEER_ADDRS[@]}"
@@ -20,7 +21,7 @@ do
     then
         echo "Successfully install chaincode ${CC_NAME} on peer ${peer_addr}"
     else
-        echo "Fail to install chaincode ${CC_NAME}"
+        echo "Fail to install chaincode ${CC_NAME} at ${peer_addr}" 
         exit 1
     fi
 done

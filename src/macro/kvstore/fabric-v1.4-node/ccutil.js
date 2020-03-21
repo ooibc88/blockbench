@@ -8,8 +8,8 @@ const os = require('os')
 const Client = require('fabric-client');
 
 const client = new Client();
-const keyPath = path.join(__dirname, "../../../../../benchmark/fabric-v1.4/four-nodes-docker/crypto_config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/2f237b2473e0e9f1d63d2715b1c0acdf376a481cbf0259befc1355361229209a_sk")
-const certPath = path.join(__dirname, "../../../../../benchmark/fabric-v1.4/four-nodes-docker/crypto_config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem")
+const keyPath = path.join(__dirname, "../../../../benchmark/fabric-v1.4/four-nodes-docker/crypto_config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/2f237b2473e0e9f1d63d2715b1c0acdf376a481cbf0259befc1355361229209a_sk")
+const certPath = path.join(__dirname, "../../../../benchmark/fabric-v1.4/four-nodes-docker/crypto_config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem")
 const MSPID = "Org1MSP"
 const channelName = "rpcchannel"
 var txIdObject;

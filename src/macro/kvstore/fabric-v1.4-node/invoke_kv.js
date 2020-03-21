@@ -17,6 +17,7 @@ var channel;
 var client;
 var peer;
 var ccName = "kvstore";
+var start;
 
 var result = new Object;
 Promise.resolve().then(()=>{
@@ -25,6 +26,7 @@ Promise.resolve().then(()=>{
     channel = result.channel;
     client = result.client;
     peer = client.newPeer(peerAddr);
+
     return ccUtil.updateE2E(channel, client, peer, ccName, functionName, args);
 }).then((txnID)=>{
     result["status"] = "ok";

@@ -10,6 +10,7 @@
 #include <string>
 #include "db/hyperledger_db.h"
 #include "db/evm_db.h"
+#include "db/fabric_db.h"
 
 using namespace std;
 using ycsbc::DB;
@@ -25,6 +26,10 @@ DB* DBFactory::CreateDB(utils::Properties& props) {
       exit(0);
     }
     return new HyperLedgerDB(endpoint, wl_name);
+  } else if (props["dbname"] == "fabric-v1.4") {
+    const string endpoint = props["endpoint"];
+    string wl_name = props.GetProperty("workload", "donothing");
+    return new FabricDB(endpoint, wl_name);
   } else if (props["dbname"] == "ethereum" || props["dbname"] == "parity") {
     const string endpoint = props["endpoint"];
     int deploy_wait = stoi(props.GetProperty("deploy_wait", "20"));

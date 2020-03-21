@@ -2,16 +2,16 @@
 
 const ccUtil = require("./ccutil.js")
 
-if (process.argv.length < 5) {
+if (process.argv.length < 4) {
     console.log("Invalid parameter...");
-    console.log("Should be 'node invoke_kv.js <ordererAddr> <peerAddr> <functionName> [args...]'");
+    console.log("Should be 'node invoke_donothing.js <ordererAddr> <peerAddr> '");
     process.exit(1);
 }
 
 var ordererAddr = "grpc://" + process.argv[2];
 var peerAddr = "grpc://" + process.argv[3];
-var functionName = process.argv[4]
-var args = process.argv.slice(5)
+var functionName = "";
+var args = [];
 
 var channel;
 var client;
@@ -19,14 +19,19 @@ var peer;
 var ccName = "donothing";
 
 var result = new Object;
+var start;
+// start = new Date()
 Promise.resolve().then(()=>{
     return ccUtil.createChannelAndClient(peerAddr, ordererAddr);
 }).then((result)=>{
     channel = result.channel;
     client = result.client;
     peer = client.newPeer(peerAddr);
+    // var end = new Date() - start
+    // console.info('Create channel time: %dms', end)
     return ccUtil.updateE2E(channel, client, peer, ccName, functionName, args);
 }).then((txnID)=>{
+
     result["status"] = "ok";
     result["txID"] = txnID
     console.log(result)

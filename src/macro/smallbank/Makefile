@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-std=c++11 -g -Wall -pthread -I./ 
-LDFLAGS= -lpthread  -lcurl -lrestclient-cpp -lboost_system
+LDFLAGS= -lpthread  -lcurl -lrestclient-cpp 
 SUBDIRS=api_adapters utils
 OBJECTS=api_adapters/SmallBank.o api_adapters/EVMDB.o api_adapters/Fabric.o utils/timer.o
 EXEC=driver

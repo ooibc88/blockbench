@@ -1,5 +1,6 @@
 # Prerequisite
 * Install [docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/) tools
+* Download `peer` binary from [here](https://github.com/hyperledger/fabric-samples/tree/release-1.4) and make it accessible from `$PATH`
 
 # Running Fabric v1.4
 
@@ -13,7 +14,7 @@ docker-compose -f docker-compose.yaml up -d
 ```
 
 # Benchmark
-* Enter the workload directory to benchmark against this setup. 
+* Enter the corresponding workload directory, such as [smallbank](src/../../../src/macro/smallbank), to benchmark against this setup. 
 
 # Shut down
 ```

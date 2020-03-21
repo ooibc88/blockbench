@@ -5,11 +5,11 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $DIR # Enter into the script directory
 . env.sh
 
+CC_SRC_PATH=../../../../benchmark/contracts/fabric-v1.4/kvstore
+CC_NAME=kvstore
 rm -rf ${GOPATH}/src/${CC_NAME}
 cp -r ${CC_SRC_PATH} ${GOPATH}/src/${CC_NAME}
 
-CC_SRC_PATH=../../../../benchmark/contracts/fabric-v1.4/kvstore
-CC_NAME=kvstore
 echo "CCNAME: " ${CC_NAME}
 
 for peer_addr in "${PEER_ADDRS[@]}"
