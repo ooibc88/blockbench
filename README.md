@@ -59,7 +59,7 @@ Go to [micro](src/micro) directory and use `npm install` to install the dependen
 * [hyperledger fabric v0.6](https://github.com/hyperledger/fabric/tree/v0.6)
 * [hyperledger fabric  v1.4](https://github.com/hyperledger/fabric/tree/release-1.4)
 
-###References
+## References
 * [1] A. Dinh, J. Wang, G. Chen, R. Liu, B. C. Ooi, K.-L. Tan: [BLOCKBENCH: A Framework for Analysing Private Blockchains](https://www.comp.nus.edu.sg/~ooibc/blockbench.pdf). ACM SIGMOD 2017.
 * [2] [The Morning Paper Review](https://blog.acolyer.org/2018/06/01/forkbase-an-efficient-storage-engine-for-blockchain-and-forkable-applications/) 2017
 * [3] A. Dinh, R. Liu, M. Zhang, G. Chen, B.C. Ooi, J. Wang: [Untangling Blockchain: A Data Processing View of Blockchain Systems](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8246573). IEEE Transactions on Knowledge and Data Engineering, July 2018.
