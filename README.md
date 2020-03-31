@@ -56,5 +56,5 @@ Go to [micro](src/micro) directory and use `npm install` to install the dependen
 * [geth(ethereum)](https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-Ubuntu)
 * [geth(parity)](https://github.com/paritytech/parity/wiki/Setup)
 * [geth(quorum)](https://github.com/jpmorganchase/quorum/wiki/Getting-Set-Up)
-* [hyperledger v0.6](https://github.com/hyperledger/fabric/tree/v0.6)
-* [hyperledger v1.4](https://github.com/hyperledger/fabric/tree/release-1.4)
+* [hyperledger fabric v0.6](https://github.com/hyperledger/fabric/tree/v0.6)
+* [hyperledger fabric  v1.4](https://github.com/hyperledger/fabric/tree/release-1.4)
