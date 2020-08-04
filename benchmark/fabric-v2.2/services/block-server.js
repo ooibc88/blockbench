@@ -6,7 +6,7 @@
 
 'use strict';
 
-const { Gateway, Wallets, GatewayOptions, DefaultEventHandlerStrategies  } = require('fabric-network');
+const { Gateway, Wallets, DefaultEventHandlerStrategies  } = require('fabric-network');
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
@@ -77,7 +77,7 @@ getChannel(channelName).then((network)=>{
                     blkTxns[blkNum].push(channel_header.tx_id)
                 }
             }
-            console.log(`Block ${blkNum} has txns ${blkTxns[blkNum]}. `);
+            console.log(`Block ${blkNum} has txns [${blkTxns[blkNum]}]. `);
 
         } catch (error) {
             console.error(`Failed to listen for blocks: ${error}`);
@@ -91,20 +91,20 @@ getChannel(channelName).then((network)=>{
         console.log(`Server running on port ${port}`);
     })
 
-    app.use(bodyParser.json());
+    // app.use(bodyParser.json());
 
     app.get("/block", (req, res) => { 
-        const blkNum = "" + req.body["blk_num"]; //convert to string
+        const blkNum = "" + req.query.num; //convert to string
         const txns = blkTxns[blkNum];
         if (txns === undefined) {
-            res.json({"status": 1, "message": "Block " + blkNum + " does not exist. "});
+            res.json({"status": "1", "message": "Block " + blkNum + " does not exist. "});
         } else {
-            res.json({"status": 0, "txns": txns});
+            res.json({"status": "0", "txns": txns});
         }
     });
 
     app.get("/height", (req, res) => { 
-        res.json({"status": 0, "height": height});
+        res.json({"status": "0", "height": "" + height});
     });
 }).catch((error)=>{
     console.error(`Failed to set up the contract and channel: ${error}`);

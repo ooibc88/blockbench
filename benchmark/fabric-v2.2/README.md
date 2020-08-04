@@ -22,7 +22,7 @@ CC_SRC_PATH="../contracts/fabric-v2.2/${CC_NAME}"
 ```
 
 ## Start up the helper processes.
-This part is necessary as Fabriv 2.2 does not provide C++ SDK. To work around, we wrap up the Fabric's service into a json web service, implemented by NodeJS. In macro benchmarks, client drivers will contact these helpers processes to interact with Fabric network. 
+This part is necessary as Fabric 2.2 does not provide C++ SDK. To work around, we wrap up the Fabric's service into a json web service, implemented by NodeJS. In macro benchmarks, client drivers will contact these helpers processes to interact with Fabric network. 
 
 Note down their listening addresses and ports. 
 
@@ -45,10 +45,11 @@ node block-server.js ${CHANNEl_NAME} 8800 > block-server.log 2>&1 &
 ```
 
 Launch two transaction services on port 8801 and 8802 respectively in the background, each listening for json requests and routes them to Fabric network. 
+`$MODE` is determined by individual benchmarks. In most cases, macro benchmarks opt for `$MODE=open_loop` and micro benchmarks opt for `$MODE=closed_loop`. 
 ```
 # Still in services/
-node txn-server.js ${CHANNEl_NAME} ${CC_NAME} 8801 > txn-server-8801.log 2>&1 &
-node txn-server.js ${CHANNEl_NAME} ${CC_NAME} 8802 > txn-server-8802.log 2>&1 &
+node txn-server.js ${CHANNEl_NAME} ${CC_NAME} ${MODE} 8801 > txn-server-8801.log 2>&1 &
+node txn-server.js ${CHANNEl_NAME} ${CC_NAME} ${MODE} 8802 > txn-server-8802.log 2>&1 &
 ```
 As __txn-servers__ are contacted by the __Client_Thread__ of client drivers, and there are multiple client threads, it is desirable to launch multiple __txn-servers__ to balance the workload. 
 
