@@ -1,0 +1,17 @@
+{
+    "name": "Blockbench_Helper",
+    "version": "1.0.0",
+    "description": "Helper web services on Fabric v2.2",
+    "engines": {
+        "node": ">=8",
+        "npm": ">=5"
+    },
+    "engineStrict": true,
+    "author": "Blockbench",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "express": "^4.17.1",
+        "fabric-ca-client": "^2.2.0",
+        "fabric-network": "^2.2.0"
+    }
+}
