@@ -99,7 +99,6 @@ getChannel(channelName, contractName).then((contract)=>{
 
     app.post("/invoke", (req, res) => { 
         var txn;
-        console.log("Receive request: ", req.body)
         const funcName = req.body["function"];
         const args = req.body["args"];
         console.log(`Receive funcName: ${funcName}, args: ${args}`);
@@ -119,7 +118,6 @@ getChannel(channelName, contractName).then((contract)=>{
     });
 
     app.get("/query", (req, res) => { 
-        // console.log("Receive request: ", req.body)
         const funcName = req.query.function;
         const args = req.query.args.split(',');
         console.log(`Receive funcName: ${funcName}, args: ${args}`);

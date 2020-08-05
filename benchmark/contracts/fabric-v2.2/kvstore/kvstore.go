@@ -28,15 +28,14 @@ func (t *KVStore) Del(ctx contractapi.TransactionContextInterface, key string) e
 	return nil
 }
 
-func (t *KVStore) Read(ctx contractapi.TransactionContextInterface, key string) error {
-	var err error
+func (t *KVStore) Read(ctx contractapi.TransactionContextInterface, key string) (string, error) {
 
-	_, err := ctx.GetStub().GetState(key)
+	val, err := ctx.GetStub().GetState(key)
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	return string(val), nil
 }
 
 func main() {

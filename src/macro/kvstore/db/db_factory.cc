@@ -11,6 +11,7 @@
 #include "db/hyperledger_db.h"
 #include "db/evm_db.h"
 #include "db/fabric_db.h"
+#include "db/fabricv2_db.h"
 
 using namespace std;
 using ycsbc::DB;
@@ -26,6 +27,11 @@ DB* DBFactory::CreateDB(utils::Properties& props) {
       exit(0);
     }
     return new HyperLedgerDB(endpoint, wl_name);
+  } else if (props["dbname"] == "fabric-v2.2") {
+    const string endpoint = props["endpoint"];
+    string wl_name = props.GetProperty("workload", "donothing");
+    return new FabricV2DB(endpoint, wl_name);
+
   } else if (props["dbname"] == "fabric-v1.4") {
     const string endpoint = props["endpoint"];
     string wl_name = props.GetProperty("workload", "donothing");
