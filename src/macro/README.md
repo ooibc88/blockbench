@@ -52,8 +52,7 @@ The driver in `kvstore` directory provides the following workloads:
   * Repeat the above step as in KVStore, except that `$CC_NAME=donothing`.
   * Usage: 
   ```
-  ./driver -db fabric-v2.2 -threads 1 -txrate 5 -P workloads/workloada.spec -endpoint localhost:8545 -wl donthing -wt 20
-  ```
+  ./driver -db fabric-v2.2 -threads 1 -txrate 5 -P workloads/workloada.spec -endpoint ${endpoint} -wl donthing -wt 20
   ```
 
 * DoNothing: for Fabric 1.4
@@ -90,7 +89,7 @@ The driver in `smallbank` directory provides the following workloads:
   * Repeat the above step as in KVStore, except that `$CC_NAME=smallbank`.
   * Usage: 
   ```
-  ./driver -db fabric-v2.2 -ops 1000 -threads 10 -txrate 10 -fp stat.txt -endpoint <endpoint> 
+  ./driver -db fabric-v2.2 -ops 1000 -threads 10 -txrate 10 -fp stat.txt -endpoint ${endpoint}
   ```
   * Note: In Smallbank workload, one may observe that the number of outstanding transactions are constantly increasing. It is because some Smallbank transactions may be classified as invalid due to the read-write conflict. The block web service will not return these invalid transactions. Hence, these transactions forever stay in the pending queue. 
 

@@ -25,7 +25,7 @@ BlockBench comes with both [macro benchmark workloads](src/macro) for evaluating
 
 + Smart contract sources are in [benchmark/contracts](benchmark/contracts) directory.
 + Instructions and scripts to run benchmarks for Ethereum, Hyperledger v0.6 and v1.4, Parity and Quorum are in [ethereum](benchmark/ethereum),
-[hyperledger fabric v0.6](benchmark/hyperledger) , [hyperledger fabric v1.4](benchmark/fabric-v1.4), [parity](benchmark/parity) , [quorum_raft](benchmark/quorum_raft) and [quorum_vote](benchmark/quorum_vote) directories respectively.
+[hyperledger fabric v0.6](benchmark/hyperledger) , [hyperledger fabric v1.4](benchmark/fabric-v1.4), [hyperledger fabric v2.2](benchmark/fabric-v2.2), [parity](benchmark/parity) , [quorum_raft](benchmark/quorum_raft) and [quorum_vote](benchmark/quorum_vote) directories respectively.
 + Drivers for benchmark workloads are in [src](src) directory.
 
 ## Dependency
@@ -51,6 +51,7 @@ Go to [micro](src/micro) directory and use `npm install` to install the dependen
 * [zipfian](https://www.npmjs.com/package/zipfian)
 * [bignumber.js](https://www.npmjs.com/package/bignumber.js)
 * [fabric-v1.4 SDK](https://github.com/hyperledger/fabric-sdk-node/tree/release-1.4)
+* [fabric-v2.2 SDK](https://github.com/hyperledger/fabric-sdk-node/tree/release-2.2)
 
 ## Blockchain Systems 
 * [geth(ethereum)](https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-Ubuntu)
@@ -58,8 +59,9 @@ Go to [micro](src/micro) directory and use `npm install` to install the dependen
 * [geth(quorum)](https://github.com/jpmorganchase/quorum/wiki/Getting-Set-Up)
 * [hyperledger fabric v0.6](https://github.com/hyperledger/fabric/tree/v0.6)
 * [hyperledger fabric  v1.4](https://github.com/hyperledger/fabric/tree/release-1.4)
+* [hyperledger fabric  v2.2](https://github.com/hyperledger/fabric/tree/release-2.2)
 
 ## References
 * [1] A. Dinh, J. Wang, G. Chen, R. Liu, B. C. Ooi, K.-L. Tan: [BLOCKBENCH: A Framework for Analysing Private Blockchains](https://www.comp.nus.edu.sg/~ooibc/blockbench.pdf). ACM SIGMOD 2017.
-* [2] [The Morning Paper Review](https://blog.acolyer.org/2017/07/05/blockbench-a-framework-for-analyzing-private-blockchains/)2017
+* [2] [The Morning Paper Review](https://blog.acolyer.org/2017/07/05/blockbench-a-framework-for-analyzing-private-blockchains/) 2017
 * [3] A. Dinh, R. Liu, M. Zhang, G. Chen, B.C. Ooi, J. Wang: [Untangling Blockchain: A Data Processing View of Blockchain Systems](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8246573). IEEE Transactions on Knowledge and Data Engineering, July 2018.

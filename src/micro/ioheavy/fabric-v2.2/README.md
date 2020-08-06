@@ -1,5 +1,5 @@
 # Prepare
-  * Spin up the network, create the channel, deploy the contract and launch the helper web services, as in [README](../../benchmark/fabric-v2.2/README.md) with the following two bash **variables** `CC_NAME=ioheavy MODE=closed_loop`.
+  * Spin up the network, create the channel, deploy the contract and launch the helper web services, as in [README](../../../../benchmark/fabric-v2.2/README.md) with the following two bash **variables** `CC_NAME=ioheavy MODE=closed_loop`.
 
 
 # Run

@@ -10,7 +10,6 @@ To see more details, please refer to the README file in each individual director
 ## Details
 
 + [ethereum/parity](ethereum/README.md) IOHeavy driver
-+ [hyperledger-fabric-v0.6](hyperledger/README.md) IOHeavy driver
-+ [hyperledger v0.6](hyperledger/README.md) IOHeavy driver
++ [hyperledger-fabric v0.6](hyperledger/README.md) IOHeavy driver
 + [hyperledger fabric v1.4](fabric-v1.4/README.md) IOHeavy driver
 + [hyperledger fabric v2.2](fabric-v2.2/README.md) IOHeavy driver
