@@ -14,8 +14,11 @@ extracting statistics from the blockchain data:
 For Ethereum and Parity the queries are implemented using JSON-RPC. Ethereum and Parity share the same driver.
 For Hyperledger we develop our own chaincode to implement the similar logic.
 To see more details, please refer to the README file in each individual directory for each system.
+For Fabric v1.4, we use chaincode to simulate monetary transactions and use NodeJS SDK to pull blocks for analysis. 
+We do not provide the analytical workload for Fabric v2.2, as its NodeJS SDK no longers supports to pull blocks. It is because the package removes *fabric-client* module, as detailed [here](https://hyperledger.github.io/fabric-sdk-node/release-2.2/tutorial-migration.html).
 
 ## Details
 
-+ [ethereum/parity](ethereum/README.md) analytic driver
-+ [hyperledger](hyperledger/README.md) analytic driver
++ [ethereum/parity](ethereum/README.md) Analytic driver
++ [hyperledger](hyperledger/README.md) Analytic driver
++ [hyperledger fabric v1.4](fabric-v1.4/README.md) analytic driver

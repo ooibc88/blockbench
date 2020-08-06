@@ -8,8 +8,8 @@
   "engine-strict": true,
   "engineStrict": true,
   "dependencies": {
-    "fabric-ca-client": "1.4.2",
-    "fabric-client": "1.4.2"
+    "fabric-ca-client": "1.4.4",
+    "fabric-client": "1.4.4"
   },
   "license": "Apache-2.0"
 }
