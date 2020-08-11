@@ -11,7 +11,7 @@ CHANNEL_NAME=mychannel
 
 ## Launch and setup
 ```
-./network.sh up createChannel -ca -i 2.2 -c ${CHANNEl_NAME}
+./network.sh up createChannel -ca -i 2.2 -c ${CHANNEL_NAME}
 ```
 
 ## Deploy Chaincode
@@ -41,7 +41,7 @@ Launch one block service on port 8800 in the background, which provides the ledg
 Since __block-server__ is only contacted by the __Status_Thread__ of client drivers, a single one block service is enough. 
 ```
 # Still in services/
-node block-server.js ${CHANNEl_NAME} 8800 > block-server.log 2>&1 &
+node block-server.js ${CHANNEL_NAME} 8800 > block-server.log 2>&1 &
 ```
 
 Launch two transaction services on port 8801 and 8802 respectively in the background, each listening for json requests and routes them to Fabric network. 
