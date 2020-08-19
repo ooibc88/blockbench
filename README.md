@@ -24,7 +24,7 @@ BlockBench comes with both [macro benchmark workloads](src/macro) for evaluating
 ## Source file structure
 
 + Smart contract sources are in [benchmark/contracts](benchmark/contracts) directory.
-+ Instructions and scripts to run benchmarks for Ethereum, Hyperledger v0.6 and v1.4, Parity and Quorum are in [ethereum](benchmark/ethereum),
++ Instructions and scripts to run benchmarks for Ethereum, Hyperledger v0.6, v1.4 and v2.2, Parity and Quorum are in [ethereum](benchmark/ethereum),
 [hyperledger fabric v0.6](benchmark/hyperledger) , [hyperledger fabric v1.4](benchmark/fabric-v1.4), [hyperledger fabric v2.2](benchmark/fabric-v2.2), [parity](benchmark/parity) , [quorum_raft](benchmark/quorum_raft) and [quorum_vote](benchmark/quorum_vote) directories respectively.
 + Drivers for benchmark workloads are in [src](src) directory.
 
