@@ -5,6 +5,7 @@ import time
 import yaml
 import logging
 from aiohttp.web_response import json_response
+from sawtooth_sdk.processor.context import Context
 
 from rest_api.errors import ApiBadRequest
 
@@ -45,6 +46,9 @@ class RouteHandler(object):
         LOGGER.warning(link)
         res = {"batchID": batchID, "latency_sec": end}
         return res
+
+    async def delete_record(self, arg):
+        pass
 
 
 async def decode_request(request):
