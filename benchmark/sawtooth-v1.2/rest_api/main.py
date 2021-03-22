@@ -11,7 +11,7 @@ import pkg_resources
 from aiohttp import web
 
 from colorlog import ColoredFormatter
-
+from pathlib import Path
 
 from rest_api.intkey_client import IntkeyClient
 from rest_api.exceptions import IntKeyCliException
@@ -112,7 +112,12 @@ def generate_private_key():
     context = create_context('secp256k1')
     private_key = context.new_random_private_key()
     private_key_hex = Secp256k1PublicKey.as_hex(private_key)
-    f = open("test.priv", "w")
+    real_user = getpass.getuser()
+    home = os.path.expanduser("~")
+    key_dir = os.path.join(home, ".sawtooth", "keys")
+    path = key_dir + "/" + real_user + ".priv"
+    Path(key_dir).mkdir(parents=True, exist_ok=True)
+    f = open(path, "w")
     f.write(private_key_hex)
     f.close()
 
