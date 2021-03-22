@@ -27,12 +27,12 @@ build_str = "lib.{}-{}.{}".format(
 
 sys.path.insert(0, os.path.join(
     os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
-    'rest'))
+    'rest_api'))
 sys.path.insert(0, os.path.join(
     os.path.dirname(os.path.dirname(os.path.realpath(__file__))),
     ))
 
-from rest.main import main_wrapper
+from rest_api.main import main_wrapper
 
 
 if __name__ == '__main__':

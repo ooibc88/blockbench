@@ -21,7 +21,7 @@ import requests
 import yaml
 import cbor
 
-from rest.exceptions import IntkeyClientException
+from rest_api.exceptions import IntkeyClientException
 
 from sawtooth_signing import create_context
 from sawtooth_signing import CryptoFactory

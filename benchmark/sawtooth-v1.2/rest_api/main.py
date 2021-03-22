@@ -13,15 +13,16 @@ from aiohttp import web
 from colorlog import ColoredFormatter
 
 
-from rest.intkey_client import IntkeyClient
-from rest.exceptions import IntKeyCliException
-from rest.exceptions import IntkeyClientException
+from rest_api.intkey_client import IntkeyClient
+from rest_api.exceptions import IntKeyCliException
+from rest_api.exceptions import IntkeyClientException
+from rest_api.route_handler import RouteHandler
 from zmq.asyncio import ZMQEventLoop
 
 from sawtooth_signing import create_context
 from sawtooth_signing.secp256k1 import Secp256k1PublicKey
 
-from rest.route_handler import RouteHandler
+
 
 
 LOGGER = logging.getLogger(__file__)

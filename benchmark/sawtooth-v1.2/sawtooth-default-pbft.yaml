@@ -130,7 +130,7 @@ services:
   intkey-rest-api:
     build:
       context: .
-      dockerfile: rest/Dockerfile
+      dockerfile: rest_api/Dockerfile
     image: intkey-rest-api
     container_name: intkey-rest-api
     volumes:

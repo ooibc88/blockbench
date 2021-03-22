@@ -1,13 +1,15 @@
 import os
 import getpass
 from json import JSONDecodeError
-
+import time
+import yaml
+import logging
 from aiohttp.web_response import json_response
 
-from rest.errors import ApiBadRequest
+from rest_api.errors import ApiBadRequest
 
 DEFAULT_URL = 'http://127.0.0.1:8008'
-
+LOGGER = logging.getLogger(__file__)
 
 class RouteHandler(object):
     def __init__(self, loop, client):
@@ -20,9 +22,16 @@ class RouteHandler(object):
         validate_fields(required_fields, body)
         name = body.get('name')
         value = body.get('value')
-
+        start = time.time()
         response = self._client.set(name, value)
-        return json_response(response)
+        end = time.time() - start
+        LOGGER.warning("getting status")
+        LOGGER.warning( yaml.safe_load(response))
+        link = yaml.safe_load(response)['link']
+        batchID = link.split("=")[1]
+        LOGGER.warning(link)
+        res = {"batchID": batchID, "latency_sec": end}
+        return json_response(res)
 
 
 async def decode_request(request):
