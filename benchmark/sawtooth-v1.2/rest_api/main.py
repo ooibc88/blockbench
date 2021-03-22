@@ -128,7 +128,7 @@ def start_rest_api(host, port):
     client = _get_client(ARGS)
     handler = RouteHandler(loop, client)
 
-    app.router.add_post('/set', handler.create_record)
+    app.router.add_post('/invoke', handler.invoke_function)
 
     LOGGER.warning('Starting REST API on %s:%s', host, port)
     web.run_app(
