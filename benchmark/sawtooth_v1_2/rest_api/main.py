@@ -74,7 +74,7 @@ def create_parent_parser(prog_name):
     parent_parser.add_argument(
         '-b', '--bind',
         help='identify host and port for api to run on',
-        default='simple-supply-rest-api:8000')
+        default='txt-rest-api:8000')
 
     parent_parser.add_argument(
         '--url',

@@ -1,3 +1,4 @@
+import asyncio
 import logging
 
 from sawtooth_sdk.protobuf.client_event_pb2 import ClientEventsSubscribeRequest, ClientEventsSubscribeResponse
@@ -12,10 +13,12 @@ class Subscriber(object):
     def __init__(self, validator_url):
         LOGGER.info('Connecting to validator: %s', validator_url)
         self._stream = Stream(validator_url)
-        self._is_active = False
-        self._height = 0
+        self._event_handlers = []
 
-    def listen_to_event(self):
+    def add_handler(self, handler):
+        self._event_handlers.append(handler)
+
+    async def listen_to_event(self):
         self._stream.wait_for_ready()
         # Step 1: Construct a Subscription
         block_sub = EventSubscription(event_type='sawtooth/block-commit')
@@ -32,27 +35,16 @@ class Subscriber(object):
         response.ParseFromString(response_future.result().content)
 
         # Listen for events in an infinite loop
-        LOGGER.info("Listening to events.")
+        LOGGER.warning("Listening to events.")
         while True:
+            # to avoid blocking not the best solution
+            await asyncio.sleep(1)
             msg = self._stream.receive()
             event_list = EventList()
             event_list.ParseFromString(msg.result().content)
-            block_num, block_id = _parse_new_block(event_list.events)
-            if block_num is not None:
-                self._height = block_num
+            for handler in self._event_handlers:
+                handler(event_list.events)
 
 
 
 
-
-def _parse_new_block(events):
-    try:
-        block_attr = next(e.attributes for e in events
-                          if e.event_type == 'sawtooth/block-commit')
-    except StopIteration:
-        return None, None
-
-    block_num = int(next(a.value for a in block_attr if a.key == 'block_num'))
-    block_id = next(a.value for a in block_attr if a.key == 'block_id')
-    LOGGER.debug('Handling deltas for block: %s', block_id)
-    return block_num, block_id

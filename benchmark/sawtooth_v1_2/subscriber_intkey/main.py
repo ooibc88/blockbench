@@ -1,8 +1,16 @@
 import argparse
+import asyncio
 import logging
 import sys
+import threading
 
 from subscriber_intkey.subscriber import Subscriber
+from aiohttp import web
+
+from subscriber_intkey.route_handler import RouteHandler
+from zmq.asyncio import ZMQEventLoop
+
+from subscriber_intkey.event_handling import get_events_handler
 
 LOGGER = logging.getLogger(__name__)
 
@@ -16,6 +24,11 @@ def parse_args(args):
         action='count',
         default=0,
         help='Increase output sent to stderr')
+
+    parser.add_argument(
+        '-b', '--bind',
+        help='identify host and port for api to run on',
+        default='block-txt-rest-api:8001')
 
     parser.add_argument(
         '-C', '--connect',
@@ -36,16 +49,54 @@ def init_logger(level):
         logger.setLevel(logging.WARN)
 
 
-def do_subscribe(opts):
+async def do_subscribe(opts):
     LOGGER.info('Starting subscriber...')
     subscriber = Subscriber(opts.connect)
-    subscriber.listen_to_event()
+    subscriber.add_handler(get_events_handler())
+    await subscriber.listen_to_event()
+
+
+def start_rest_api(host, port, opts, loop):
+    # start REST API
+    app = web.Application(loop=loop)
+    handler = RouteHandler()
+
+    app.router.add_get('/height', handler.get_height)
+
+    LOGGER.warning('Starting REST API on %s:%s', host, port)
+    web.run_app(
+        app,
+        host=host,
+        port=port,
+        access_log=LOGGER)
+    LOGGER.warning("out")
 
 
 def main():
+    LOGGER.warning("###########")
     opts = parse_args(sys.argv[1:])
     init_logger(opts.verbose)
-    do_subscribe(opts)
+    try:
+        host, port = opts.bind.split(":")
+        port = int(port)
+    except ValueError:
+        print("Unable to parse binding {}: Must be in the format"
+              " host:port".format(opts.bind))
+        sys.exit(1)
+    loop = asyncio.get_event_loop()
+    try:
+
+        # asyncio.ensure_future(start_rest_api(host, port, opts))
+        asyncio.ensure_future(do_subscribe(opts))
+        start_rest_api(host, port, opts, loop)
+        loop.run_forever()
+
+
+    except KeyboardInterrupt:
+        pass
+    finally:
+        print("Closing Loop")
+        loop.close()
 
 
 main()

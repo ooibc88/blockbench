@@ -63,6 +63,8 @@ services:
     container_name: intkey-subscriber
     volumes:
        - ./:/project/sawtooth_sdk_python
+    ports:
+      - '9033:9033'
     depends_on:
       - validator
     command: |
@@ -70,6 +72,7 @@ services:
       chmod +x /project/sawtooth_sdk_python/bin/subscribe
       subscribe \
           -C tcp://validator:4004 \
+          -b intkey-subscriber:9033 \
           -vv
       "
 
