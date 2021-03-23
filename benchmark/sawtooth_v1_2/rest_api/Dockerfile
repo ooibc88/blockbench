@@ -54,10 +54,10 @@ RUN pip3 install \
 
 RUN mkdir -p /var/log/sawtooth
 
-WORKDIR /project/sawtooth-sdk-python
+WORKDIR /project/sawtooth_sdk_python
 
 
-ENV PATH=$PATH:/project/sawtooth-sdk-python/bin
+ENV PATH=$PATH:/project/sawtooth_sdk_python/bin
 
 EXPOSE 8000/tcp
 

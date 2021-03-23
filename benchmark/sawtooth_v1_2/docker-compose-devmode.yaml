@@ -1,0 +1,147 @@
+# Copyright 2018 Cargill Incorporated
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+version: '3.6'
+
+services:
+
+  settings-tp:
+    image: hyperledger/sawtooth-settings-tp:nightly
+    container_name: sawtooth-settings-tp
+    depends_on:
+      - validator
+    command: |
+      bash -c "
+        settings-tp -vv -C tcp://validator:4004
+      "
+    stop_signal: SIGKILL
+
+  intkey-tp:
+    image: hyperledger/sawtooth-intkey-tp-python:nightly
+    container_name: sawtooth-intkey-tp
+    expose:
+      - 4004
+    command: intkey-tp-python -C tcp://validator:4004
+    stop_signal: SIGKILL
+
+  intkey-rest-api:
+    build:
+      context: .
+      dockerfile: rest_api/Dockerfile
+    image: intkey-rest-api
+    container_name: intkey-rest-api
+    volumes:
+      - ./:/project/sawtooth_sdk_python
+    ports:
+      - '8000:8000'
+
+    command: |
+      bash -c "
+      chmod +x /project/sawtooth_sdk_python/bin/rest-api
+      rest-api \
+          -b intkey-rest-api:8000 \
+          --keyfile /root/.sawtooth/keys/root.priv \
+          --url rest-api:8008
+      "
+
+  intkey-subscriber:
+    build:
+      context: .
+      dockerfile: subscriber_intkey/Dockerfile
+    image: intkey-subscriber
+    container_name: intkey-subscriber
+    volumes:
+       - ./:/project/sawtooth_sdk_python
+    depends_on:
+      - validator
+    command: |
+      sh -c "
+      chmod +x /project/sawtooth_sdk_python/bin/subscribe
+      subscribe \
+          -C tcp://validator:4004 \
+          -vv
+      "
+
+
+
+  client:
+    image: hyperledger/sawtooth-shell:nightly
+    container_name: sawtooth-shell
+    depends_on:
+      - validator
+    command: |
+      bash -c "
+        sawtooth keygen &&
+        tail -f /dev/null
+      "
+    stop_signal: SIGKILL
+
+
+  validator:
+    image: hyperledger/sawtooth-validator:nightly
+    container_name: sawtooth-validator
+    expose:
+      - 4004
+      - 8800
+      - 5050
+    ports:
+      - "4004:4004"
+    # start the validator with an empty genesis batch
+    command: |
+      bash -c "
+        sawadm keygen
+        sawset genesis \
+          -k /etc/sawtooth/keys/validator.priv \
+          -o config-genesis.batch && \
+        sawset proposal create \
+          -k /etc/sawtooth/keys/validator.priv \
+          sawtooth.consensus.algorithm.name=Devmode \
+          sawtooth.consensus.algorithm.version=0.1 \
+          -o config.batch && \
+        sawadm genesis config-genesis.batch config.batch && \
+        sawtooth-validator -vv \
+            --endpoint tcp://validator:8800 \
+            --bind component:tcp://eth0:4004 \
+            --bind network:tcp://eth0:8800 \
+            --bind consensus:tcp://eth0:5050 \
+      "
+    stop_signal: SIGKILL
+
+
+  rest-api:
+    image: hyperledger/sawtooth-rest-api:nightly
+    container_name: sawtooth-rest-api
+    expose:
+      - 8008
+    depends_on:
+      - validator
+    command: |
+      bash -c "
+        sawtooth-rest-api -v --connect tcp://validator:4004 --bind rest-api:8008
+      "
+    stop_signal: SIGKILL
+
+
+
+
+  devmode-rust:
+    image: hyperledger/sawtooth-devmode-engine-rust:nightly
+    container_name: sawtooth-devmode-engine-rust
+    depends_on:
+      - validator
+    command: |
+      bash -c "
+        devmode-engine-rust -v --connect tcp://validator:5050
+      "
+    stop_signal: SIGKILL
