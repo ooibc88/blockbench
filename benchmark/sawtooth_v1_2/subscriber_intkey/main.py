@@ -8,10 +8,11 @@ from subscriber_intkey.subscriber import Subscriber
 from aiohttp import web
 
 from subscriber_intkey.route_handler import RouteHandler
+from subscriber_intkey.event_handling import EventHandler
 from zmq.asyncio import ZMQEventLoop
 
-from subscriber_intkey.event_handling import get_events_handler
-
+#from subscriber_intkey.event_handling import get_events_handler
+from subscriber_intkey.blockchain_data import BlockchainData
 LOGGER = logging.getLogger(__name__)
 
 
@@ -52,7 +53,8 @@ def init_logger(level):
 async def do_subscribe(opts):
     LOGGER.info('Starting subscriber...')
     subscriber = Subscriber(opts.connect)
-    subscriber.add_handler(get_events_handler())
+    eventHandler = EventHandler.getInstance()
+    subscriber.add_handler(eventHandler.get_events_handler())
     await subscriber.listen_to_event()
 
 
@@ -85,8 +87,6 @@ def main():
         sys.exit(1)
     loop = asyncio.get_event_loop()
     try:
-
-        # asyncio.ensure_future(start_rest_api(host, port, opts))
         asyncio.ensure_future(do_subscribe(opts))
         start_rest_api(host, port, opts, loop)
         loop.run_forever()
