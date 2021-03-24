@@ -39,12 +39,9 @@ class RouteHandler(object):
         value = args[1]
         response = self._client.set(name, value)
         end = time.time() - start
-        LOGGER.warning("getting status")
-        LOGGER.warning(yaml.safe_load(response))
-        link = yaml.safe_load(response)['link']
-        batchID = link.split("=")[1]
-        LOGGER.warning(link)
-        res = {"batchID": batchID, "latency_sec": end}
+        # link = yaml.safe_load(response)['link']
+        # batchID = link.split("=")[1]
+        res = {"transactionID": response, "latency_sec": end}
         return res
 
     async def delete_record(self, arg):

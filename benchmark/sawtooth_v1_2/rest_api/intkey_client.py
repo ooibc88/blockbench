@@ -180,6 +180,7 @@ class IntkeyClient:
         )
 
         batch_list = self._create_batch_list([transaction])
+
         batch_id = batch_list.batches[0].header_signature
 
         if wait and wait > 0:
@@ -197,14 +198,16 @@ class IntkeyClient:
                 wait_time = time.time() - start_time
 
                 if status != 'PENDING':
-                    return response
+                    return signature
 
-            return response
+            return signature
 
-        return self._send_request(
+        self._send_request(
             "batches", batch_list.SerializeToString(),
             'application/octet-stream',
         )
+
+        return signature
 
     def _create_batch_list(self, transactions):
         transaction_signatures = [t.header_signature for t in transactions]
