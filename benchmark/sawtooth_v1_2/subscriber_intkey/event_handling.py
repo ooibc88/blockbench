@@ -9,25 +9,25 @@ LOGGER = logging.getLogger(__name__)
 
 
 class EventHandler(object):
-    __instance = None
-
-    @staticmethod
-    def getInstance(rest_api_url=None):
-        """ Static access method. """
-        if (EventHandler.__instance is None) and (rest_api_url is None):
-            raise Exception("you must pass rest api url")
-        if EventHandler.__instance is None:
-            EventHandler(rest_api_url)
-        return EventHandler.__instance
+    # __instance = None
+    #
+    # @staticmethod
+    # def getInstance(rest_api_url=None):
+    #     """ Static access method. """
+    #     if (EventHandler.__instance is None) and (rest_api_url is None):
+    #         raise Exception("you must pass rest api url")
+    #     if EventHandler.__instance is None:
+    #         EventHandler(rest_api_url)
+    #     return EventHandler.__instance
 
     def __init__(self, rest_api_url):
-        """ Virtually private constructor. """
-        if EventHandler.__instance is not None:
-            raise Exception("This class is a singleton!")
-        else:
-            self._blockchain_data = BlockchainData()
-            self._url = rest_api_url
-            EventHandler.__instance = self
+        # """ Virtually private constructor. """
+        # if EventHandler.__instance is not None:
+        #     raise Exception("This class is a singleton!")
+        # else:
+        self._blockchain_data = BlockchainData.getInstance()
+        self._url = rest_api_url
+        #EventHandler.__instance = self
 
     # def __init__(self):
     #     self._blockchain_data = BlockchainData()
@@ -41,7 +41,7 @@ class EventHandler(object):
             self._blockchain_data.set_height(block_num)
             # get transactions id of the new block
             transactionIDS = self._get_txnts(block_id)
-            LOGGER.warning(transactionIDS)
+            self._blockchain_data.add_blkTxns(block_num, transactionIDS)
 
 
     def get_height(self):

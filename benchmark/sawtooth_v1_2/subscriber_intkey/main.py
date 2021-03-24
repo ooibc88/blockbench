@@ -8,11 +8,10 @@ from subscriber_intkey.subscriber import Subscriber
 from aiohttp import web
 
 from subscriber_intkey.route_handler import RouteHandler
-from subscriber_intkey.event_handling import EventHandler
 from zmq.asyncio import ZMQEventLoop
 
-#from subscriber_intkey.event_handling import get_events_handler
-from subscriber_intkey.blockchain_data import BlockchainData
+from subscriber_intkey.event_handling import EventHandler
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -59,7 +58,7 @@ def init_logger(level):
 async def do_subscribe(opts):
     LOGGER.info('Starting subscriber...')
     subscriber = Subscriber(opts.connect)
-    eventHandler = EventHandler.getInstance(opts.url)
+    eventHandler = EventHandler(opts.url)
     subscriber.add_handler(eventHandler.get_events_handler())
     await subscriber.listen_to_event()
 
@@ -67,9 +66,10 @@ async def do_subscribe(opts):
 def start_rest_api(host, port, opts, loop):
     # start REST API
     app = web.Application(loop=loop)
-    handler = RouteHandler(opts.url)
+    handler = RouteHandler()
 
     app.router.add_get('/height', handler.get_height)
+    app.router.add_get('/block', handler.get_block_transactions)
 
     LOGGER.warning('Starting REST API on %s:%s', host, port)
     web.run_app(
@@ -77,7 +77,6 @@ def start_rest_api(host, port, opts, loop):
         host=host,
         port=port,
         access_log=LOGGER)
-    LOGGER.warning("out")
 
 
 def main():
