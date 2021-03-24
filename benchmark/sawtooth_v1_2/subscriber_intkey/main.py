@@ -36,6 +36,12 @@ def parse_args(args):
         help='The url of the validator to subscribe to',
         default='tcp://localhost:4004')
 
+    parser.add_argument(
+        '--url',
+        type=str,
+        help='specify URL of REST API',
+        default='http://127.0.0.1:8008')
+
     return parser.parse_args(args)
 
 
@@ -53,7 +59,7 @@ def init_logger(level):
 async def do_subscribe(opts):
     LOGGER.info('Starting subscriber...')
     subscriber = Subscriber(opts.connect)
-    eventHandler = EventHandler.getInstance()
+    eventHandler = EventHandler.getInstance(opts.url)
     subscriber.add_handler(eventHandler.get_events_handler())
     await subscriber.listen_to_event()
 
@@ -61,7 +67,7 @@ async def do_subscribe(opts):
 def start_rest_api(host, port, opts, loop):
     # start REST API
     app = web.Application(loop=loop)
-    handler = RouteHandler()
+    handler = RouteHandler(opts.url)
 
     app.router.add_get('/height', handler.get_height)
 

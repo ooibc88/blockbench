@@ -73,6 +73,7 @@ services:
       subscribe \
           -C tcp://validator:4004 \
           -b intkey-subscriber:9033 \
+          --url rest-api:8008 \
           -vv
       "
 
