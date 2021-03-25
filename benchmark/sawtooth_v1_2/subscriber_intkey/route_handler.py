@@ -12,19 +12,23 @@ class RouteHandler(object):
 
     def get_height(self, request):
         height = self.blockchain_data.get_height()
-        return json_response({"height": height})
+        return json_response({"status": "0", "height": str(height)})
 
     async def get_block_transactions(self, request):
-        LOGGER.warning(request)
-        body = await decode_request(request)
-        required_fields = ['num']
-        validate_fields(required_fields, body)
-        blknum = body.get('num')
+
+        if request.rel_url.query['num']is None:
+            raise ApiBadRequest(
+                "missing num query parameters")
+        try:
+            blknum = int(request.rel_url.query['num'])
+        except Exception:
+            raise ApiBadRequest(
+                "block number must be int")
         transactions = self.blockchain_data.get_transactions(blknum)
         if transactions is None:
             raise ApiBadRequest(
                 "block num '{}' does not exist ".format(blknum))
-        return json_response({"transactions": transactions})
+        return json_response({"status": "0", "txns": transactions})
 
 
 async def decode_request(request):

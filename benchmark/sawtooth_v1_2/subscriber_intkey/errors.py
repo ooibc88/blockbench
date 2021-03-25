@@ -42,7 +42,8 @@ class _ApiError(HTTPError):
         super().__init__(
             content_type='application/json',
             text=json.dumps(
-                {'error': self.message},
+                {'message': self.message,
+                 "status": "1"},
                 indent=2,
                 separators=(',', ': '),
                 sort_keys=True))

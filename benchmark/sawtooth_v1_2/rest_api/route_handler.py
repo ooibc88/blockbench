@@ -24,7 +24,9 @@ class RouteHandler(object):
         validate_fields(required_fields, body)
         function = body.get('function')
         args = body.get("args")
-        if function == "write":
+        if function == "Write":
+            LOGGER.warning("######")
+            LOGGER.warning(args)
             res = await self.create_record(args)
             return json_response(res)
         else:
@@ -36,12 +38,17 @@ class RouteHandler(object):
         if len(args) != 2:
             raise ApiBadRequest("write function must invoke two parameters")
         name = args[0]
-        value = args[1]
+        try:
+            value = int(args[1])
+        except ValueError:
+            raise ApiBadRequest("value must be int")
+        LOGGER.warning("## val ##")
+        LOGGER.warning(value)
         response = self._client.set(name, value)
         end = time.time() - start
         # link = yaml.safe_load(response)['link']
         # batchID = link.split("=")[1]
-        res = {"transactionID": response, "latency_sec": end}
+        res = {"txnID": response, "latency_sec": end}
         return res
 
     async def delete_record(self, arg):

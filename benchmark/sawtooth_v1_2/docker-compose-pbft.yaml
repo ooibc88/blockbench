@@ -126,6 +126,29 @@ services:
     command: intkey-tp-python -C tcp://validator-4:4004
     stop_signal: SIGKILL
 
+# --------------- block server subscriber ----------------#
+  intkey-subscriber:
+    build:
+      context: .
+      dockerfile: subscriber_intkey/Dockerfile
+    image: intkey-subscriber
+    container_name: intkey-subscriber
+    volumes:
+      - ./:/project/sawtooth_sdk_python
+    ports:
+      - '9033:9033'
+    depends_on:
+      - validator-0
+    command: |
+      sh -c "
+      chmod +x /project/sawtooth_sdk_python/bin/subscribe
+      subscribe \
+          -C tcp://validator-0:4004 \
+          -b intkey-subscriber:9033 \
+          --url rest-api-0:8008 \
+          -vv
+      "
+
 # --------------- costume rest api-------------------------
   intkey-rest-api:
     build:
@@ -134,13 +157,13 @@ services:
     image: intkey-rest-api
     container_name: intkey-rest-api
     volumes:
-      - ./:/project/sawtooth-sdk-python
+      - ./:/project/sawtooth_sdk_python
     ports:
       - '8000:8000'
 
     command: |
       bash -c "
-      chmod +x /project/sawtooth-sdk-python/bin/rest-api
+      chmod +x /project/sawtooth_sdk_python/bin/rest-api
       rest-api \
           -b intkey-rest-api:8000 \
           --keyfile /root/.sawtooth/keys/root.priv \

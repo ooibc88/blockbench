@@ -24,7 +24,7 @@ class BlockchainData(object):
             BlockchainData.__instance = self
 
     def get_height(self):
-        return self._height
+        return self._height + 1
 
     def set_height(self, height):
         self._height = height
