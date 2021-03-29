@@ -38,16 +38,19 @@ string ParseCommandLine(int argc, const char *argv[], utils::Properties &props);
 utils::Timer<double> stat_timer;
 
 int DelegateClient(ycsbc::DB *db, ycsbc::CoreWorkload *wl, const int num_ops,
-                   bool is_loading, const int txrate) {
+                   bool is_loading, const int txrate,string dbname) {
   db->Init();
   ycsbc::Client client(*db, *wl);
   int oks = 0;
   double tx_sleep_time = 1.0 / txrate;
   for (int i = 0; i < num_ops; ++i) {
-    if (is_loading) {
+    if (is_loading && dbname !="sawtooth-v1.2") {
       oks += client.DoInsert();
       utils::sleep(tx_sleep_time);
-    } else {
+    } else if (dbname =="sawtooth-v1.2"){
+      oks += client.DoInsertSawtooth();
+      utils::sleep(tx_sleep_time);
+    }else {
       oks += client.DoTransaction();
     }
   }
@@ -90,13 +93,23 @@ int StatusThread(string dbname, ycsbc::DB *db, double interval,
         string s = (dbname == "ethereum" || dbname == "parity")
                        ? tmp.substr(1, tmp.length() - 2)  // get rid of ""
                        : tmp;
+
+        size_t found = s.find("\"");
+        if (found != string::npos){
+        // remove "
+         s.erase(0, 1);
+        }
+        
         if (pendingtx.find(s) != pendingtx.end()) {
           txcount++;
           latency += (block_time - pendingtx[s]);
           // then remove
           pendingtx.erase(s);
         }
-      }
+      
+        }
+
+       
       txlock.unlock();
     }
     cout << "In the last " << interval << "s, tx count = " << txcount
@@ -145,7 +158,7 @@ int main(const int argc, const char *argv[]) {
   int total_ops = stoi(props[ycsbc::CoreWorkload::RECORD_COUNT_PROPERTY]);
   for (int i = 0; i < num_threads; ++i) {
     actual_ops.emplace_back(async(launch::async, DelegateClient, db, &wl,
-                                  total_ops / num_threads, true, txrate));
+                                  total_ops / num_threads, true, txrate, props["dbname"]));
   }
 
   actual_ops.emplace_back(async(launch::async, StatusThread, props["dbname"],

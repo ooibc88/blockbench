@@ -13,14 +13,16 @@
 #include "db.h"
 #include "core_workload.h"
 #include "utils.h"
-
+using namespace std;
 namespace ycsbc {
 
 class Client {
  public:
   Client(DB &db, CoreWorkload &wl) : db_(db), workload_(wl) { }
-  
+  int oldkey = 0;
   virtual bool DoInsert();
+
+  virtual bool DoInsertSawtooth();
   virtual bool DoTransaction();
   
   virtual ~Client() { }
@@ -41,6 +43,16 @@ inline bool Client::DoInsert() {
   std::string key = workload_.NextSequenceKey();
   std::vector<DB::KVPair> pairs;
   workload_.BuildValues(pairs);
+  return (db_.Insert(workload_.NextTable(), key, pairs) == DB::kOK);
+}
+
+inline bool Client::DoInsertSawtooth() {
+
+  std::string key = workload_.NextSequenceKey();
+  std::vector<DB::KVPair> pairs;
+  workload_.BuildValuesSawtooth(pairs);
+  key= to_string(oldkey + 1);
+  oldkey ++;
   return (db_.Insert(workload_.NextTable(), key, pairs) == DB::kOK);
 }
 

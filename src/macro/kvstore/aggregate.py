@@ -10,13 +10,13 @@ with open(sys.argv[2]) as f:
         if line.find('latency') != -1:
             linenum += 1
 
-print "line number: ", linenum
+print("line number: ", linenum )
 
 latency_arr = [float(0)]*linenum
 throughput_arr = [float(0)]*linenum
 
 for i in range(0, filenum):
-    print 2+i, sys.argv[2+i]
+    print(2+i, sys.argv[2+i])
     with open(sys.argv[2+i]) as f:
         lines = f.read().splitlines()
     j = 0
@@ -37,4 +37,4 @@ for i in range(0, filenum):
                 j = j + 1
 
 for la, tp in zip(latency_arr, throughput_arr):
-    print la/filenum, tp
+    print(la/filenum, tp)

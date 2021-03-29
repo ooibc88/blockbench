@@ -140,6 +140,7 @@ class CoreWorkload {
   virtual void Init(const utils::Properties &p);
   
   virtual void BuildValues(std::vector<ycsbc::DB::KVPair> &values);
+  virtual void BuildValuesSawtooth(std::vector<ycsbc::DB::KVPair> &values);
   virtual void BuildUpdate(std::vector<ycsbc::DB::KVPair> &update);
   
   virtual std::string NextTable() { return table_name_; }

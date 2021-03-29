@@ -17,7 +17,7 @@
 
 using ycsbc::CoreWorkload;
 using std::string;
-
+using namespace std;
 const string CoreWorkload::TABLENAME_PROPERTY = "table";
 const string CoreWorkload::TABLENAME_DEFAULT = "usertable";
 
@@ -187,6 +187,17 @@ void CoreWorkload::BuildValues(std::vector<ycsbc::DB::KVPair> &values) {
     ycsbc::DB::KVPair pair;
     pair.first.append("field").append(std::to_string(i));
     pair.second.append(field_len_generator_->Next(), utils::RandomPrintChar());
+    values.push_back(pair);
+  }
+}
+
+void CoreWorkload::BuildValuesSawtooth(std::vector<ycsbc::DB::KVPair> &values) {
+
+  for (int i = 0; i < field_count_; ++i) {
+    ycsbc::DB::KVPair pair;
+    // for sawtooth we have used intkey workload only integer value are allowed 
+    pair.first.append("1111").append(std::to_string(i));
+    pair.second.append("555");
     values.push_back(pair);
   }
 }

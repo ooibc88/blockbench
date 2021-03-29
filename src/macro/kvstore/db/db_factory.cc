@@ -12,6 +12,7 @@
 #include "db/evm_db.h"
 #include "db/fabric_db.h"
 #include "db/fabricv2_db.h"
+#include "db/sawtoothv1_db.h"
 
 using namespace std;
 using ycsbc::DB;
@@ -32,7 +33,14 @@ DB* DBFactory::CreateDB(utils::Properties& props) {
     string wl_name = props.GetProperty("workload", "donothing");
     return new FabricV2DB(endpoint, wl_name);
 
-  } else if (props["dbname"] == "fabric-v1.4") {
+  }else if (props["dbname"] == "sawtooth-v1.2") {
+
+    const string endpoint = props["endpoint"];
+    string wl_name = props.GetProperty("workload", "donothing");
+    return new SawtoothV1DB(endpoint, wl_name);
+
+  } 
+  else if (props["dbname"] == "fabric-v1.4") {
     const string endpoint = props["endpoint"];
     string wl_name = props.GetProperty("workload", "donothing");
     return new FabricDB(endpoint, wl_name);

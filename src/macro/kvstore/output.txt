@@ -1,0 +1,28 @@
+Make sure to deploy YCSB chaincode based on README.md. 
+height 1
+Current TIP = 1
+height 1
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 2
+polled block 1 : 2 txs 
+In the last 2s, tx count = 2 latency = 3.71769 outstanding request = 7
+height 4
+polled block 2 : 1 txs 
+polled block 3 : 4 txs 
+In the last 2s, tx count = 5 latency = 15.2948 outstanding request = 11
+height 6
+polled block 4 : 1 txs 
+polled block 5 : 4 txs 
+In the last 2s, tx count = 5 latency = 19.5906 outstanding request = 8
+height 8
+polled block 6 : 1 txs 
+polled block 7 : 4 txs 
+In the last 2s, tx count = 5 latency = 23.988 outstanding request = 3
+height 10
+polled block 8 : 1 txs 
+polled block 9 : 2 txs 
+In the last 2s, tx count = 3 latency = 17.6605 outstanding request = 0
+height 10
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 10
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
