@@ -93,7 +93,7 @@ For the default configuration and assume helper services are run in the same mac
 ```
 
 The output of this command should be similar to this:
-![pbft](img/output.png)
+![pbft](img/output-kvstore.png)
 
 Note: In order to change the number of total send requests change `recordcount` variable in `workload\workloada.spec` file.
 
