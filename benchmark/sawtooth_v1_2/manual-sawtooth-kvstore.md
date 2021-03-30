@@ -11,7 +11,7 @@ This steps where tested using the following infrastructure:
 
 ## Prerequisites
 This application development environment requires the latest version of Docker Engine and Docker Compose.
-
+## Running the project
 
 <details><summary>Setting up hyperledger Sawtooth 1.2.4 network </summary>
 
