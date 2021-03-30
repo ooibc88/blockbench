@@ -5,16 +5,17 @@ import re
 
 
 def main():
-    if len(sys.argv) != 2 or sys.argv[1] == '-h':
-        print("Usage: %s OutputFileName" % sys.argv[0])
+    if len(sys.argv) != 3 or sys.argv[1] == '-h':
+        print("Usage: %s InputFileName OutputFileName" % sys.argv[0])
         print("Statistics (.cv file) for each workload " + \
-              "will be written to the workload directory.")
+              "will be written to the target fime.")
         sys.exit(-1)
 
     path = sys.argv[1]
+    target = sys.argv[2]
 
     with open(path) as file_in:
-        with open("workloads/workloada.csv", "w") as f:
+        with open(target, "w") as f:
             f.write("txt_count,latency,outstanding\n")
             for line in file_in:
                 txt_count = re.search('tx count = (.+?) ', line)
