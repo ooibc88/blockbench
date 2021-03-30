@@ -1,6 +1,6 @@
 <a name="top"></a>
 
-# Manuel for using KVSTORE with hyperledger Sawtooth as a backend
+# Manual for using KVSTORE with hyperledger Sawtooth as a backend
 
 ## Overview
 
