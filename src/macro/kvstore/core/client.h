@@ -22,7 +22,7 @@ class Client {
   int oldkey = 0;
   virtual bool DoInsert();
 
-  virtual bool DoInsertSawtooth();
+  virtual bool DoInsertIntegerVal();
   virtual bool DoTransaction();
   
   virtual ~Client() { }
@@ -46,7 +46,7 @@ inline bool Client::DoInsert() {
   return (db_.Insert(workload_.NextTable(), key, pairs) == DB::kOK);
 }
 
-inline bool Client::DoInsertSawtooth() {
+inline bool Client::DoInsertIntegerVal() {
 
   std::string key = workload_.NextSequenceKey();
   std::vector<DB::KVPair> pairs;

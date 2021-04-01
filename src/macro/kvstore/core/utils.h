@@ -86,6 +86,8 @@ inline std::string Trim(const std::string &str) {
       [](int c){ return std::isspace(c); }).base());
 }
 
+
+
 } // utils
 
 #endif // YCSB_C_UTILS_H_

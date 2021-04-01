@@ -1,45 +1,8 @@
-./driver -db sawtooth-v1.2 -threads 1 -P workloads/workloada.spec -txrate 5 -endpoint  -wl ycsb -wt 20 2>&1 | tee output.txt
-Make sure to deploy YCSB chaincode based on README.md. 
-height 1
-Current TIP = 1
-height 1
-In the last 2s, tx count = 0 latency = 0 outstanding request = 0
-height 2
-polled block 1 : 4 txs 
-In the last 2s, tx count = 4 latency = 4.73725 outstanding request = 3
-height 4
-polled block 2 : 1 txs 
-polled block 3 : 5 txs 
-In the last 2s, tx count = 6 latency = 12.1769 outstanding request = 6
-height 6
-polled block 4 : 4 txs 
-polled block 5 : 5 txs 
-In the last 2s, tx count = 9 latency = 20.4484 outstanding request = 5
-height 8
-polled block 6 : 4 txs 
-polled block 7 : 1 txs 
-In the last 2s, tx count = 5 latency = 13.2742 outstanding request = 9
-height 9
-polled block 8 : 5 txs 
-In the last 2s, tx count = 5 latency = 17.4267 outstanding request = 13
-height 11
-polled block 9 : 4 txs 
-polled block 10 : 5 txs 
-In the last 2s, tx count = 9 latency = 34.8523 outstanding request = 12
-height 12
-polled block 11 : 5 txs 
-In the last 2s, tx count = 5 latency = 21.3111 outstanding request = 7
-height 14
-polled block 12 : 4 txs 
-polled block 13 : 1 txs 
-In the last 2s, tx count = 5 latency = 25.599 outstanding request = 2
-height 15
-polled block 14 : 2 txs 
-In the last 2s, tx count = 2 latency = 16.4862 outstanding request = 0
-height 15
-In the last 2s, tx count = 0 latency = 0 outstanding request = 0
-height 15
-In the last 2s, tx count = 0 latency = 0 outstanding request = 0
-height 15
-In the last 2s, tx count = 0 latency = 0 outstanding request = 0
-echo ./driver -db sawtooth-v1.2 -threads 1 -P workloads/workloada.spec -txrate 5 -endpoint -wl ycsb -wt 20
+Usage: ./driver [options]
+Options:
+  -threads n: execute using n threads (default: 1)
+  -wt deploytime: waiting time in second before start to submit transactions for deployment the smart contract/chaincode
+  -db dbname: specify the name of the DB to use (e.g., hyperledger)
+  -wl workload: specify the type of smart contract to run (choices: ycsb, donothing, smallbank. By default: donothing)
+  -P propertyfile: load properties from the given file. Multiple files can
+                   be specified, and will be processed in the order specified

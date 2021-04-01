@@ -38,17 +38,17 @@ string ParseCommandLine(int argc, const char *argv[], utils::Properties &props);
 utils::Timer<double> stat_timer;
 
 int DelegateClient(ycsbc::DB *db, ycsbc::CoreWorkload *wl, const int num_ops,
-                   bool is_loading, const int txrate,string dbname) {
+                   bool is_loading, const int txrate,bool isint) {
   db->Init();
   ycsbc::Client client(*db, *wl);
   int oks = 0;
   double tx_sleep_time = 1.0 / txrate;
   for (int i = 0; i < num_ops; ++i) {
-    if (is_loading && dbname !="sawtooth-v1.2") {
+    if (is_loading && !isint) {
       oks += client.DoInsert();
       utils::sleep(tx_sleep_time);
-    } else if (dbname =="sawtooth-v1.2"){
-      oks += client.DoInsertSawtooth();
+    } else if (isint){
+      oks += client.DoInsertIntegerVal();
       utils::sleep(tx_sleep_time);
     }else {
       oks += client.DoTransaction();
@@ -156,9 +156,11 @@ int main(const int argc, const char *argv[]) {
   // Loads data
   vector<future<int>> actual_ops;
   int total_ops = stoi(props[ycsbc::CoreWorkload::RECORD_COUNT_PROPERTY]);
+  bool isint = utils::StrToBool(props.GetProperty("isint", "0"));
+  cout << "isint " << isint << endl;
   for (int i = 0; i < num_threads; ++i) {
     actual_ops.emplace_back(async(launch::async, DelegateClient, db, &wl,
-                                  total_ops / num_threads, true, txrate, props["dbname"]));
+                                  total_ops / num_threads, true, txrate,  isint ));
   }
 
   actual_ops.emplace_back(async(launch::async, StatusThread, props["dbname"],
@@ -241,7 +243,17 @@ string ParseCommandLine(int argc, const char *argv[],
       }
       input.close();
       argindex++;
-    } else {
+    }else if (strcmp(argv[argindex], "-isint") == 0) {
+      cout << "in intkey"  << endl;
+      argindex++;
+      if (argindex >= argc) {
+        cout << argindex << argv << endl;
+        UsageMessage(argv[0]);
+        exit(0);
+      }
+      props.SetProperty("isint", argv[argindex]);
+      argindex++;
+    }  else {
       cout << "Unknown option '" << argv[argindex] << "'" << endl;
       exit(0);
     }
