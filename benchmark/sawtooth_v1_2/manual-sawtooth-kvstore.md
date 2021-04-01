@@ -70,6 +70,7 @@ sudo apt-get install libcurl4-gnutls-dev
 2. Install restclient-cpp dependencies (we have used 0.5.2 realase version)
 
 There is three mothodes to install restclient-cpp: 
+
  2.1. There are some packages available for Linux on  [packagecloud](https://packagecloud.io/mrtazz/restclient-cpp). And for OSX you can get it from the mrtazz/oss homebrew tap:
 
 ```
