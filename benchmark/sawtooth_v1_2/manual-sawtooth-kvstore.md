@@ -61,18 +61,33 @@ docker ps
 1. Install dependencies:
 
 ```
-sudo apt-get install build-essential2sudo apt-get
-install libtool3sudo apt-get install autoconf4sudo
-apt-get install libcurl4-gnutls-dev
+sudo apt-get install build-essential2
+sudo apt-get install libtool3
+sudo apt-get install autoconf4
+sudo apt-get install libcurl4-gnutls-dev
 ```
 
-2. Install restclient-cpp dependencies
+2. Install restclient-cpp dependencies (we have used 0.5.2 realase version)
 
+There is three mothodes to install restclient-cpp: 
+ 2.1. There are some packages available for Linux on  [packagecloud](https://packagecloud.io/mrtazz/restclient-cpp). And for OSX you can get it from the mrtazz/oss homebrew tap:
+
+```
+brew tap mrtazz/oss
+brew install restclient-cpp
+```
+
+2.2. Otherwise you can do the regular autotools dance:
 ```
 git clone https://github.com/mrtazz/restclient-cpp.git
-cd restclient-cpp/ && ./autogen.sh && ./configure && sudo make install
+cd restclient-cpp
+./autogen.sh
+./configure
+sudo make install
 cd ..
 ```
+
+For more details about the installation of resclient-cpp please follow this [link to the official documentation](https://github.com/mrtazz/restclient-cpp#installation)   
 
 3.  install BLOCKBENCH kvstore executable
 ```
