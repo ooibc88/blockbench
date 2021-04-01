@@ -105,8 +105,9 @@ For the default configuration and assume helper services are run in the same mac
 
  5. Launch the client driver processes. Each client thread will randomly contact one of the transaction web service to invoke a transaction or make a query. Usage example:
 ```
- ./driver -db sawtooth-v1.2 -threads 1 -P workloads/workloada.spec -txrate 5 -endpoint ${endpoint} -wl ycsb -wt 20 2>&1 | tee output.txt
+ ./driver -db sawtooth-v1.2 -threads 1 -P workloads/workloada.spec -txrate 5 -endpoint ${endpoint} -wl ycsb -wt 20 -isint 1 2>&1 | tee output.txt
 ```
+Note -isint option is used to set the value of the workload to int because sawtooth intkey family accept only integer values. 
 
 The output of this command should be similar to this:
 ![pbft](img/output-kvstore.png)
