@@ -119,7 +119,7 @@ int get_tip_block_number(const std::string &serviceAddr) {
   } else {
     std::string height = get_json_field(r, "height");
      std::cout << "height " << height <<std::endl;
-    return atoi(height.c_str());
+    return atoi(height.c_str())-1;
   }
 }
 

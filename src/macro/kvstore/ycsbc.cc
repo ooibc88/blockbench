@@ -82,7 +82,8 @@ int StatusThread(string dbname, ycsbc::DB *db, double interval,
     if (tip == -1)  // fail
       utils::sleep(interval);
 
-    while (cur_block_height + confirm_duration <= tip) {
+     
+    while (cur_block_height + confirm_duration <= tip + 1 ) {
       vector<string> txs = db->PollTxn(cur_block_height);
       cout << "polled block " << cur_block_height << " : " << txs.size()
            << " txs " << endl;
@@ -157,7 +158,6 @@ int main(const int argc, const char *argv[]) {
   vector<future<int>> actual_ops;
   int total_ops = stoi(props[ycsbc::CoreWorkload::RECORD_COUNT_PROPERTY]);
   bool isint = utils::StrToBool(props.GetProperty("isint", "0"));
-  cout << "isint " << isint << endl;
   for (int i = 0; i < num_threads; ++i) {
     actual_ops.emplace_back(async(launch::async, DelegateClient, db, &wl,
                                   total_ops / num_threads, true, txrate,  isint ));
