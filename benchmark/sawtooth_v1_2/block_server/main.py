@@ -1,16 +1,10 @@
 import argparse
-import asyncio
 import logging
 import sys
-import threading
 
-from subscriber_intkey.subscriber import Subscriber
-from aiohttp import web
-
-from subscriber_intkey.route_handler import RouteHandler
-from zmq.asyncio import ZMQEventLoop
-from subscriber_intkey.databaseImp import DatabaseImp
-from subscriber_intkey.event_handling import EventHandler
+from block_server.subscriber import Subscriber
+from block_server.databaseImp import DatabaseImp
+from block_server.event_handling import EventHandler
 
 LOGGER = logging.getLogger(__name__)
 
@@ -55,28 +49,15 @@ def init_logger(level):
         logger.setLevel(logging.WARN)
 
 
-async def do_subscribe(opts):
-    LOGGER.info('Starting subscriber...')
+def do_subscribe(opts):
+    LOGGER.info('Starting block server...')
     subscriber = Subscriber(opts.connect)
     eventHandler = EventHandler(opts.url)
     subscriber.add_handler(eventHandler.get_events_handler())
-    await subscriber.listen_to_event()
+    subscriber.listen_to_event()
 
 
-def start_rest_api(host, port, opts, loop):
-    # start REST API
-    app = web.Application(loop=loop)
-    handler = RouteHandler()
 
-    app.router.add_get('/height', handler.get_height)
-    app.router.add_get('/block', handler.get_block_transactions)
-
-    LOGGER.warning('Starting REST API on %s:%s', host, port)
-    web.run_app(
-        app,
-        host=host,
-        port=port,
-        access_log=LOGGER)
 
 
 def main():
@@ -90,21 +71,14 @@ def main():
         print("Unable to parse binding {}: Must be in the format"
               " host:port".format(opts.bind))
         sys.exit(1)
-    loop = asyncio.get_event_loop()
     try:
         LOGGER.warning("## initialize db ##")
         DatabaseImp.initialize()
-        #do_subscribe(opts)
-        asyncio.ensure_future(do_subscribe(opts))
-        #start_rest_api(host, port, opts, loop)
-        loop.run_forever()
+        do_subscribe(opts)
 
 
     except KeyboardInterrupt:
         pass
-    finally:
-        print("Closing Loop")
-        loop.close()
 
 
 main()

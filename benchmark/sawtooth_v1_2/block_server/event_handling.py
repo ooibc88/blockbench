@@ -2,36 +2,16 @@ import logging
 
 import requests
 import yaml
-from subscriber_intkey.blockchain_data import BlockchainData
-from subscriber_intkey.databaseImp import DatabaseImp
+from block_server.databaseImp import DatabaseImp
 import time
 
 LOGGER = logging.getLogger(__name__)
 
 
 class EventHandler(object):
-    # __instance = None
-    #
-    # @staticmethod
-    # def getInstance(rest_api_url=None):
-    #     """ Static access method. """
-    #     if (EventHandler.__instance is None) and (rest_api_url is None):
-    #         raise Exception("you must pass rest api url")
-    #     if EventHandler.__instance is None:
-    #         EventHandler(rest_api_url)
-    #     return EventHandler.__instance
 
     def __init__(self, rest_api_url):
-        # """ Virtually private constructor. """
-        # if EventHandler.__instance is not None:
-        #     raise Exception("This class is a singleton!")
-        # else:
-        self._blockchain_data = BlockchainData.getInstance()
         self._url = rest_api_url
-        #EventHandler.__instance = self
-
-    # def __init__(self):
-    #     self._blockchain_data = BlockchainData()
 
     def get_events_handler(self):
         return lambda events: self._handle_events(events)
@@ -39,16 +19,12 @@ class EventHandler(object):
     def _handle_events(self, events):
         block_num, block_id = self._parse_new_block(events)
         if block_num is not None:
-            #self._blockchain_data.set_height(block_num)
             DatabaseImp.insert("height", {"block_num": block_num})
             # get transactions id of the new block
             transactionIDS = self._get_txnts(block_id)
-            #DatabaseImp.insert("blkTxns", {"block_num": block_num, "transactions": transactionIDS})
-            #self._blockchain_data.add_blkTxns(block_num, transactionIDS)
-
-
+            DatabaseImp.insert("blkTxns", {"block_num": block_num, "transactions": transactionIDS})
     def get_height(self):
-        return self._blockchain_data.get_height()
+        pass
 
     def _parse_new_block(self, events):
         try:

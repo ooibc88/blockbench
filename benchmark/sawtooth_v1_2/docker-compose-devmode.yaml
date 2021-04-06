@@ -136,9 +136,6 @@ services:
       "
     stop_signal: SIGKILL
 
-
-
-
   devmode-rust:
     image: hyperledger/sawtooth-devmode-engine-rust:nightly
     container_name: sawtooth-devmode-engine-rust
@@ -149,3 +146,28 @@ services:
         devmode-engine-rust -v --connect tcp://validator:5050
       "
     stop_signal: SIGKILL
+
+
+  bb:
+    image: mongo:3-xenial
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    restart: always
+    ports:
+      - 27017:27017
+
+  bbmanager:
+    image: mongo-express
+    links:
+      - bb
+    ports:
+      - 8081:8081
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_SERVER: bb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+
+
+
