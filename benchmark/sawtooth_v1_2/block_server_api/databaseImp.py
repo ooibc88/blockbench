@@ -19,9 +19,8 @@ class DatabaseImp(object):
     @staticmethod
     def insert(collection, data):
         try:
-            LOGGER.warning("before insert ")
             DatabaseImp.DATABASE[collection].insert(data)
-            LOGGER.warning("after insert")
+
         except Exception as ex:
             LOGGER.warning(ex)
 
@@ -32,3 +31,16 @@ class DatabaseImp(object):
     @staticmethod
     def find_one(collection, query):
         return DatabaseImp.DATABASE[collection].find_one(query)
+
+    @staticmethod
+    def find_last_record(collection):
+        doc = None
+        try:
+            record = DatabaseImp.DATABASE[collection].find({}).sort("_id", -1).limit(1)
+        except Exception as ex:
+            LOGGER.warning(ex)
+        try:
+            doc = record.next()
+        except StopIteration:
+            return None
+        return doc

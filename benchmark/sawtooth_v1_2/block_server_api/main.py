@@ -4,13 +4,11 @@ import logging
 import sys
 import threading
 
-from subscriber_intkey.subscriber import Subscriber
 from aiohttp import web
 
-from subscriber_intkey.route_handler import RouteHandler
+from block_server_api.route_handler import RouteHandler
 from zmq.asyncio import ZMQEventLoop
-from subscriber_intkey.databaseImp import DatabaseImp
-from subscriber_intkey.event_handling import EventHandler
+from block_server_api.databaseImp import DatabaseImp
 
 LOGGER = logging.getLogger(__name__)
 
@@ -28,18 +26,8 @@ def parse_args(args):
     parser.add_argument(
         '-b', '--bind',
         help='identify host and port for api to run on',
-        default='block-txt-rest-api:8001')
+        default='block-server-rest-api:9001')
 
-    parser.add_argument(
-        '-C', '--connect',
-        help='The url of the validator to subscribe to',
-        default='tcp://localhost:4004')
-
-    parser.add_argument(
-        '--url',
-        type=str,
-        help='specify URL of REST API',
-        default='http://127.0.0.1:8008')
 
     return parser.parse_args(args)
 
@@ -54,13 +42,6 @@ def init_logger(level):
     else:
         logger.setLevel(logging.WARN)
 
-
-async def do_subscribe(opts):
-    LOGGER.info('Starting subscriber...')
-    subscriber = Subscriber(opts.connect)
-    eventHandler = EventHandler(opts.url)
-    subscriber.add_handler(eventHandler.get_events_handler())
-    await subscriber.listen_to_event()
 
 
 def start_rest_api(host, port, opts, loop):
@@ -80,7 +61,7 @@ def start_rest_api(host, port, opts, loop):
 
 
 def main():
-    LOGGER.warning("###########")
+    LOGGER.warning("## in api ##")
     opts = parse_args(sys.argv[1:])
     init_logger(opts.verbose)
     try:
@@ -90,14 +71,11 @@ def main():
         print("Unable to parse binding {}: Must be in the format"
               " host:port".format(opts.bind))
         sys.exit(1)
-    loop = asyncio.get_event_loop()
+    loop = ZMQEventLoop()
+    asyncio.set_event_loop(loop)
     try:
-        LOGGER.warning("## initialize db ##")
         DatabaseImp.initialize()
-        #do_subscribe(opts)
-        asyncio.ensure_future(do_subscribe(opts))
-        #start_rest_api(host, port, opts, loop)
-        loop.run_forever()
+        start_rest_api(host, port, opts, loop)
 
 
     except KeyboardInterrupt:

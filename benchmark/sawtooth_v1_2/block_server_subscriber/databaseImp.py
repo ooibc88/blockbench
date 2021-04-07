@@ -31,3 +31,11 @@ class DatabaseImp(object):
     @staticmethod
     def find_one(collection, query):
         return DatabaseImp.DATABASE[collection].find_one(query)
+
+    @staticmethod
+    def find_last_record(collection):
+        try:
+            record = DatabaseImp.DATABASE[collection].find({}).sort("_id", -1).limit(1)
+        except Exception as ex:
+            LOGGER.warning(ex)
+        return record.next()

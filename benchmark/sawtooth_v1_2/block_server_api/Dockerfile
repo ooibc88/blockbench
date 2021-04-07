@@ -47,19 +47,19 @@ RUN apt-get install -y -q \
 
 RUN pip3 install \
     cbor \
-    psycopg2-binary \
     colorlog \
     sawtooth-sdk \
     aiohttp \
     pymongo \
     aiopg
 
+RUN mkdir -p /var/log/sawtooth
 
 WORKDIR /project/sawtooth_sdk_python
 
 
 ENV PATH=$PATH:/project/sawtooth_sdk_python/bin
 
-EXPOSE 8000/tcp
+EXPOSE 9001/tcp
 
-CMD ['subscribe']
+CMD ['block-server-api']

@@ -1,22 +1,28 @@
 from json import JSONDecodeError
 import logging
 from aiohttp.web_response import json_response
-from subscriber_intkey.blockchain_data import BlockchainData
 
-from subscriber_intkey.errors import ApiBadRequest
+from block_server_api.databaseImp import DatabaseImp
+from block_server_api.errors import ApiBadRequest
+
 LOGGER = logging.getLogger(__name__)
+
 
 class RouteHandler(object):
     def __init__(self):
-        self.blockchain_data = BlockchainData.getInstance()
+        pass
 
     def get_height(self, request):
-        height = self.blockchain_data.get_height()
-        return json_response({"status": "0", "height": str(height)})
+        height = DatabaseImp.find_last_record("height")
+        field = 0
+        if height is not None:
+            field = height.get("height")
+
+        return json_response({"status": "0", "height": str(field)})
 
     async def get_block_transactions(self, request):
 
-        if request.rel_url.query['num']is None:
+        if request.rel_url.query['num'] is None:
             raise ApiBadRequest(
                 "missing num query parameters")
         try:
@@ -24,10 +30,11 @@ class RouteHandler(object):
         except Exception:
             raise ApiBadRequest(
                 "block number must be int")
-        transactions = self.blockchain_data.get_transactions(blknum)
-        if transactions is None:
+        blockTxs = DatabaseImp.find_one("blkTxns", {"block_num": blknum})
+        if blockTxs is None:
             raise ApiBadRequest(
                 "block num '{}' does not exist ".format(blknum))
+        transactions = blockTxs.get("transactions")
         return json_response({"status": "0", "txns": transactions})
 
 

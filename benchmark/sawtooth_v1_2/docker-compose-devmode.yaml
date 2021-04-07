@@ -55,25 +55,42 @@ services:
           --url rest-api:8008
       "
 
-  intkey-subscriber:
+  block-server-subscriber:
     build:
       context: .
-      dockerfile: subscriber_intkey/Dockerfile
-    image: intkey-subscriber
-    container_name: intkey-subscriber
+      dockerfile: block_server_subscriber/Dockerfile
+    image: block-server-subscriber
+    container_name: block-server-subscriber
     volumes:
        - ./:/project/sawtooth_sdk_python
     ports:
-      - '9033:9033'
+      - '9002:9002'
     depends_on:
       - validator
     command: |
       sh -c "
-      chmod +x /project/sawtooth_sdk_python/bin/subscribe
-      subscribe \
+      chmod +x /project/sawtooth_sdk_python/bin/block-server-subscriber
+      block-server-subscriber \
           -C tcp://validator:4004 \
-          -b intkey-subscriber:9033 \
           --url rest-api:8008 \
+          -vv
+      "
+
+  block-server-rest-api:
+    build:
+      context: .
+      dockerfile: block_server_api/Dockerfile
+    image: block-server-rest-api
+    container_name: block-server-rest-api
+    volumes:
+      - ./:/project/sawtooth_sdk_python
+    ports:
+      - '9001:9001'
+    command: |
+      sh -c "
+      chmod +x /project/sawtooth_sdk_python/bin/block-server-api
+      block-server-api \
+          -b block-server-rest-api:9001 \
           -vv
       "
 

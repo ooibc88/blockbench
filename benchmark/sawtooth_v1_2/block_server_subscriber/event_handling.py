@@ -2,7 +2,7 @@ import logging
 
 import requests
 import yaml
-from block_server.databaseImp import DatabaseImp
+from block_server_subscriber.databaseImp import DatabaseImp
 import time
 
 LOGGER = logging.getLogger(__name__)
@@ -19,12 +19,13 @@ class EventHandler(object):
     def _handle_events(self, events):
         block_num, block_id = self._parse_new_block(events)
         if block_num is not None:
-            DatabaseImp.insert("height", {"block_num": block_num})
+            DatabaseImp.insert("height", {"height": block_num})
             # get transactions id of the new block
             transactionIDS = self._get_txnts(block_id)
+            LOGGER.warning("insert from db")
             DatabaseImp.insert("blkTxns", {"block_num": block_num, "transactions": transactionIDS})
-    def get_height(self):
-        pass
+            output = DatabaseImp.find_last_record("height")
+
 
     def _parse_new_block(self, events):
         try:

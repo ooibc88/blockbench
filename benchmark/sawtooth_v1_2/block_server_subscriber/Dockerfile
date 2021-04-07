@@ -62,4 +62,4 @@ ENV PATH=$PATH:/project/sawtooth_sdk_python/bin
 
 EXPOSE 8000/tcp
 
-CMD ['subscribe']
+CMD ['block_server_subscriber']

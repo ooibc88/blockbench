@@ -2,9 +2,9 @@ import argparse
 import logging
 import sys
 
-from block_server.subscriber import Subscriber
-from block_server.databaseImp import DatabaseImp
-from block_server.event_handling import EventHandler
+from block_server_subscriber.subscriber import Subscriber
+from block_server_subscriber.databaseImp import DatabaseImp
+from block_server_subscriber.event_handling import EventHandler
 
 LOGGER = logging.getLogger(__name__)
 
@@ -18,11 +18,6 @@ def parse_args(args):
         action='count',
         default=0,
         help='Increase output sent to stderr')
-
-    parser.add_argument(
-        '-b', '--bind',
-        help='identify host and port for api to run on',
-        default='block-txt-rest-api:8001')
 
     parser.add_argument(
         '-C', '--connect',
@@ -57,25 +52,15 @@ def do_subscribe(opts):
     subscriber.listen_to_event()
 
 
-
-
-
 def main():
-    LOGGER.warning("###########")
+    LOGGER.warning("######in new subscriber#####")
     opts = parse_args(sys.argv[1:])
     init_logger(opts.verbose)
-    try:
-        host, port = opts.bind.split(":")
-        port = int(port)
-    except ValueError:
-        print("Unable to parse binding {}: Must be in the format"
-              " host:port".format(opts.bind))
-        sys.exit(1)
+
     try:
         LOGGER.warning("## initialize db ##")
         DatabaseImp.initialize()
         do_subscribe(opts)
-
 
     except KeyboardInterrupt:
         pass
