@@ -73,6 +73,7 @@ services:
       block-server-subscriber \
           -C tcp://validator:4004 \
           --url rest-api:8008 \
+          --uri  mongodb://root:password@bb:27017/ \
           -vv
       "
 
@@ -91,6 +92,7 @@ services:
       chmod +x /project/sawtooth_sdk_python/bin/block-server-api
       block-server-api \
           -b block-server-rest-api:9001 \
+          --uri  mongodb://root:password@bb:27017/ \
           -vv
       "
 

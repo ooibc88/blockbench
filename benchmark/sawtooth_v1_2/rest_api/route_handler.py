@@ -42,12 +42,9 @@ class RouteHandler(object):
             value = int(args[1])
         except ValueError:
             raise ApiBadRequest("value must be int")
-        LOGGER.warning("## val ##")
-        LOGGER.warning(value)
+
         response = self._client.set(name, value)
         end = time.time() - start
-        # link = yaml.safe_load(response)['link']
-        # batchID = link.split("=")[1]
         res = {"txnID": response, "latency_sec": end}
         return res
 

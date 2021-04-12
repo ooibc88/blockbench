@@ -183,8 +183,6 @@ class IntkeyClient:
 
         batch_id = batch_list.batches[0].header_signature
 
-        LOGGER.warning("####batch ID ###")
-        LOGGER.warning(batch_id)
 
         if wait and wait > 0:
             wait_time = 0

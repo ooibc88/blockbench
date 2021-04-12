@@ -17,7 +17,7 @@ class RouteHandler(object):
         field = 0
         if height is not None:
             field = height.get("height")
-
+        field += 1
         return json_response({"status": "0", "height": str(field)})
 
     async def get_block_transactions(self, request):
@@ -30,6 +30,7 @@ class RouteHandler(object):
         except Exception:
             raise ApiBadRequest(
                 "block number must be int")
+
         blockTxs = DatabaseImp.find_one("blkTxns", {"block_num": blknum})
         if blockTxs is None:
             raise ApiBadRequest(

@@ -12,6 +12,7 @@ class EventHandler(object):
 
     def __init__(self, rest_api_url):
         self._url = rest_api_url
+        self.retry = 2
 
     def get_events_handler(self):
         return lambda events: self._handle_events(events)
@@ -19,13 +20,23 @@ class EventHandler(object):
     def _handle_events(self, events):
         block_num, block_id = self._parse_new_block(events)
         if block_num is not None:
-            DatabaseImp.insert("height", {"height": block_num})
-            # get transactions id of the new block
-            transactionIDS = self._get_txnts(block_id)
-            LOGGER.warning("insert from db")
-            DatabaseImp.insert("blkTxns", {"block_num": block_num, "transactions": transactionIDS})
-            output = DatabaseImp.find_last_record("height")
+            try:
+                transactionIDS = self._get_txnts(block_id)
+            except Exception as ex:
+                if self.retry == 2:
+                    try:
+                        LOGGER.warning("SECOND TRY")
+                        transactionIDS = self._get_txnts(block_id)
+                    except Exception as ex:
+                        LOGGER.warning("second try exception:",ex)
 
+            try:
+                DatabaseImp.insert("blkTxns", {"block_num": block_num, "transactions": transactionIDS})
+                # get transactions id of the new block
+                DatabaseImp.insert("height", {"height": block_num})
+
+            except Exception as ex:
+                LOGGER.warning(ex)
 
     def _parse_new_block(self, events):
         try:
@@ -44,23 +55,21 @@ class EventHandler(object):
             transactionIDS = []
             result = self._send_request(
                 'blocks/{}'.format(block_id))
+            
             res = yaml.safe_load(result)
             for batch in res['data']['batches']:
                 for transactionId in batch['header']['transaction_ids']:
                     transactionIDS.append(transactionId)
             return transactionIDS
 
-        except BaseException as err:
+        except Exception as err:
             raise Exception(err) from err
 
-    def _send_request(self, suffix, data=None, content_type=None, name=None):
+    def _send_request(self, suffix, data=None, content_type=None):
         if self._url.startswith("http://"):
             url = "{}/{}".format(self._url, suffix)
         else:
             url = "http://{}/{}".format(self._url, suffix)
-
-        LOGGER.warning(url)
-
         headers = {}
 
         if content_type is not None:
@@ -72,8 +81,8 @@ class EventHandler(object):
             else:
                 result = requests.get(url, headers=headers)
 
-            if result.status_code == 404:
-                raise Exception("No such key: {}".format(name))
+            # if result.status_code == 404:
+            #     raise Exception("No such key: {}".format(name))
 
             if not result.ok:
                 raise Exception("Error {}: {}".format(

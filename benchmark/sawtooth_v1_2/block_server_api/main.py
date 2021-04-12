@@ -22,6 +22,11 @@ def parse_args(args):
         action='count',
         default=0,
         help='Increase output sent to stderr')
+    parser.add_argument(
+        '--uri',
+        type=str,
+        help='database URI',
+        default='mongodb://127.0.0.1:27017/')
 
     parser.add_argument(
         '-b', '--bind',
@@ -74,7 +79,7 @@ def main():
     loop = ZMQEventLoop()
     asyncio.set_event_loop(loop)
     try:
-        DatabaseImp.initialize()
+        DatabaseImp.initialize(opts.uri)
         start_rest_api(host, port, opts, loop)
 
 

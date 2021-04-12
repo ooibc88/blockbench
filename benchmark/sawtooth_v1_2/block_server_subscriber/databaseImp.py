@@ -5,14 +5,16 @@ LOGGER = logging.getLogger(__name__)
 
 
 class DatabaseImp(object):
-    URI = "mongodb://root:password@bb:27017/"
+    #URI = "mongodb://root:password@bb:27017/"
     DATABASE = None
 
     @staticmethod
-    def initialize():
+    def initialize(uri):
         try:
-            client = pymongo.MongoClient(DatabaseImp.URI)
+            client = pymongo.MongoClient(uri)
             DatabaseImp.DATABASE = client['blocks']
+            DatabaseImp.DATABASE["blkTxns"].insert({"block_num": 0, "transactions": []})
+            DatabaseImp.DATABASE["height"].insert({"height": 0})
         except Exception as ex:
             LOGGER.warning(ex)
 

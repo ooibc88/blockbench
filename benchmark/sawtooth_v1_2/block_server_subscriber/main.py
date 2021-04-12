@@ -30,6 +30,12 @@ def parse_args(args):
         help='specify URL of REST API',
         default='http://127.0.0.1:8008')
 
+    parser.add_argument(
+        '--uri',
+        type=str,
+        help='database URI',
+        default='mongodb://127.0.0.1:27017/')
+
     return parser.parse_args(args)
 
 
@@ -53,13 +59,12 @@ def do_subscribe(opts):
 
 
 def main():
-    LOGGER.warning("######in new subscriber#####")
     opts = parse_args(sys.argv[1:])
     init_logger(opts.verbose)
 
     try:
         LOGGER.warning("## initialize db ##")
-        DatabaseImp.initialize()
+        DatabaseImp.initialize(opts.uri)
         do_subscribe(opts)
 
     except KeyboardInterrupt:
