@@ -114,8 +114,6 @@ inline std::string send_jsonrpc_request(const std::string &endpoint,
                                         const std::string &request_header,
                                         const std::string &request_data) 
   {
-  std::cout << "request data " << std::endl;
-  std::cout << request_data << std::endl;
   return RestClient::post(endpoint, request_header, request_data).body;
 }
 

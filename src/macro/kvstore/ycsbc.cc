@@ -45,7 +45,6 @@ int DelegateClient(ycsbc::DB *db, ycsbc::CoreWorkload *wl, const int num_ops,
   double tx_sleep_time = 1.0 / txrate;
   for (int i = 0; i < num_ops; ++i) {
     if (is_loading && !isint) {
-      cout << "in do insert " << i << endl;
       oks += client.DoInsert();
       utils::sleep(tx_sleep_time);
     } else if (isint){
@@ -82,7 +81,7 @@ int StatusThread(string dbname, ycsbc::DB *db, double interval,
     int tip = db->GetTip();
     if (tip == -1)  // fail
       utils::sleep(interval);
-
+      std::cout << "height " << tip <<std::endl;
      
     while (cur_block_height + confirm_duration <= tip + 1 ) {
       vector<string> txs = db->PollTxn(cur_block_height);

@@ -322,10 +322,6 @@ std::string deploy_smart_contract(const std::string &endpoint,
       break;
   }
   auto r = send_jsonrpc_request(endpoint, REQUEST_HEADERS, txn_data);
-  std::cout << "deploy sm " << std::endl;
-  std::cout << txn_data << std::endl;
-  std::cout << "deploy contract result : " << std::endl;
-  std::cout << r << std::endl;
   return get_json_field(r, "result");
 }
 
@@ -355,8 +351,6 @@ std::string submit_set_txn(const std::string &endpoint, const std::string &key,
   auto r =
       send_jsonrpc_request(endpoint, REQUEST_HEADERS,
                            compose_write(key, val, from_address, to_address));
-  std::cout << "transaction response " << std::endl;
-  std::cout << r << std::endl;
   return get_json_field(r, "result");
 }
 
