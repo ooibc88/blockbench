@@ -19,7 +19,7 @@ const std::string SEND_TXN_PREFIX =
     "{\
   \"jsonrpc\": \"2.0\", \
   \"method\": \"eth_sendTransaction\", \
-  \"params\": [{ \"gas\": \"100000\", \
+  \"params\": [{ \"gas\": \"0x100000\", \
                 \"gasPrice\": \"0x0\", \
                 \"from\": \"";
 
@@ -27,7 +27,7 @@ const std::string CALL_PREFIX =
     "{\
   \"jsonrpc\": \"2.0\", \
   \"method\": \"eth_call\", \
-  \"params\": [{ \"gas\": \"100000\",\
+  \"params\": [{ \"gas\": \"0x100000\",\
                 \"gasPrice\": \"0x0\", \
                 \"from\": \"";
 
@@ -73,7 +73,7 @@ const std::string GET_ACCOUNTS =
 const std::string DEPLOY_SMARTCONTRACT_PREFIX =
     " {\"jsonrpc\":\"2.0\",\
   \"method\":\"eth_sendTransaction\",\
-  \"params\": [{ \"gas\": \"100000\",\
+  \"params\": [{ \"gas\": \"0x100000\",\
                 \"gasPrice\": \"0x0\", \
                \"from\": \"";
 
@@ -322,6 +322,10 @@ std::string deploy_smart_contract(const std::string &endpoint,
       break;
   }
   auto r = send_jsonrpc_request(endpoint, REQUEST_HEADERS, txn_data);
+  std::cout << "deploy sm " << std::endl;
+  std::cout << txn_data << std::endl;
+  std::cout << "deploy contract result : " << std::endl;
+  std::cout << r << std::endl;
   return get_json_field(r, "result");
 }
 
@@ -351,6 +355,8 @@ std::string submit_set_txn(const std::string &endpoint, const std::string &key,
   auto r =
       send_jsonrpc_request(endpoint, REQUEST_HEADERS,
                            compose_write(key, val, from_address, to_address));
+  std::cout << "transaction response " << std::endl;
+  std::cout << r << std::endl;
   return get_json_field(r, "result");
 }
 
