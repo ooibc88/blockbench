@@ -22,15 +22,6 @@ class EventHandler(object):
         if block_num is not None:
             try:
                 transactionIDS = self._get_txnts(block_id)
-            except Exception as ex:
-                if self.retry == 2:
-                    try:
-                        LOGGER.warning("SECOND TRY")
-                        transactionIDS = self._get_txnts(block_id)
-                    except Exception as ex:
-                        LOGGER.warning("second try exception:",ex)
-
-            try:
                 DatabaseImp.insert("blkTxns", {"block_num": block_num, "transactions": transactionIDS})
                 # get transactions id of the new block
                 DatabaseImp.insert("height", {"height": block_num})
@@ -50,12 +41,28 @@ class EventHandler(object):
         LOGGER.debug('Handling deltas for block: %s', block_num)
         return block_num, block_id
 
+    def _send_get_txts(self,block_id):
+        try:
+            result = self._send_request(
+                'blocks/{}'.format(block_id))
+            return result
+        except Exception as ex:
+            return 0
+
+
+
+
     def _get_txnts(self, block_id):
         try:
             transactionIDS = []
-            result = self._send_request(
-                'blocks/{}'.format(block_id))
-            
+            result = 0
+            i = 0
+            while result == 0:
+                i = i+1
+                LOGGER.warning("## getting transactions ## " + str(i))
+                result = self._send_get_txts(block_id)
+
+            i = 0
             res = yaml.safe_load(result)
             for batch in res['data']['batches']:
                 for transactionId in batch['header']['transaction_ids']:
