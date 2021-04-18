@@ -2,7 +2,7 @@ version: "3"
 
 services:
 
-  eth_etl_bootnode:
+  eth_bootnode:
     hostname: bootnode
     environment:
       - key=0acd3e0043e73c4bf95187c935fb7d6cc688685f1da60fb72da1d588ffca13f5
@@ -11,14 +11,14 @@ services:
     ports:
       - 30301:30301/udp
     networks:
-      eth_etl_private_network:
+      eth_private_network:
         ipv4_address: 172.28.1.10
 
-  eth_etl_sealer1:
+  eth_sealer1:
     restart: on-failure:5
     hostname: sealer1
     depends_on:
-      - eth_etl_bootnode
+      - eth_bootnode
     environment:
       - addr=0xe062C6acEF6e44a009dfF67bCBdDf2C780DdbC91
       - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
@@ -30,16 +30,16 @@ services:
         pwd: MfeLN6JxcZ6P25eC # MUSIC fruit egg LAPTOP NUT 6 JACK xbox coffee ZIP 6 PARK 2 5 egg COFFEE
     container_name: sealer1
     volumes:
-      - eth_etl_data_sealer1:/root/.ethash
+      - eth_data_sealer1:/root/.ethash
     networks:
-      eth_etl_private_network:
+      eth_private_network:
         ipv4_address: 172.28.1.11
 
-  eth_etl_sealer2:
+  eth_sealer2:
     restart: on-failure:5
     hostname: sealer2
     depends_on:
-      - eth_etl_bootnode
+      - eth_bootnode
     environment:
       - addr=0xa7EfD857De41dc223Cfc8cf6FE052348492864C4
       - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
@@ -51,16 +51,16 @@ services:
         pwd: 9Uk5kskVGZdTsu87 # 9 USA korean 5 korean skype korean VISA GOLF ZIP drip TOKYO skype usa 8 7
     container_name: sealer2
     volumes:
-     - eth_etl_data_sealer2:/root/.ethash
+     - eth_data_sealer2:/root/.ethash
     networks:
-      eth_etl_private_network:
+      eth_private_network:
         ipv4_address: 172.28.1.12
 
-  eth_etl_backup1:
+  eth_backup1:
     restart: on-failure:5
     hostname: backup1
     depends_on:
-      - eth_etl_bootnode
+      - eth_bootnode
     environment:
       - addr=0x30b80213f04b1e4f40E7c1241Ab1901Fe59EFB43
       - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
@@ -72,16 +72,16 @@ services:
         pwd: PuBEtkJ8sHbYfLbU # PARK usa BESTBUY EGG tokyo korean JACK 8 skype HULU bestbuy YELP fruit LAPTOP bestbuy USA
     container_name: backup1
     volumes:
-      - eth_etl_data_backup1:/root/.ethash
+      - eth_data_backup1:/root/.ethash
     networks:
-      eth_etl_private_network:
+      eth_private_network:
         ipv4_address: 172.28.1.13
 
-  eth_etl_backup2:
+  eth_backup2:
     restart: on-failure:5
     hostname: backup2
     depends_on:
-      - eth_etl_bootnode
+      - eth_bootnode
     environment:
       - addr=0xc031114f2625EF0733d57e406aeD346d5Ab3f827
       - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
@@ -93,16 +93,16 @@ services:
         pwd: A2LJGdRUvAKhq682 # APPLE 2 LAPTOP JACK GOLF drip ROPE USA visa APPLE KOREAN hulu queen 6 8 2
     container_name: backup2
     volumes:
-      - eth_etl_data_backup2:/root/.ethash
+      - eth_data_backup2:/root/.ethash
     networks:
-      eth_etl_private_network:
+      eth_private_network:
         ipv4_address: 172.28.1.14
 
-  eth_etl_peer:
+  eth_peer:
     restart: on-failure:5
     hostname: peer
     depends_on:
-      - eth_etl_bootnode
+      - eth_bootnode
     environment:
       - addr=0x116C95B6f0599b80EdaEF96dB4A0a03890bAf812
       - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
@@ -116,16 +116,16 @@ services:
     ports:
       - 46281:50282
     volumes:
-      - eth_etl_data_peer:/root/.ethash
+      - eth_data_peer:/root/.ethash
     networks:
-      eth_etl_private_network:
+      eth_private_network:
         ipv4_address: 172.28.1.15
 
-  eth_etl_application:
+  eth_application:
     restart: on-failure:5
     hostname: application
     depends_on:
-      - eth_etl_bootnode
+      - eth_bootnode
     environment:
       - addr=0x52b08b642e3b3b07d995039bb7737e15317902df
       - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
@@ -142,22 +142,22 @@ services:
       # ws port
       - 46283:63343
     volumes:
-      - eth_etl_data_application:/root/.ethash
+      - eth_data_application:/root/.ethash
     networks:
-      eth_etl_private_network:
+      eth_private_network:
         ipv4_address: 172.28.1.16
 
 networks:
-  eth_etl_private_network:
+  eth_private_network:
     driver: bridge
     ipam:
       config:
       - subnet: 172.28.1.0/24
 
 volumes:
-  eth_etl_data_sealer1:
-  eth_etl_data_sealer2:
-  eth_etl_data_backup1:
-  eth_etl_data_backup2:
-  eth_etl_data_peer:
-  eth_etl_data_application:
+  eth_data_sealer1:
+  eth_data_sealer2:
+  eth_data_backup1:
+  eth_data_backup2:
+  eth_data_peer:
+  eth_data_application:
