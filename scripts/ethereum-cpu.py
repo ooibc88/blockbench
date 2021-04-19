@@ -14,23 +14,13 @@ peer = "peer"
 sealer = "sealer"
 backup = "backup"
 application = "application"
-check_interval = 5
+check_interval = 2
 up_threshold = 85 if use_cpu_utilization else 20
 down_threshold = 60 if use_cpu_utilization else -1
 log_cpu_path = "ethereum.csv"
 
-
 def printSetting():
-
-    print("Min containers:  \t%d" % min_containers)
-    print("Max containers:  \t%d" % max_containers)
-    print("Check interval:  \t%d seconds" % check_interval)
-    if use_cpu_utilization:
-        print("Up threshold:    \t> %.2f%% cpu utilization" % up_threshold)
-        print("Down threshold:  \t< %.2f%% cpu utilization" % down_threshold)
-    else:
-        print("Up threshold:    \t> %d waiting requests" % int(up_threshold))
-        print("Down threshold:  \t< %d waiting requests" % int(down_threshold))
+    pass
 
 
 def printUsage():
@@ -108,8 +98,6 @@ for cmd, arg in opts:
     elif cmd in ("-i", "--interval"):
         check_interval = int(arg)
 
-printSetting()
-print("")
 
 log_file = open(log_cpu_path, "w+")
 log_file.write("Time,Num,AvgCPU,AvgMEM,C1CPU,CIMEM,...\n")

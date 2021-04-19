@@ -1,9 +1,0 @@
-in intkey
-to address: :
-Smart contract ycsb deploy ready
-Current TIP = 1
-height 1
-polled block 1 : 0 txs 
-In the last 2s, tx count = 0 latency = 0 outstanding request = 1
-height 1
-In the last 2s, tx count = 0 latency = 0 outstanding request = 1
