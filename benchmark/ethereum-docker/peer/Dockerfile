@@ -13,6 +13,6 @@ RUN geth --datadir ~/peer account import --password /tmp/`ls -al /tmp/ | awk '{p
 ENV addr=""
 ENV id=""
 ENV ip=""
-CMD exec geth --bootnodes "enode://$id@$ip:30301" --datadir ~/peer --networkid 6085214 --verbosity=3 --rpc --rpcaddr "0.0.0.0" --rpcport "50282" --rpcapi "eth,web3,net,admin,debug,db" --rpccorsdomain "*" --syncmode=full
+CMD exec geth --bootnodes "enode://$id@$ip:30301" --datadir ~/peer --networkid 6085214 --verbosity=4 --rpc --rpcaddr "0.0.0.0" --rpcport "50282" --rpcapi "eth,web3,net,admin,debug,db" --rpccorsdomain "*" --syncmode=full
 EXPOSE 50282
 EXPOSE 30303

@@ -35,26 +35,26 @@ services:
       eth_private_network:
         ipv4_address: 172.28.1.11
 
-#  eth_sealer2:
-#    restart: on-failure:5
-#    hostname: sealer2
-#    depends_on:
-#      - eth_bootnode
-#    environment:
-#      - addr=0xa7EfD857De41dc223Cfc8cf6FE052348492864C4
-#      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
-#      - ip=172.28.1.10
-#    build:
-#      context: ./sealer
-#      args:
-#        pk: 91fa188e5e01a3ba4df713c97e1b712a878451db3952fc104f7eb90e9f860e0c # BIP39 Mnemonic: panel average amount abandon fence renew spoon powder top grid whip achieve access sponsor meadow
-#        pwd: 9Uk5kskVGZdTsu87 # 9 USA korean 5 korean skype korean VISA GOLF ZIP drip TOKYO skype usa 8 7
-#    container_name: sealer2
-#    volumes:
-#     - eth_data_sealer2:/root/.ethash
-#    networks:
-#      eth_private_network:
-#        ipv4_address: 172.28.1.12
+  eth_sealer2:
+    restart: on-failure:5
+    hostname: sealer2
+    depends_on:
+      - eth_bootnode
+    environment:
+      - addr=0xa7EfD857De41dc223Cfc8cf6FE052348492864C4
+      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
+      - ip=172.28.1.10
+    build:
+      context: ./sealer
+      args:
+        pk: 91fa188e5e01a3ba4df713c97e1b712a878451db3952fc104f7eb90e9f860e0c # BIP39 Mnemonic: panel average amount abandon fence renew spoon powder top grid whip achieve access sponsor meadow
+        pwd: 9Uk5kskVGZdTsu87 # 9 USA korean 5 korean skype korean VISA GOLF ZIP drip TOKYO skype usa 8 7
+    container_name: sealer2
+    volumes:
+     - eth_data_sealer2:/root/.ethash
+    networks:
+      eth_private_network:
+        ipv4_address: 172.28.1.12
 
   eth_backup1:
     restart: on-failure:5
@@ -77,26 +77,26 @@ services:
       eth_private_network:
         ipv4_address: 172.28.1.13
 
-#  eth_backup2:
-#    restart: on-failure:5
-#    hostname: backup2
-#    depends_on:
-#      - eth_bootnode
-#    environment:
-#      - addr=0xc031114f2625EF0733d57e406aeD346d5Ab3f827
-#      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
-#      - ip=172.28.1.10
-#    build:
-#      context: ./backup
-#      args:
-#        pk: c57ab27575691073684c34016949a950f4a44233425bd3fc442ef720bff4f9ad # BIP39 Mnemonic: section neck kit web era work blind defy census output tube bullet game involve rural
-#        pwd: A2LJGdRUvAKhq682 # APPLE 2 LAPTOP JACK GOLF drip ROPE USA visa APPLE KOREAN hulu queen 6 8 2
-#    container_name: backup2
-#    volumes:
-#      - eth_data_backup2:/root/.ethash
-#    networks:
-#      eth_private_network:
-#        ipv4_address: 172.28.1.14
+  eth_backup2:
+    restart: on-failure:5
+    hostname: backup2
+    depends_on:
+      - eth_bootnode
+    environment:
+      - addr=0xc031114f2625EF0733d57e406aeD346d5Ab3f827
+      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
+      - ip=172.28.1.10
+    build:
+      context: ./backup
+      args:
+        pk: c57ab27575691073684c34016949a950f4a44233425bd3fc442ef720bff4f9ad # BIP39 Mnemonic: section neck kit web era work blind defy census output tube bullet game involve rural
+        pwd: A2LJGdRUvAKhq682 # APPLE 2 LAPTOP JACK GOLF drip ROPE USA visa APPLE KOREAN hulu queen 6 8 2
+    container_name: backup2
+    volumes:
+      - eth_data_backup2:/root/.ethash
+    networks:
+      eth_private_network:
+        ipv4_address: 172.28.1.14
 
   eth_peer:
     restart: on-failure:5
