@@ -50,7 +50,6 @@ inline bool Client::DoInsertIntegerVal() {
 
   std::string key = workload_.NextSequenceKey();
   std::vector<DB::KVPair> pairs;
-   std::vector<DB::KVPair> pairs;
   workload_.BuildValuesSawtooth(pairs);
   std::string newkey = key.substr(5, 20);
   return (db_.Insert(workload_.NextTable(), newkey, pairs) == DB::kOK);
