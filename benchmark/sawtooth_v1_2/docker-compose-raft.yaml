@@ -237,6 +237,7 @@ services:
                 sawtooth.consensus.algorithm.version=0.1 \
                 sawtooth.consensus.raft.peers=\\['\"'$$(cat /etc/sawtooth/keys/validator.pub )'\"','\"'$$(cat /etc/sawtooth/keys/validator-2.pub )'\"','\"'$$(cat /etc/sawtooth/keys/validator-3.pub )'\"','\"'$$(cat /etc/sawtooth/keys/validator-4.pub )'\"','\"'$$(cat /etc/sawtooth/keys/validator-5.pub )'\"'\\] \
                 sawtooth.consensus.raft.period=1 \
+                sawtooth.publisher.max_batches_per_block=100 \
                 -o config.batch && \
 
       sawadm genesis \
