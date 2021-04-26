@@ -61,7 +61,6 @@ services:
              sawtooth.poet.target_wait_time=5 \
              sawtooth.poet.initial_wait_time=25 \
              sawtooth.publisher.max_batches_per_block=100 \
-             sawtooth.validator.max_transactions_per_block=100 \
           -o poet-settings.batch && \
         sawadm genesis \
           config-genesis.batch config.batch poet.batch poet-settings.batch && \
@@ -519,7 +518,6 @@ services:
           --keyfile /root/.sawtooth/keys/root.priv \
           --url rest-api-0:8008
       "
-
   block-server-subscriber:
     build:
       context: .
@@ -541,7 +539,6 @@ services:
           --uri  mongodb://root:password@bb:27017/ \
           -vv
       "
-
   block-server-rest-api:
     build:
       context: .

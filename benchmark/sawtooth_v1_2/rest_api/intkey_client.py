@@ -150,6 +150,7 @@ class IntkeyClient:
         return result.text
 
     def _send_transaction(self, verb, name, value, wait=None):
+        LOGGER.warning("in send transaction")
         payload = cbor.dumps({
             'Verb': verb,
             'Name': name,
@@ -191,6 +192,8 @@ class IntkeyClient:
                 "batches", batch_list.SerializeToString(),
                 'application/octet-stream',
             )
+            LOGGER.warning("response :")
+            LOGGER.warning(response)
             while wait_time < wait:
                 status = self._get_status(
                     batch_id,
@@ -203,11 +206,12 @@ class IntkeyClient:
 
             return signature
 
-        self._send_request(
+        res =self._send_request(
             "batches", batch_list.SerializeToString(),
             'application/octet-stream',
         )
-
+        LOGGER.warning("response :")
+        LOGGER.warning(res)
         return signature
 
     def _create_batch_list(self, transactions):
