@@ -1,43 +1,137 @@
-  0
-  21
-  26
-  1
-  40
-  54
-  23
-  70
-  23
-  71
-  78
-  52
-  24
-  60
-  1
-  4
-  79
-  92
-  2
-  5
-  77
-  13
-  100
-  16
-  86
-  89
-  40
-  100
-  54
-  46
-  24
-  68
-  34
-  28
-  100
-  15
-  16
-  100
-  33
-  14
-  100
-  100
-  21
+in intkey
+to address: 0x39c7f1422166a366c8a158e0628f8a0fa07e1d7e
+Smart contract ycsb deploy ready
+Current TIP = 10
+height 10
+polled block 10 : 0 txs 
+In the last 2s, tx count = 0 latency = 0 outstanding request = 1
+height 10
+In the last 2s, tx count = 0 latency = 0 outstanding request = 34
+height 11
+polled block 11 : 0 txs 
+In the last 2s, tx count = 0 latency = 0 outstanding request = 68
+height 11
+In the last 2s, tx count = 0 latency = 0 outstanding request = 102
+height 11
+In the last 2s, tx count = 0 latency = 0 outstanding request = 136
+height 11
+In the last 2s, tx count = 0 latency = 0 outstanding request = 170
+height 11
+In the last 2s, tx count = 0 latency = 0 outstanding request = 203
+height 11
+In the last 2s, tx count = 0 latency = 0 outstanding request = 237
+height 11
+In the last 2s, tx count = 0 latency = 0 outstanding request = 271
+height 12
+polled block 12 : 249 txs 
+In the last 2s, tx count = 249 latency = 2663.98 outstanding request = 57
+height 12
+In the last 2s, tx count = 0 latency = 0 outstanding request = 91
+height 12
+In the last 2s, tx count = 0 latency = 0 outstanding request = 125
+height 12
+In the last 2s, tx count = 0 latency = 0 outstanding request = 159
+height 12
+In the last 2s, tx count = 0 latency = 0 outstanding request = 193
+height 12
+In the last 2s, tx count = 0 latency = 0 outstanding request = 227
+height 12
+In the last 2s, tx count = 0 latency = 0 outstanding request = 261
+height 13
+polled block 13 : 0 txs 
+In the last 2s, tx count = 0 latency = 0 outstanding request = 295
+height 13
+In the last 2s, tx count = 0 latency = 0 outstanding request = 328
+height 13
+In the last 2s, tx count = 0 latency = 0 outstanding request = 362
+height 13
+In the last 2s, tx count = 0 latency = 0 outstanding request = 396
+height 13
+In the last 2s, tx count = 0 latency = 0 outstanding request = 430
+height 13
+In the last 2s, tx count = 0 latency = 0 outstanding request = 464
+height 13
+In the last 2s, tx count = 0 latency = 0 outstanding request = 497
+height 13
+In the last 2s, tx count = 0 latency = 0 outstanding request = 531
+height 14
+polled block 14 : 0 txs 
+In the last 2s, tx count = 0 latency = 0 outstanding request = 564
+height 14
+In the last 2s, tx count = 0 latency = 0 outstanding request = 598
+height 14
+In the last 2s, tx count = 0 latency = 0 outstanding request = 631
+height 14
+In the last 2s, tx count = 0 latency = 0 outstanding request = 665
+height 14
+In the last 2s, tx count = 0 latency = 0 outstanding request = 699
+height 14
+In the last 2s, tx count = 0 latency = 0 outstanding request = 732
+height 14
+In the last 2s, tx count = 0 latency = 0 outstanding request = 751
+height 15
+polled block 15 : 0 txs 
+In the last 2s, tx count = 0 latency = 0 outstanding request = 751
+height 15
+In the last 2s, tx count = 0 latency = 0 outstanding request = 751
+height 15
+In the last 2s, tx count = 0 latency = 0 outstanding request = 751
+height 15
+In the last 2s, tx count = 0 latency = 0 outstanding request = 751
+height 15
+In the last 2s, tx count = 0 latency = 0 outstanding request = 751
+height 15
+In the last 2s, tx count = 0 latency = 0 outstanding request = 751
+height 15
+In the last 2s, tx count = 0 latency = 0 outstanding request = 751
+height 15
+In the last 2s, tx count = 0 latency = 0 outstanding request = 751
+height 16
+polled block 16 : 751 txs 
+In the last 2s, tx count = 751 latency = 30927.5 outstanding request = 0
+height 16
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 16
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 16
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 16
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 16
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 16
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 17
+polled block 17 : 0 txs 
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 17
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 17
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 17
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 17
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 17
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 17
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 17
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 18
+polled block 18 : 0 txs 
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 18
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 18
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 18
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 18
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 18
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 18
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
+height 18
+In the last 2s, tx count = 0 latency = 0 outstanding request = 0
