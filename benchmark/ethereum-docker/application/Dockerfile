@@ -13,7 +13,7 @@ RUN geth --datadir ~/application account import --password /tmp/`ls -al /tmp/ | 
 ENV addr=""
 ENV id=""
 ENV ip=""
-CMD exec geth --bootnodes "enode://$id@$ip:30301" --datadir ~/application --networkid 6085214 --verbosity=4 --rpc --rpcaddr "0.0.0.0" --rpcport "59767" --rpcapi "eth,web3,net,admin,debug,db" --rpccorsdomain "*" --ws --ws.addr "0.0.0.0" --ws.port "63343" --ws.api "eth,web3,net,admin,debug,db,personal" --ws.origins "*" --syncmode=full  --mine --miner.etherbase $addr --unlock $addr --password /tmp/`ls -al /tmp/ | awk '{print $9}' | grep .pwd` --allow-insecure-unlock
+CMD exec geth --bootnodes "enode://$id@$ip:30301" --datadir ~/application --networkid 6085214 --verbosity=4 --rpc --rpcaddr "0.0.0.0" --rpcport "59767" --rpcapi "eth,web3,net,admin,debug,db" --rpccorsdomain "*" --ws --ws.addr "0.0.0.0" --ws.port "63343" --ws.api "eth,web3,net,admin,debug,db,personal" --ws.origins "*" --syncmode=full  --mine  -miner.threads=1 --miner.etherbase $addr --unlock $addr --password /tmp/`ls -al /tmp/ | awk '{print $9}' | grep .pwd` --allow-insecure-unlock
 EXPOSE 59767
 EXPOSE 63343
 EXPOSE 30303
