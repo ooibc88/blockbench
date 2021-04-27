@@ -40,6 +40,27 @@ services:
       eth_private_network:
         ipv4_address: 172.28.1.12
 
+  eth_miner2:
+    restart: on-failure:5
+    hostname: miner2
+    depends_on:
+      - eth_bootnode
+    environment:
+      - addr=0x116C95B6f0599b80EdaEF96dB4A0a03890bAf812
+      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
+      - ip=172.28.1.10
+    build:
+      context: ./miner
+      args:
+        pk: 1646b6552c0bcea3fda9001bf5748a53a0499c724f4f60ec1038ad76d9c5d861 # BIP39 Mnemonic: limb pair transfer answer flower rescue inquiry quit debate echo liquid owner priority require again
+        pwd: 6Z39urGJgqxjJWjQ # 6 ZIP 3 9 usa rope GOLF JACK golf queen xbox jack JACK WALMART jack QUEEN
+    container_name: miner2
+    volumes:
+      - eth_data_miner2:/root/.ethash
+    networks:
+      eth_private_network:
+        ipv4_address: 172.28.1.15
+
 
 
 networks:
@@ -51,3 +72,10 @@ networks:
 
 volumes:
   eth_data_miner1:
+  eth_data_miner2:
+
+
+
+
+
+

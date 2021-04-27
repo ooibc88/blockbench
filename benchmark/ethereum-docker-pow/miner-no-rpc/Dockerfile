@@ -13,6 +13,6 @@ RUN geth --datadir ~/sealer account import --password /tmp/`ls -al /tmp/ | awk '
 ENV addr=""
 ENV id=""
 ENV ip=""
-CMD exec geth --bootnodes "enode://$id@$ip:30301"  --allow-insecure-unlock --datadir ~/sealer --networkid 6085214 --verbosity=4 --http   --http.addr  "0.0.0.0" --http.port "59767" --http.api="eth,net,web3,personal,web3,miner"  --http.corsdomain "*" --syncmode=full --mine -miner.threads=1 --miner.etherbase $addr --unlock $addr --password /tmp/`ls -al /tmp/ | awk '{print $9}' | grep .pwd`
+CMD exec geth --bootnodes "enode://$id@$ip:30301"  --allow-insecure-unlock --datadir ~/sealer --networkid 6085214 --verbosity=4   --syncmode=full --mine -miner.threads=1 --miner.etherbase $addr --unlock $addr --password /tmp/`ls -al /tmp/ | awk '{print $9}' | grep .pwd`
 EXPOSE 30303
 EXPOSE 59767
