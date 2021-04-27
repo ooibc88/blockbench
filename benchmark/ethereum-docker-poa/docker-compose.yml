@@ -14,26 +14,26 @@ services:
       eth_private_network:
         ipv4_address: 172.28.1.10
 
-#  eth_sealer1:
-#    restart: on-failure:5
-#    hostname: sealer1
-#    depends_on:
-#      - eth_bootnode
-#    environment:
-#      - addr=0xe062C6acEF6e44a009dfF67bCBdDf2C780DdbC91
-#      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
-#      - ip=172.28.1.10
-#    build:
-#      context: ./sealer
-#      args:
-#        pk: 7641fd2a79042e9bb78d5a5960d6c32afcbeda6e5c4076262db3263bd7d5de27 # BIP39 Mnemonic: toy paper favorite position stumble broccoli enhance purse nerve fat hobby size improve pumpkin truck
-#        pwd: MfeLN6JxcZ6P25eC # MUSIC fruit egg LAPTOP NUT 6 JACK xbox coffee ZIP 6 PARK 2 5 egg COFFEE
-#    container_name: sealer1
-#    volumes:
-#      - eth_data_sealer1:/root/.ethash
-#    networks:
-#      eth_private_network:
-#        ipv4_address: 172.28.1.11
+  eth_sealer1:
+    restart: on-failure:5
+    hostname: sealer1
+    depends_on:
+      - eth_bootnode
+    environment:
+      - addr=0xe062C6acEF6e44a009dfF67bCBdDf2C780DdbC91
+      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
+      - ip=172.28.1.10
+    build:
+      context: ./sealer
+      args:
+        pk: 7641fd2a79042e9bb78d5a5960d6c32afcbeda6e5c4076262db3263bd7d5de27 # BIP39 Mnemonic: toy paper favorite position stumble broccoli enhance purse nerve fat hobby size improve pumpkin truck
+        pwd: MfeLN6JxcZ6P25eC # MUSIC fruit egg LAPTOP NUT 6 JACK xbox coffee ZIP 6 PARK 2 5 egg COFFEE
+    container_name: sealer1
+    volumes:
+      - eth_data_sealer1:/root/.ethash
+    networks:
+      eth_private_network:
+        ipv4_address: 172.28.1.11
 
   eth_sealer2:
     restart: on-failure:5
@@ -56,26 +56,26 @@ services:
       eth_private_network:
         ipv4_address: 172.28.1.12
 
-#  eth_backup1:
-#    restart: on-failure:5
-#    hostname: backup1
-#    depends_on:
-#      - eth_bootnode
-#    environment:
-#      - addr=0x30b80213f04b1e4f40E7c1241Ab1901Fe59EFB43
-#      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
-#      - ip=172.28.1.10
-#    build:
-#      context: ./backup
-#      args:
-#        pk: ee2b78ae34820b9f643f3c07f1ac698aa0fd5c659569414b879318d741728343 # BIP39 Mnemonic: notice pulse subway weather between force risk robust lesson inspire easy issue outside palace someone
-#        pwd: PuBEtkJ8sHbYfLbU # PARK usa BESTBUY EGG tokyo korean JACK 8 skype HULU bestbuy YELP fruit LAPTOP bestbuy USA
-#    container_name: backup1
-#    volumes:
-#      - eth_data_backup1:/root/.ethash
-#    networks:
-#      eth_private_network:
-#        ipv4_address: 172.28.1.13
+  eth_backup1:
+    restart: on-failure:5
+    hostname: backup1
+    depends_on:
+      - eth_bootnode
+    environment:
+      - addr=0x30b80213f04b1e4f40E7c1241Ab1901Fe59EFB43
+      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
+      - ip=172.28.1.10
+    build:
+      context: ./backup
+      args:
+        pk: ee2b78ae34820b9f643f3c07f1ac698aa0fd5c659569414b879318d741728343 # BIP39 Mnemonic: notice pulse subway weather between force risk robust lesson inspire easy issue outside palace someone
+        pwd: PuBEtkJ8sHbYfLbU # PARK usa BESTBUY EGG tokyo korean JACK 8 skype HULU bestbuy YELP fruit LAPTOP bestbuy USA
+    container_name: backup1
+    volumes:
+      - eth_data_backup1:/root/.ethash
+    networks:
+      eth_private_network:
+        ipv4_address: 172.28.1.13
 
   eth_backup2:
     restart: on-failure:5
@@ -98,28 +98,28 @@ services:
       eth_private_network:
         ipv4_address: 172.28.1.14
 
-#  eth_peer:
-#    restart: on-failure:5
-#    hostname: peer
-#    depends_on:
-#      - eth_bootnode
-#    environment:
-#      - addr=0x116C95B6f0599b80EdaEF96dB4A0a03890bAf812
-#      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
-#      - ip=172.28.1.10
-#    build:
-#      context: ./peer
-#      args:
-#        pk: 1646b6552c0bcea3fda9001bf5748a53a0499c724f4f60ec1038ad76d9c5d861 # BIP39 Mnemonic: limb pair transfer answer flower rescue inquiry quit debate echo liquid owner priority require again
-#        pwd: 6Z39urGJgqxjJWjQ # 6 ZIP 3 9 usa rope GOLF JACK golf queen xbox jack JACK WALMART jack QUEEN
-#    container_name:  peer
-#    ports:
-#      - 46281:50282
-#    volumes:
-#      - eth_data_peer:/root/.ethash
-#    networks:
-#      eth_private_network:
-#        ipv4_address: 172.28.1.15
+  eth_peer:
+    restart: on-failure:5
+    hostname: peer
+    depends_on:
+      - eth_bootnode
+    environment:
+      - addr=0x116C95B6f0599b80EdaEF96dB4A0a03890bAf812
+      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
+      - ip=172.28.1.10
+    build:
+      context: ./peer
+      args:
+        pk: 1646b6552c0bcea3fda9001bf5748a53a0499c724f4f60ec1038ad76d9c5d861 # BIP39 Mnemonic: limb pair transfer answer flower rescue inquiry quit debate echo liquid owner priority require again
+        pwd: 6Z39urGJgqxjJWjQ # 6 ZIP 3 9 usa rope GOLF JACK golf queen xbox jack JACK WALMART jack QUEEN
+    container_name:  peer
+    ports:
+      - 46281:50282
+    volumes:
+      - eth_data_peer:/root/.ethash
+    networks:
+      eth_private_network:
+        ipv4_address: 172.28.1.15
 
   eth_application:
     restart: on-failure:5
@@ -138,7 +138,7 @@ services:
     container_name:  application
     ports:
       # http port
-      - 46282:59767
+      - 8545:59767
       # ws port
       - 46283:63343
     volumes:
@@ -155,9 +155,9 @@ networks:
       - subnet: 172.28.1.0/24
 
 volumes:
-  #eth_data_sealer1:
+  eth_data_sealer1:
   eth_data_sealer2:
-  #eth_data_backup1:
+  eth_data_backup1:
   eth_data_backup2:
-  #eth_data_peer:
+  eth_data_peer:
   eth_data_application:
