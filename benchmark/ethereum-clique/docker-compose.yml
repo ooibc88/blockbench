@@ -15,7 +15,6 @@ services:
         ipv4_address: 172.28.1.10
 
 
-
   eth_miner1:
     restart: on-failure:5
     hostname: miner1
@@ -61,6 +60,69 @@ services:
       eth_private_network:
         ipv4_address: 172.28.1.15
 
+  eth_miner3:
+    restart: on-failure:5
+    hostname: miner3
+    depends_on:
+      - eth_bootnode
+    environment:
+      - addr=0xe062C6acEF6e44a009dfF67bCBdDf2C780DdbC91
+      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
+      - ip=172.28.1.10
+    build:
+      context: ./miner
+      args:
+        pk: 7641fd2a79042e9bb78d5a5960d6c32afcbeda6e5c4076262db3263bd7d5de27 # BIP39 Mnemonic: toy paper favorite position stumble broccoli enhance purse nerve fat hobby size improve pumpkin truck
+        pwd: MfeLN6JxcZ6P25eC # MUSIC fruit egg LAPTOP NUT 6 JACK xbox coffee ZIP 6 PARK 2 5 egg COFFEE
+    container_name: miner3
+    volumes:
+      - eth_data_miner3:/root/.ethash
+    networks:
+      eth_private_network:
+        ipv4_address: 172.28.1.11
+
+  eth_miner4:
+    restart: on-failure:5
+    hostname: miner4
+    depends_on:
+      - eth_bootnode
+    environment:
+      - addr=0x30b80213f04b1e4f40E7c1241Ab1901Fe59EFB43
+      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
+      - ip=172.28.1.10
+    build:
+      context: ./miner
+      args:
+        pk: ee2b78ae34820b9f643f3c07f1ac698aa0fd5c659569414b879318d741728343 # BIP39 Mnemonic: notice pulse subway weather between force risk robust lesson inspire easy issue outside palace someone
+        pwd: PuBEtkJ8sHbYfLbU # PARK usa BESTBUY EGG tokyo korean JACK 8 skype HULU bestbuy YELP fruit LAPTOP bestbuy USA
+    container_name: miner4
+    volumes:
+      - eth_data_miner4:/root/.ethash
+    networks:
+      eth_private_network:
+        ipv4_address: 172.28.1.13
+
+  eth_miner5:
+    restart: on-failure:5
+    hostname: miner5
+    depends_on:
+      - eth_bootnode
+    environment:
+      - addr=0xc031114f2625EF0733d57e406aeD346d5Ab3f827
+      - id=4cb7dc25aaeb769ae94ce002e2ecd5232d9421a81c3cc63620a79db127778dd89c61348e7475a1e977cb72121098d364451bcbbaffd2981e306408d4b2405a6e
+      - ip=172.28.1.10
+    build:
+      context: ./miner
+      args:
+        pk: c57ab27575691073684c34016949a950f4a44233425bd3fc442ef720bff4f9ad # BIP39 Mnemonic: section neck kit web era work blind defy census output tube bullet game involve rural
+        pwd: A2LJGdRUvAKhq682 # APPLE 2 LAPTOP JACK GOLF drip ROPE USA visa APPLE KOREAN hulu queen 6 8 2
+    container_name: miner5
+    volumes:
+      - eth_data_miner5:/root/.ethash
+    networks:
+      eth_private_network:
+        ipv4_address: 172.28.1.14
+
 
 
 networks:
@@ -73,9 +135,8 @@ networks:
 volumes:
   eth_data_miner1:
   eth_data_miner2:
-
-
-
-
+  eth_data_miner3:
+  eth_data_miner4:
+  eth_data_miner5:
 
 
