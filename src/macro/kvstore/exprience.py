@@ -6,9 +6,9 @@ import sys
 
 # running experiments
 EXPS = [(1, 20)]
-TARGET = "fabric-v2.2"
+TARGET = "ethereum"
 WORKLOAD = "workloada.spec"
-ENDPOINT = "localhost:8800,localhost:8801"
+ENDPOINT = "localhost:8545"
 SC = "ycsb"
 WAIT_TIME = 20
 IS_INT = 1
