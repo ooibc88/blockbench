@@ -10,10 +10,8 @@ const cbor = require('cbor')
 var encoder = new TextEncoder('utf8')
 var decoder = new TextDecoder('utf8')
 
-// Constants defined in intkey specification
-const MIN_VALUE = 0
-const MAX_VALUE = 4294967295
-const MAX_NAME_LENGTH = 150
+
+
 // function to hash data
 const _hash = (x) =>
   crypto.createHash('sha512').update(x).digest('hex').toLowerCase()
@@ -48,12 +46,7 @@ const _applySet = (context, address, name, value) => (possibleAddressValues) => 
   let stateValue
   if (stateValueRep && stateValueRep.length > 0) {
     stateValue = cbor.decodeFirstSync(stateValueRep)
-    let stateName = stateValue[name]
-    // if (stateName) {
-    //   throw new InvalidTransaction(
-    //     `Verb is "set" but Name already in state, Name: ${name} Value: ${stateName}`
-    //   )
-    // }
+
   }
 
   // 'set' passes checks so store it in the state
@@ -66,39 +59,6 @@ const _applySet = (context, address, name, value) => (possibleAddressValues) => 
   return _setEntry(context, address, stateValue)
 }
 
-const _applyOperator = (verb, op) => (context, address, name, value) => (possibleAddressValues) => {
-  let stateValueRep = possibleAddressValues[address]
-  if (!stateValueRep || stateValueRep.length === 0) {
-    throw new InvalidTransaction(`Verb is ${verb} but Name is not in state`)
-  }
-
-  let stateValue = cbor.decodeFirstSync(stateValueRep)
-  if (stateValue[name] === null || stateValue[name] === undefined) {
-    throw new InvalidTransaction(`Verb is ${verb} but Name is not in state`)
-  }
-
-  const result = op(stateValue[name], value)
-
-  if (result < MIN_VALUE) {
-    throw new InvalidTransaction(
-      `Verb is ${verb}, but result would be less than ${MIN_VALUE}`
-    )
-  }
-
-  if (result > MAX_VALUE) {
-    throw new InvalidTransaction(
-      `Verb is ${verb}, but result would be greater than ${MAX_VALUE}`
-    )
-  }
-
-  // Increment the value in state by value
-  // stateValue[name] = op(stateValue[name], value)
-  stateValue[name] = result
-  return _setEntry(context, address, stateValue)
-}
-
-const _applyInc = _applyOperator('inc', (x, y) => x + y)
-const _applyDec = _applyOperator('dec', (x, y) => x - y)
 
 
 
@@ -120,12 +80,6 @@ class KvstoreHandler extends TransactionHandler {
           throw new InvalidTransaction('Name is required')
         }
 
-        if (name.length > MAX_NAME_LENGTH) {
-          throw new InvalidTransaction(
-            `Name must be a string of no more than ${MAX_NAME_LENGTH} characters`
-          )
-        }
-
         let verb = update.Verb
         if (!verb) {
           throw new InvalidTransaction('Verb is required')
@@ -136,26 +90,14 @@ class KvstoreHandler extends TransactionHandler {
           throw new InvalidTransaction('Value is required')
         }
 
-        let parsed = parseInt(value)
-        if (parsed !== value || parsed < MIN_VALUE || parsed > MAX_VALUE) {
-          throw new InvalidTransaction(
-            `Value must be an integer ` +
-            `no less than ${MIN_VALUE} and ` +
-            `no greater than ${MAX_VALUE}`)
-        }
-
-        value = parsed
 
         // Determine the action to apply based on the verb
         let actionFn
         if (verb === 'set') {
           actionFn = _applySet
-        } else if (verb === 'dec') {
-          actionFn = _applyDec
-        } else if (verb === 'inc') {
-          actionFn = _applyInc
+
         } else {
-          throw new InvalidTransaction(`Verb must be set, inc, dec not ${verb}`)
+          throw new InvalidTransaction(`Verb must be set not ${verb}`)
         }
 
         let address = NAMESPACE + _hash(name).slice(-64)

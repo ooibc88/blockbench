@@ -39,7 +39,7 @@ class RouteHandler(object):
             raise ApiBadRequest("write function must invoke two parameters")
         name = args[0]
         try:
-            value = int(args[1])
+            value = args[1]
         except ValueError:
             raise ApiBadRequest("value must be int")
 
