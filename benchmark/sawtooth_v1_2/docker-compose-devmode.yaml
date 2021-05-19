@@ -17,23 +17,20 @@ version: '3.6'
 services:
 
   settings-tp:
-    image: hyperledger/sawtooth-settings-tp:nightly
-    container_name: sawtooth-settings-tp
-    depends_on:
-      - validator
-    command: |
-      bash -c "
-        settings-tp -vv -C tcp://validator:4004
-      "
-    stop_signal: SIGKILL
+      image: hyperledger/sawtooth-settings-tp:chime
+      depends_on:
+        - validator
+      entrypoint: settings-tp -vv -C tcp://validator:4004
 
-  intkey-tp:
-    image: hyperledger/sawtooth-intkey-tp-python:nightly
-    container_name: sawtooth-intkey-tp
-    expose:
-      - 4004
-    command: intkey-tp-python -C tcp://validator:4004
-    stop_signal: SIGKILL
+  kvstore-processor:
+      container_name: kvstore-processor
+      build:
+        context: .
+        dockerfile: kvstoreprocessor/DockerFile
+      depends_on:
+          - validator
+      volumes:
+          - '.:/project/sawtooth-kvstore'
 
   intkey-rest-api:
     build:
@@ -112,59 +109,47 @@ services:
 
 
   validator:
-    image: hyperledger/sawtooth-validator:nightly
-    container_name: sawtooth-validator
-    expose:
-      - 4004
-      - 8800
-      - 5050
-    ports:
-      - "4004:4004"
-    # start the validator with an empty genesis batch
-    command: |
-      bash -c "
-        sawadm keygen
-        sawset genesis \
-          -k /etc/sawtooth/keys/validator.priv \
-          -o config-genesis.batch && \
-        sawset proposal create \
-          -k /etc/sawtooth/keys/validator.priv \
-          sawtooth.consensus.algorithm.name=Devmode \
-          sawtooth.consensus.algorithm.version=0.1 \
-          -o config.batch && \
-        sawadm genesis config-genesis.batch config.batch && \
-        sawtooth-validator -vv \
+      image: hyperledger/sawtooth-validator:chime
+      container_name: validator
+      expose:
+        - 4004
+      ports:
+        - "4004:4004"
+      entrypoint: "bash -c \"\
+          sawadm keygen && \
+          sawtooth keygen my_key && \
+          sawset genesis -k /root/.sawtooth/keys/my_key.priv && \
+          sawset proposal create \
+            -k /root/.sawtooth/keys/my_key.priv \
+            sawtooth.consensus.algorithm.name=Devmode \
+            sawtooth.consensus.algorithm.version=0.1 \
+            -o config.batch && \
+          sawadm genesis config-genesis.batch config.batch && \
+          sawtooth-validator -vv \
             --endpoint tcp://validator:8800 \
             --bind component:tcp://eth0:4004 \
             --bind network:tcp://eth0:8800 \
             --bind consensus:tcp://eth0:5050 \
-      "
-    stop_signal: SIGKILL
+          \""
+  sawtooth-rest-api:
+      image: hyperledger/sawtooth-rest-api:chime
+      container_name: rest-api
+      expose:
+        - 8008
+      ports:
+        - "8008:8008"
+      depends_on:
+        - validator
+      entrypoint: sawtooth-rest-api -vv -C tcp://validator:4004 --bind rest-api:8008
 
-
-  rest-api:
-    image: hyperledger/sawtooth-rest-api:nightly
-    container_name: sawtooth-rest-api
-    expose:
-      - 8008
-    depends_on:
-      - validator
-    command: |
-      bash -c "
-        sawtooth-rest-api -v --connect tcp://validator:4004 --bind rest-api:8008
-      "
-    stop_signal: SIGKILL
-
-  devmode-rust:
-    image: hyperledger/sawtooth-devmode-engine-rust:nightly
-    container_name: sawtooth-devmode-engine-rust
-    depends_on:
-      - validator
-    command: |
-      bash -c "
-        devmode-engine-rust -v --connect tcp://validator:5050
-      "
-    stop_signal: SIGKILL
+  devmode-engine:
+      image: hyperledger/sawtooth-devmode-engine-rust:chime
+      container_name: sawtooth-devmode-engine-rust-default
+      ports:
+        - '5050:5050'
+      depends_on:
+        - validator
+      entrypoint: devmode-engine-rust -C tcp://validator:5050
 
 
   bb:

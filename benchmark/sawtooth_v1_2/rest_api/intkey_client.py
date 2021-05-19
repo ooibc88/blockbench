@@ -109,7 +109,7 @@ class IntkeyClient:
             raise IntkeyClientException(err) from err
 
     def _get_prefix(self):
-        return _sha512('intkey'.encode('utf-8'))[0:6]
+        return _sha512('kvstore'.encode('utf-8'))[0:6]
 
     def _get_address(self, name):
         prefix = self._get_prefix()
@@ -162,7 +162,7 @@ class IntkeyClient:
 
         header = TransactionHeader(
             signer_public_key=self._signer.get_public_key().as_hex(),
-            family_name="intkey",
+            family_name="kvstore",
             family_version="1.0",
             inputs=[address],
             outputs=[address],
