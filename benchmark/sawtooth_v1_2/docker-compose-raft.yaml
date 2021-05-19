@@ -23,7 +23,7 @@ services:
 
 
   settings-tp-1:
-    image: hyperledger/sawtooth-settings-tp:nightly
+    image: hyperledger/sawtooth-settings-tp:chime
     container_name: sawtooth-settings-tp-1
     expose:
       - 4004
@@ -36,7 +36,7 @@ services:
     stop_signal: SIGKILL
 
   settings-tp-2:
-    image: hyperledger/sawtooth-settings-tp:nightly
+    image: hyperledger/sawtooth-settings-tp:chime
     container_name: sawtooth-settings-tp-2
     expose:
       - 4004
@@ -49,7 +49,7 @@ services:
     stop_signal: SIGKILL
 
   settings-tp-3:
-    image: hyperledger/sawtooth-settings-tp:nightly
+    image: hyperledger/sawtooth-settings-tp:chime
     container_name: sawtooth-settings-tp-3
     expose:
       - 4004
@@ -62,7 +62,7 @@ services:
     stop_signal: SIGKILL
 
   settings-tp-4:
-    image: hyperledger/sawtooth-settings-tp:nightly
+    image: hyperledger/sawtooth-settings-tp:chime
     container_name: sawtooth-settings-tp-4
     expose:
       - 4004
@@ -75,7 +75,7 @@ services:
     stop_signal: SIGKILL
 
   settings-tp-5:
-    image: hyperledger/sawtooth-settings-tp:nightly
+    image: hyperledger/sawtooth-settings-tp:chime
     container_name: sawtooth-settings-tp-5
     expose:
       - 4004
@@ -91,46 +91,92 @@ services:
 
 
 
-  intkey-tp-1:
-    image: hyperledger/sawtooth-intkey-tp-python:nightly
-    container_name: sawtooth-intkey-tp-python-default-1
-    expose:
-      - 4004
-    command: intkey-tp-python -C tcp://validator-1:4004
-    stop_signal: SIGKILL
 
-  intkey-tp-2:
-    image: hyperledger/sawtooth-intkey-tp-python:nightly
-    container_name: sawtooth-intkey-tp-python-default-2
-    expose:
-      - 4004
-    command: intkey-tp-python -C tcp://validator-2:4004
-    stop_signal: SIGKILL
+  kvstore-processor-1:
+    build:
+      context: .
+      dockerfile: kvstoreprocessor/DockerFile
+    depends_on:
+      - validator-1
+    container_name: kvstore-processor-1
+    volumes:
+      - ./:/project/sawtooth-kvstore
+    command: |
+      bash -c "
+       chmod +x /project/sawtooth-kvstore/bin/build_kvstore
+       ../bin/build_kvstore
+          chmod +x /project/sawtooth-kvstore/bin/kvstore
+       ../bin/kvstore tcp://validator-1:4004
+       "
 
-  intkey-tp-3:
-    image: hyperledger/sawtooth-intkey-tp-python:nightly
-    container_name: sawtooth-intkey-tp-python-default-3
-    expose:
-      - 4004
-    command: intkey-tp-python -C tcp://validator-3:4004
-    stop_signal: SIGKILL
+  kvstore-processor-2:
+    build:
+      context: .
+      dockerfile: kvstoreprocessor/DockerFile
+    depends_on:
+      - validator-2
+    container_name: kvstore-processor-2
+    volumes:
+      - ./:/project/sawtooth-kvstore
+    command: |
+      bash -c "
+       chmod +x /project/sawtooth-kvstore/bin/build_kvstore
+       ../bin/build_kvstore
+          chmod +x /project/sawtooth-kvstore/bin/kvstore
+       ../bin/kvstore tcp://validator-2:4004
+       "
 
-  intkey-tp-4:
-    image: hyperledger/sawtooth-intkey-tp-python:nightly
-    container_name: sawtooth-intkey-tp-python-default-4
-    expose:
-      - 4004
-    command: intkey-tp-python -C tcp://validator-4:4004
-    stop_signal: SIGKILL
+  kvstore-processor-3:
+    build:
+      context: .
+      dockerfile: kvstoreprocessor/DockerFile
+    depends_on:
+      - validator-1
+    container_name: kvstore-processor-3
+    volumes:
+      - ./:/project/sawtooth-kvstore
+    command: |
+      bash -c "
+       chmod +x /project/sawtooth-kvstore/bin/build_kvstore
+       ../bin/build_kvstore
+          chmod +x /project/sawtooth-kvstore/bin/kvstore
+       ../bin/kvstore tcp://validator-3:4004
+       "
 
-  intkey-tp-5:
-    image: hyperledger/sawtooth-intkey-tp-python:nightly
-    container_name: sawtooth-intkey-tp-python-default-5
-    expose:
-      - 4004
-    command: intkey-tp-python -C tcp://validator-5:4004
-    stop_signal: SIGKILL
+  kvstore-processor-4:
+    build:
+      context: .
+      dockerfile: kvstoreprocessor/DockerFile
+    depends_on:
+      - validator-1
+    container_name: kvstore-processor-4
+    volumes:
+      - ./:/project/sawtooth-kvstore
+    command: |
+      bash -c "
+       chmod +x /project/sawtooth-kvstore/bin/build_kvstore
+       ../bin/build_kvstore
+          chmod +x /project/sawtooth-kvstore/bin/kvstore
+       ../bin/kvstore tcp://validator-4:4004
+       "
 
+
+  kvstore-processor-5:
+    build:
+      context: .
+      dockerfile: kvstoreprocessor/DockerFile
+    depends_on:
+      - validator-5
+    container_name: kvstore-processor-5
+    volumes:
+      - ./:/project/sawtooth-kvstore
+    command: |
+      bash -c "
+       chmod +x /project/sawtooth-kvstore/bin/build_kvstore
+       ../bin/build_kvstore
+          chmod +x /project/sawtooth-kvstore/bin/kvstore
+       ../bin/kvstore tcp://validator-5:4004
+       "
 
 
   # --------------- block server subscriber & transaction server ----------------#
@@ -199,7 +245,7 @@ services:
  # -------------=== shell ===-----------------------
 
   client:
-    image: hyperledger/sawtooth-shell:nightly
+    image: hyperledger/sawtooth-shell:chime
     container_name: sawtooth-shell
     command: |
       bash -c "
@@ -210,7 +256,7 @@ services:
 
 # -------------=== validators ===-------------
   validator-1:
-    image: hyperledger/sawtooth-validator:nightly
+    image: hyperledger/sawtooth-validator:chime
     container_name: sawtooth-validator-1
     expose:
       - 4004
@@ -259,7 +305,7 @@ services:
     stop_signal: SIGKILL
 
   validator-2:
-    image: hyperledger/sawtooth-validator:nightly
+    image: hyperledger/sawtooth-validator:chime
     container_name: sawtooth-validator-2
     volumes:
       - keys:/shared_keys
@@ -289,7 +335,7 @@ services:
 
 
   validator-3:
-    image: hyperledger/sawtooth-validator:nightly
+    image: hyperledger/sawtooth-validator:chime
     container_name: sawtooth-validator-3
     expose:
       - 4004
@@ -319,7 +365,7 @@ services:
     stop_signal: SIGKILL
 
   validator-4:
-    image: hyperledger/sawtooth-validator:nightly
+    image: hyperledger/sawtooth-validator:chime
     container_name: sawtooth-validator-4
     expose:
       - 4004
@@ -349,7 +395,7 @@ services:
     stop_signal: SIGKILL
 
   validator-5:
-    image: hyperledger/sawtooth-validator:nightly
+    image: hyperledger/sawtooth-validator:chime
     container_name: sawtooth-validator-5
     expose:
       - 4004
@@ -387,7 +433,7 @@ services:
 
 
   rest-api-1:
-    image: hyperledger/sawtooth-rest-api:nightly
+    image: hyperledger/sawtooth-rest-api:chime
     container_name: sawtooth-rest-api-default-1
     expose:
       - 8008
@@ -400,7 +446,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-2:
-    image: hyperledger/sawtooth-rest-api:nightly
+    image: hyperledger/sawtooth-rest-api:chime
     container_name: sawtooth-rest-api-default-2
     expose:
       - 8008
@@ -413,7 +459,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-3:
-    image: hyperledger/sawtooth-rest-api:nightly
+    image: hyperledger/sawtooth-rest-api:chime
     container_name: sawtooth-rest-api-default-3
     expose:
       - 8008
@@ -426,7 +472,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-4:
-    image: hyperledger/sawtooth-rest-api:nightly
+    image: hyperledger/sawtooth-rest-api:chime
     container_name: sawtooth-rest-api-default-4
     expose:
       - 8008
@@ -439,7 +485,7 @@ services:
     stop_signal: SIGKILL
 
   rest-api-5:
-    image: hyperledger/sawtooth-rest-api:nightly
+    image: hyperledger/sawtooth-rest-api:chime
     container_name: sawtooth-rest-api-default-5
     expose:
       - 8008
@@ -458,7 +504,7 @@ services:
 
 
   raft-engine-1:
-    image: hyperledger/sawtooth-raft-engine:nightly
+    image: hyperledger/sawtooth-raft-engine:chime
     container_name: sawtooth-raft-engine-1
     command: raft-engine --connect tcp://validator-1:5050 -v
     stop_signal: SIGKILL
@@ -467,7 +513,7 @@ services:
 
 
   raft-engine-2:
-    image: hyperledger/sawtooth-raft-engine:nightly
+    image: hyperledger/sawtooth-raft-engine:chime
     container_name: sawtooth-raft-engine-2
     command: raft-engine --connect tcp://validator-2:5050 -v
     stop_signal: SIGKILL
@@ -475,7 +521,7 @@ services:
       RUST_BACKTRACE: full
 
   raft-engine-3:
-    image: hyperledger/sawtooth-raft-engine:nightly
+    image: hyperledger/sawtooth-raft-engine:chime
     container_name: sawtooth-raft-engine-3
     command: raft-engine --connect tcp://validator-3:5050 -v
     stop_signal: SIGKILL
@@ -483,7 +529,7 @@ services:
       RUST_BACKTRACE: full
 
   raft-engine-4:
-    image: hyperledger/sawtooth-raft-engine:nightly
+    image: hyperledger/sawtooth-raft-engine:chime
     container_name: sawtooth-raft-engine-4
     command: raft-engine --connect tcp://validator-4:5050 -v
     stop_signal: SIGKILL
@@ -491,7 +537,7 @@ services:
       RUST_BACKTRACE: full
 
   raft-engine-5:
-    image: hyperledger/sawtooth-raft-engine:nightly
+    image: hyperledger/sawtooth-raft-engine:chime
     container_name: sawtooth-raft-engine-5
     command: raft-engine --connect tcp://validator-5:5050 -v
     stop_signal: SIGKILL
