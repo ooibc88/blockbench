@@ -264,85 +264,96 @@ services:
       "
     stop_signal: SIGKILL
 
-  intkey-tp-0:
-    image: hyperledger/sawtooth-intkey-tp-python:chime
-    container_name: sawtooth-intkey-tp-python-default-0
-    expose:
-      - 4004
-    command: intkey-tp-python -C tcp://validator-0:4004
-    stop_signal: SIGKILL
 
-  intkey-tp-1:
-    image: hyperledger/sawtooth-intkey-tp-python:chime
-    container_name: sawtooth-intkey-tp-python-default-1
-    expose:
-      - 4004
-    command: intkey-tp-python -C tcp://validator-1:4004
-    stop_signal: SIGKILL
 
-  intkey-tp-2:
-    image: hyperledger/sawtooth-intkey-tp-python:chime
-    container_name: sawtooth-intkey-tp-python-default-2
-    expose:
-      - 4004
-    command: intkey-tp-python -C tcp://validator-2:4004
-    stop_signal: SIGKILL
+  kvstore-processor-0:
+    build:
+      context: .
+      dockerfile: kvstoreprocessor/DockerFile
+    depends_on:
+      - validator-0
+    container_name: kvstore-processor-0
+    volumes:
+      - ./:/project/sawtooth-kvstore
+    command: |
+      bash -c "
+       chmod +x /project/sawtooth-kvstore/bin/build_kvstore
+       ../bin/build_kvstore
+          chmod +x /project/sawtooth-kvstore/bin/kvstore
+       ../bin/kvstore tcp://validator-0:4004
+       "
 
-  intkey-tp-3:
-    image: hyperledger/sawtooth-intkey-tp-python:chime
-    container_name: sawtooth-intkey-tp-python-default-3
-    expose:
-      - 4004
-    command: intkey-tp-python -C tcp://validator-3:4004
-    stop_signal: SIGKILL
+  kvstore-processor-1:
+    build:
+      context: .
+      dockerfile: kvstoreprocessor/DockerFile
+    depends_on:
+      - validator-1
+    container_name: kvstore-processor-1
+    volumes:
+      - ./:/project/sawtooth-kvstore
+    command: |
+      bash -c "
+       chmod +x /project/sawtooth-kvstore/bin/build_kvstore
+       ../bin/build_kvstore
+          chmod +x /project/sawtooth-kvstore/bin/kvstore
+       ../bin/kvstore tcp://validator-1:4004
+       "
 
-  intkey-tp-4:
-    image: hyperledger/sawtooth-intkey-tp-python:chime
-    container_name: sawtooth-intkey-tp-python-default-4
-    expose:
-      - 4004
-    command: intkey-tp-python -C tcp://validator-4:4004
-    stop_signal: SIGKILL
+  kvstore-processor-2:
+    build:
+      context: .
+      dockerfile: kvstoreprocessor/DockerFile
+    depends_on:
+      - validator-2
+    container_name: kvstore-processor-2
+    volumes:
+      - ./:/project/sawtooth-kvstore
+    command: |
+      bash -c "
+       chmod +x /project/sawtooth-kvstore/bin/build_kvstore
+       ../bin/build_kvstore
+          chmod +x /project/sawtooth-kvstore/bin/kvstore
+       ../bin/kvstore tcp://validator-2:4004
+       "
 
-  xo-tp-0:
-    image: hyperledger/sawtooth-xo-tp-python:chime
-    container_name: sawtooth-xo-tp-python-default-0
-    expose:
-      - 4004
-    command: xo-tp-python -vv -C tcp://validator-0:4004
-    stop_signal: SIGKILL
+  kvstore-processor-3:
+    build:
+      context: .
+      dockerfile: kvstoreprocessor/DockerFile
+    depends_on:
+      - validator-1
+    container_name: kvstore-processor-3
+    volumes:
+      - ./:/project/sawtooth-kvstore
+    command: |
+      bash -c "
+       chmod +x /project/sawtooth-kvstore/bin/build_kvstore
+       ../bin/build_kvstore
+          chmod +x /project/sawtooth-kvstore/bin/kvstore
+       ../bin/kvstore tcp://validator-3:4004
+       "
 
-  xo-tp-1:
-    image: hyperledger/sawtooth-xo-tp-python:chime
-    container_name: sawtooth-xo-tp-python-default-1
-    expose:
-      - 4004
-    command: xo-tp-python -vv -C tcp://validator-1:4004
-    stop_signal: SIGKILL
+  kvstore-processor-4:
+    build:
+      context: .
+      dockerfile: kvstoreprocessor/DockerFile
+    depends_on:
+      - validator-1
+    container_name: kvstore-processor-4
+    volumes:
+      - ./:/project/sawtooth-kvstore
+    command: |
+      bash -c "
+       chmod +x /project/sawtooth-kvstore/bin/build_kvstore
+       ../bin/build_kvstore
+          chmod +x /project/sawtooth-kvstore/bin/kvstore
+       ../bin/kvstore tcp://validator-4:4004
+       "
 
-  xo-tp-2:
-    image: hyperledger/sawtooth-xo-tp-python:chime
-    container_name: sawtooth-xo-tp-python-default-2
-    expose:
-      - 4004
-    command: xo-tp-python -vv -C tcp://validator-2:4004
-    stop_signal: SIGKILL
 
-  xo-tp-3:
-    image: hyperledger/sawtooth-xo-tp-python:chime
-    container_name: sawtooth-xo-tp-python-default-3
-    expose:
-      - 4004
-    command: xo-tp-python -vv -C tcp://validator-3:4004
-    stop_signal: SIGKILL
 
-  xo-tp-4:
-    image: hyperledger/sawtooth-xo-tp-python:chime
-    container_name: sawtooth-xo-tp-python-default-4
-    expose:
-      - 4004
-    command: xo-tp-python -vv -C tcp://validator-4:4004
-    stop_signal: SIGKILL
+
 
   settings-tp-0:
     image: hyperledger/sawtooth-settings-tp:chime
