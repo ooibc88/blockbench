@@ -13,7 +13,7 @@ var decoder = new TextDecoder('utf8')
 // Constants defined in intkey specification
 const MIN_VALUE = 0
 const MAX_VALUE = 4294967295
-const MAX_NAME_LENGTH = 40
+const MAX_NAME_LENGTH = 150
 // function to hash data
 const _hash = (x) =>
   crypto.createHash('sha512').update(x).digest('hex').toLowerCase()

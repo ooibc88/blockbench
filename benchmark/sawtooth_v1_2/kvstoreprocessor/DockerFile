@@ -23,6 +23,6 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
 
 WORKDIR /project/sawtooth-kvstore/kvstoreprocessor
 
-CMD npm install && npm start
+CMD /project/sawtooth-kvstore/bin/build_kvstore
 
 EXPOSE 4004/tcp
