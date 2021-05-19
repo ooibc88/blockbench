@@ -1,4 +1,5 @@
 # Node.js libraries
+.idea
 node_modules/
 data/
 package-lock.json

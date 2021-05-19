@@ -22,15 +22,7 @@ services:
         - validator
       entrypoint: settings-tp -vv -C tcp://validator:4004
 
-#  kvstore-processor:
-#      container_name: kvstore-processor
-#      build:
-#        context: .
-#        dockerfile: kvstoreprocessor/DockerFile
-#      depends_on:
-#          - validator
-#      volumes:
-#          - '.:/project/sawtooth-kvstore'
+
 
   kvstore-processor:
     container_name: kvstore-processor
