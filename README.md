@@ -65,4 +65,4 @@ Go to [micro](src/micro) directory and use `npm install` to install the dependen
 * [1] A. Dinh, J. Wang, G. Chen, R. Liu, B. C. Ooi, K.-L. Tan: [BLOCKBENCH: A Framework for Analysing Private Blockchains](https://www.comp.nus.edu.sg/~ooibc/blockbench.pdf). ACM SIGMOD 2017.
 * [2] [The Morning Paper Review](https://blog.acolyer.org/2017/07/05/blockbench-a-framework-for-analyzing-private-blockchains/) 2017
 * [3] A. Dinh, R. Liu, M. Zhang, G. Chen, B.C. Ooi, J. Wang: [Untangling Blockchain: A Data Processing View of Blockchain Systems](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8246573). IEEE Transactions on Knowledge and Data Engineering, July 2018.
-* [4] [FabricSharp](https://github.com/ooibc88/FabricSharp) -- an faster Fabric blockchain system.
+* [4] [FabricSharp](https://www.comp.nus.edu.sg/~dbsystem/fabricsharp/#/) -- an faster Fabric blockchain system.
