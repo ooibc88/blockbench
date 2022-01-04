@@ -67,3 +67,4 @@ Go to [micro](src/micro) directory and use `npm install` to install the dependen
 * [3] A. Dinh, R. Liu, M. Zhang, G. Chen, B.C. Ooi, J. Wang: [Untangling Blockchain: A Data Processing View of Blockchain Systems](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8246573). IEEE Transactions on Knowledge and Data Engineering, July 2018.
 * [4] [FabricSharp](https://www.comp.nus.edu.sg/~dbsystem/fabricsharp/#/) -- an faster Fabric blockchain system.
 * [5] M. Zhang, Z. Xie, C. Yue, Z. Zhong: [Spitz: A Verifiable Database System](http://www.vldb.org/pvldb/vol13/p3449-zhang.pdf). Proc. VLDB Endow. 13(12): 3449-3460 (2020).
+* [6] P. Ruan, G. Chen, A. Dinh, Q. Lin, D. Loghin, B. C. Ooi, M. Zhang: [Blockchains vs. Distributed Databases: Dichotomy and Fusion](https://www.comp.nus.edu.sg/~ooibc/bcvsdb.pdf). To appear in ACM SIGMOD 2021.
