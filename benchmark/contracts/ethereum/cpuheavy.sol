@@ -8,20 +8,20 @@ contract Sorter {
         for (uint x = 0; x < data.length; x++) {
             data[x] = size-x;
         }
-        quickSort(data, 0, data.length - 1);
+        quickSort(data, 0, int(data.length - 1));
         finish(size, signature);
     }
     
-    function quickSort(uint[] arr, uint left, uint right) internal {
-        uint i = left;
-        uint j = right;
+    function quickSort(uint[] arr, int left, int right) internal {
+        int i = left;
+        int j = right;
         if (i == j) return;
-        uint pivot = arr[left + (right - left) / 2];
+        uint pivot = arr[uint(left + (right - left) / 2)];
         while (i <= j) {
-            while (arr[i] < pivot) i++;
-            while (pivot < arr[j]) j--;
+            while (arr[uint(i)] < pivot) i++;
+            while (pivot < arr[uint(j)]) j--;
             if (i <= j) {
-                (arr[i], arr[j]) = (arr[j], arr[i]);
+                (arr[uint(i)], arr[uint(j)]) = (arr[uint(j)], arr[uint(i)]);
                 i++;
                 j--;
             }
@@ -32,4 +32,3 @@ contract Sorter {
             quickSort(arr, i, right);
     }
 }
-
