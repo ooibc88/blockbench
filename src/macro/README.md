@@ -18,7 +18,7 @@ The driver in `kvstore` directory provides the following workloads:
   * Launch the client driver processes. Each client thread will randomly contact one of the transaction web service to invoke a transaction or make a query. 
   Usage example:
   ```
-  ./driver -db fabric-v2.2 -threads 1 -P workloads/workloada.spec -txrate 5 -endpoint localhost:8545 -wl ycsb -wt 20
+  ./driver -db fabric-v2.2 -threads 1 -P workloads/workloada.spec -txrate 5 -endpoint ${endpoint} -wl ycsb -wt 20
   ```
 
 * KVStore: for Fabric 1.4
