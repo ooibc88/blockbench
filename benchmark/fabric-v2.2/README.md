@@ -45,7 +45,7 @@ node block-server.js ${CHANNEL_NAME} 8800 > block-server.log 2>&1 &
 ```
 
 Launch two transaction services on port 8801 and 8802 respectively in the background, each listening for json requests and routes them to Fabric network. 
-`$MODE` is determined by individual benchmarks. In most cases, macro benchmarks opt for `$MODE=open_loop` and micro benchmarks opt for `$MODE=closed_loop`. 
+`$MODE` is determined by individual benchmarks. In most cases, macro benchmarks opt for `MODE=open_loop` and micro benchmarks opt for `MODE=closed_loop`. 
 ```
 # Still in services/
 node txn-server.js ${CHANNEL_NAME} ${CC_NAME} ${MODE} 8801 > txn-server-8801.log 2>&1 &
