@@ -49,6 +49,7 @@ fn quick_sort(arr: &mut [u128], left: u128, right: u128) -> ProgramResult {
 
 }
 
+#[allow(dead_code, unused)]
 fn process(
     _program_id: &Pubkey,
     accounts: &[AccountInfo],
@@ -74,6 +75,7 @@ fn process(
         let (_useless_1, data, _useless_2) = stored_data.align_to::<u128>();
         let mut data_vec = data.to_vec();
         initialize_array(stored_data_size as u128,  &mut data_vec);
+
         quick_sort(&mut data_vec, 0, (stored_data_size - 1) as u128);
     }
 
