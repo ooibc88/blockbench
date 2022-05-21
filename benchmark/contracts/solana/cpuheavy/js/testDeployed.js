@@ -10,14 +10,11 @@ const {
 } = require('@solana/web3.js');
 const BN = require('bn.js');
 
-const arguments = process.argv.slice(2);
-const cpuHeavyProgram = new PublicKey(arguments[0]);
+const USIZE_BYTES = 8;
+const U128_BITS = 128;
 
-let size = parseInt(arguments[1]);
-if (isNaN(size)) {
-    size = 1000;
-}
 const connection = new Connection('http://localhost:8899/');
+// const connection = new Connection('https://api.devnet.solana.com');
 
 const readFromFile = (filename) => {
     let dataWallet = fs.readFileSync(`./${filename}`, 'utf8');
@@ -31,49 +28,97 @@ const readFromFile = (filename) => {
     }
 }
 
-const main = new Promise(async (resolve) => {
-    // const feePayer = new Keypair();
-    // const airdropTx = await connection.requestAirdrop(feePayer.publicKey, LAMPORTS_PER_SOL);
-    const feePayer = readFromFile('feePayer');
-    const dataAccount = new Keypair();
+const getRandomSignature = () => {
+    const bits = new BN('128');
+    const two = new BN('2');
+    const num1000 = new BN('1000');
 
-    const size_array = (new BN(size)).toArray('le', 16);
-    const signature = (new BN('10')).toArray('le', 16);
+    const random_seed = new BN(Math.random() * 1000);
+    const max_u128 = two.pow(bits);
 
-    const instruction_data = new Uint8Array([...size_array, ...signature]);
-    const tx = new Transaction();
+    const signature = max_u128.mul(random_seed).div(num1000);
+    return new Uint8Array(signature.toArray('le', U128_BITS / 8));
+}
 
-    const createDataAccountIx = SystemProgram.createAccount({
+const parseArguments = () => {
+    let size;
+    const arguments = process.argv.slice(2);
+    const programId = new PublicKey(arguments[0]);
+
+    if (arguments.length === 2) {
+        size = parseInt(arguments[1]);
+    }else {
+        size = 1000;
+    }
+
+    const sizeArray = new Uint8Array(new BN(size).toArray('le', 8));
+    const signature = getRandomSignature();
+
+    const instruction_data = new Uint8Array([...sizeArray, ...signature]);
+    return {
+        'programId': programId,
+        'sizeArray': size,
+        'size': size,
+        'instruction_data': instruction_data,
+    };
+}
+
+const sortIx = (feePayer, dataAccount, arguments) => {
+    return new TransactionInstruction({
+        keys: [
+            { pubkey: dataAccount.publicKey, isSigner: false, isWritable: true },
+        ],
+        data: arguments.instruction_data,
+        programId: arguments.programId,
+    });
+}
+
+const showTxLogs = async (txId) => {
+    connection.getTransaction(txId, {
+        commitment: "confirmed",
+    }).then((txInfo) => {
+        let logs = txInfo.meta.logMessages.map((line) => {
+            if (line.startsWith('Program log:')) {
+                return line.split(' ').slice(2).join(' ');
+            } else {
+                return ''
+            }
+        }).join('\n');
+        console.log(logs);
+    });
+}
+
+const createDataAccountIx = async (feePayer, dataAccount, programId, size) => {
+    return SystemProgram.createAccount({
         fromPubkey: feePayer.publicKey,
         newAccountPubkey: dataAccount.publicKey,
-        lamports: await connection.getMinimumBalanceForRentExemption(size * 16),
-        space: size * 16,
-        programId: cpuHeavyProgram,
+        lamports: await connection.getMinimumBalanceForRentExemption(size * 8),
+        space: size * 8,
+        programId: programId
     });
-    tx.add(createDataAccountIx);
+}
 
-    tx.add(
-        new TransactionInstruction({
-            keys: [
-                { pubkey: dataAccount.publicKey, isSigner: false, feePayer, isWritable: true, },
-            ],
-            data: instruction_data,
-            programId: cpuHeavyProgram,
-        },)
-    );
+const main = async () => {
+    const parsed = parseArguments();
+    const dataAccount = new Keypair();
 
-    const txId = await sendAndConfirmTransaction(connection, tx, [feePayer, dataAccount], {
-        preflightCommitment: "confirmed",
+    const feePayer = readFromFile('feePayer');
+    const signers = [feePayer, dataAccount];
+
+    const tx = new Transaction()
+        .add(await createDataAccountIx(feePayer, dataAccount, parsed.programId, parsed.size))
+        .add(sortIx(feePayer, dataAccount, parsed));
+    const txId = await sendAndConfirmTransaction(connection, tx, signers, {
         skipPreflight: true,
-        commitment: "confirmed",
+        preflightCommitment: 'confirmed',
+        commitment: 'confirmed',
     });
 
-    resolve(txId);
-});
-
-main
-    .then((txId) => {
-        console.log('Success', txId);
+    console.log('TX:', txId);
+    await showTxLogs(txId);
+}
+main()
+    .then(() => {
     })
     .catch((e) => {
         console.log('Error', e);
