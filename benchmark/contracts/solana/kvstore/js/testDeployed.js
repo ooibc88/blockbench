@@ -66,7 +66,7 @@ const readFromFile = (filename) => {
     }
 }
 
-const createDataAccount = async (feePayer, dataAccount, programId) => {
+const createDataAccount = async (feePayer, dataAccount, size, programId) => {
     return SystemProgram.createAccount({
         fromPubkey: feePayer.publicKey,
         newAccountPubkey: dataAccount.publicKey,
