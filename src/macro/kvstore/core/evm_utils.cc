@@ -1,6 +1,5 @@
 #include "evm_utils.h"
 #include <iostream>
-
 namespace BBUtils {
 namespace EVMUtils {
 
@@ -19,7 +18,7 @@ const std::string SEND_TXN_PREFIX =
     "{\
   \"jsonrpc\": \"2.0\", \
   \"method\": \"eth_sendTransaction\", \
-  \"params\": [{ \"gas\": \"100000\", \
+  \"params\": [{ \"gas\": \"0x100000\", \
                 \"gasPrice\": \"0x0\", \
                 \"from\": \"";
 
@@ -27,7 +26,7 @@ const std::string CALL_PREFIX =
     "{\
   \"jsonrpc\": \"2.0\", \
   \"method\": \"eth_call\", \
-  \"params\": [{ \"gas\": \"100000\",\
+  \"params\": [{ \"gas\": \"0x100000\",\
                 \"gasPrice\": \"0x0\", \
                 \"from\": \"";
 
@@ -73,7 +72,7 @@ const std::string GET_ACCOUNTS =
 const std::string DEPLOY_SMARTCONTRACT_PREFIX =
     " {\"jsonrpc\":\"2.0\",\
   \"method\":\"eth_sendTransaction\",\
-  \"params\": [{ \"gas\": \"100000\",\
+  \"params\": [{ \"gas\": \"0x100000\",\
                 \"gasPrice\": \"0x0\", \
                \"from\": \"";
 
@@ -327,6 +326,7 @@ std::string deploy_smart_contract(const std::string &endpoint,
 
 std::string lookup_smart_contract_address_or_die(const std::string &endpoint,
                                                  const std::string &receipt) {
+  //TODO: retry when result equal null
   auto r = send_jsonrpc_request(endpoint, REQUEST_HEADERS,
                                 GET_SMART_CONTRACT_ADDRESS_PREFIX + receipt +
                                     GET_SMART_CONTRACT_ADDRESS_SUFFIX);
