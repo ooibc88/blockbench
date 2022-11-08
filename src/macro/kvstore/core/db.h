@@ -102,7 +102,7 @@ class DB {
   /// Get tip block number of the current blockchain
   /// @return tip number of current blockchain
   ///
-  virtual unsigned int GetTip() = 0;
+  virtual int GetTip() = 0;
 
   ///
   /// Poll an array of txn_id(transaction's hash value) of transactions from one

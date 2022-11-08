@@ -10,6 +10,8 @@
 #include "api_adapters/DB.h"
 #include "api_adapters/SmallBank.h"
 #include "api_adapters/EVMDB.h"
+#include "api_adapters/Fabric.h"
+#include "api_adapters/FabricV2.h"
 #include "utils/generators.h"
 #include "utils/timer.h"
 #include "utils/statistic.h"
@@ -85,7 +87,7 @@ int StatusThread(DB* sb, string dbname, string endpoint, double interval, int st
     confirm_duration = HL_CONFIRM_BLOCK_LENGTH;
 
   while(true){
-    start_time = time_now(); 
+    start_time = utils::time_now(); 
     int tip = sb->get_tip_block_number(); 
     if (tip==-1) // fail
       sleep(interval); 
@@ -94,7 +96,7 @@ int StatusThread(DB* sb, string dbname, string endpoint, double interval, int st
       cout << "polled block " << cur_block_height << " : " << txs.size() 
            << " txs " << endl; 
       cur_block_height++;           
-      long block_time = time_now(); 
+      long block_time =utils::time_now(); 
       txlock_.lock();
       for (string tmp : txs){ 
         string s = (dbname == "ethereum" || dbname == "parity")
@@ -110,12 +112,12 @@ int StatusThread(DB* sb, string dbname, string endpoint, double interval, int st
       txlock_.unlock(); 
     }
     cout << "In the last "<< interval <<"s, tx count = " << txcount
-         << " latency = " << latency/1000000000.0 
+         << " latency = " << latency / 1000000000.0 
         << " outstanding request = " << pendingtx.size() << endl;  
     txcount = 0; 
     latency = 0; 
 
-    end_time = time_now(); 
+    end_time =utils::time_now(); 
 
     //sleep in nanosecond
     utils::sleep(interval - (end_time - start_time) / 1000000000.0);
@@ -128,6 +130,10 @@ DB* CreateDB(std::string dbname, std::string endpoint) {
     return SmallBank::GetInstance("SmallbankExample", endpoint); 
   } else if (dbname == "ethereum" || dbname == "parity") {
     return EVMDB::GetInstance(dbname, endpoint); 
+  } else if (dbname == "fabric-v1.4") {
+    return Fabric::GetInstance(dbname, endpoint); 
+  } else if (dbname == "fabric-v2.2") {
+    return FabricV2::GetInstance(dbname, endpoint); 
   } else {
     return NULL;
   }
@@ -156,7 +162,7 @@ int main(const int argc, const char* argv[]) {
   const int total_ops = stoi(props.GetProperty("total_ops", "10000")); 
   vector<thread> threads;
 
-  Timer<double> timer;
+  utils::Timer<double> timer;
   timer.Start();
   stat_timer.Tic();
 
@@ -294,7 +300,7 @@ void UsageMessage(const char *command) {
   cout << "                   be specified, and will be processed in the order "
           "specified" << endl;
   cerr << "   eg: " << "./driver"
-         << " -ops 10000 -threads 4 -txrate 10 -fp stat.txt -endpoint 127.0.0.1:8000 -db ethereum" << endl;
+         << " -ops 10000 -threads 4 -txrate 10 -fp stat.txt -endpoint 127.0.0.1:8051 -db ethereum" << endl;
 }
 
 inline bool StrStartWith(const char *str, const char *pre) {

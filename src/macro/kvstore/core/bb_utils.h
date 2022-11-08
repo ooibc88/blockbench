@@ -1,15 +1,38 @@
 #ifndef BLOCKBENCH_BB_UTILS_H_
 #define BLOCKBENCH_BB_UTILS_H_
 
+#include <iostream>
 #include <cstdint>
 #include <string>
 #include <vector>
 #include <sstream>
+#include <cstdio>
+#include <memory>
+#include <stdexcept>
+#include <array>
 #include <restclient-cpp/restclient.h>
 
 namespace BBUtils {
 
 enum class SmartContractType { KVStore, DoNothing, SmallBank };
+
+inline std::string& rtrim(std::string& s, const char* t = " \t\n\r\f\v\"\'") {
+
+    s.erase(s.find_last_not_of(t) + 1);
+    return s;
+}
+
+// trim from beginning of string (left)
+inline std::string& ltrim(std::string& s, const char* t = " \t\n\r\f\v\"\'")
+{
+    s.erase(0, s.find_first_not_of(t));
+    return s;
+}
+
+// trim from both ends of string (right then left)
+inline std::string& trim(std::string& s, const char* t = " \t\n\r\f\v\"\'") {
+    return ltrim(rtrim(s, t), t);
+}
 
 inline std::string encode_hex(unsigned int c) {
   std::ostringstream stm;
@@ -93,6 +116,52 @@ inline std::string send_jsonrpc_request(const std::string &endpoint,
   return RestClient::post(endpoint, request_header, request_data).body;
 }
 
+inline std::string exec(const char* cmd) {
+    std::string s(cmd);
+    // std::cout << "Execute cmd: " << s << std::endl;
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    // std::cout << "Result: " << result << std::endl;
+    return result;
+}
+
 }  // BBUtils
+
+
+inline std::vector<std::string> list_field(const std::string &json,
+                                              const std::string &key) {
+  auto key_pos = json.find(key);
+  auto quote_sign_pos_1 = json.find('[', key_pos + 1);
+  auto quote_sign_pos_2 = json.find(']', quote_sign_pos_1 + 1);
+
+  std::string s = json.substr(quote_sign_pos_1 + 1,
+                          quote_sign_pos_2 - quote_sign_pos_1 - 1);
+  std::stringstream ss(s);
+
+  std::string item;
+  std::vector<std::string> elems;
+  while (std::getline(ss, item, ',')) {
+    item = BBUtils::trim(item);
+    elems.push_back(item);
+  }
+  return elems;
+}
+  
+inline std::string json_field(const std::string &json,
+                                const std::string &key) {
+  auto key_pos = json.find(key);
+  auto quote_sign_pos_1 = json.find('\'', key_pos + 1);
+  auto quote_sign_pos_2 = json.find('\'', quote_sign_pos_1 + 1);
+  auto result = json.substr(quote_sign_pos_1 + 1,
+                    quote_sign_pos_2 - quote_sign_pos_1 - 1);
+  return BBUtils::trim(result);
+}
 
 #endif  // BLOCKBENCH_BB_UTILS_H_

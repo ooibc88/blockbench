@@ -87,5 +87,5 @@ vector<string> EVMDB::PollTxn(int block_number) {
   return poll_txs_by_block_number(endpoint_, block_number);
 }
 
-unsigned int EVMDB::GetTip() { return get_tip_block_number(endpoint_); }
+int EVMDB::GetTip() { return get_tip_block_number(endpoint_); }
 }  // ycsbc

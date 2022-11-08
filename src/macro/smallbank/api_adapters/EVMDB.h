@@ -5,9 +5,13 @@
 #include "DB.h"
 #include "utils/timer.h"
 #include "utils/utils.h"
+#include "utils/spinlock.h"
+
 #include <unordered_map>
 #include <vector>
 #include <cassert>
+
+
 using std::unordered_map; 
 using std::string; 
 using std::vector; 
@@ -41,7 +45,7 @@ class EVMDB : public DB {
 
   ~EVMDB() {}
 
-  unsigned int get_tip_block_number();
+  int get_tip_block_number();
   vector<string> poll_tx(int block_number);
   //int find_tip(string json);
   //vector<string> find_tx(string json); 

@@ -59,7 +59,7 @@ int HyperLedgerDB::Delete(const string &table, const string &key) {
   return Update(table, key, empty_val);
 }
 
-unsigned int HyperLedgerDB::GetTip() { return get_tip_block_number(endpoint_); }
+int HyperLedgerDB::GetTip() { return get_tip_block_number(endpoint_); }
 
 // get all tx from the start_block until latest
 vector<string> HyperLedgerDB::PollTxn(int block_number) {

@@ -35,7 +35,7 @@ std::string submit_set_txn(const std::string &endpoint, const std::string &key,
 /// @return transaction hash returned by server
 std::string submit_del_txn(const std::string &endpoint, const std::string &key);
 
-unsigned int get_tip_block_number(const std::string &endpoint);
+int get_tip_block_number(const std::string &endpoint);
 
 std::vector<std::string> poll_txs_by_block_number(const std::string &endpoint,
                                                   int block_number);

@@ -42,7 +42,7 @@ class EVMDB : public DB {
 
   int Delete(const std::string &table, const std::string &key);
 
-  unsigned int GetTip();
+  int GetTip();
 
   std::vector<std::string> PollTxn(int block_number);
 

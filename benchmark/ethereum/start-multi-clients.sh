@@ -4,7 +4,7 @@ cd `dirname ${BASH_SOURCE-$0}`
 . env.sh
 
 let i=0
-let IDX=$1/2 #$1 is #clients, we take only half of them 
+let IDX=$1  #/2 #$1 is #clients, we take only half of them 
 echo starting clients
 for client in `cat $CLIENTS`; do
   if [[ $i -lt $IDX ]]; then
