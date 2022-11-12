@@ -12,7 +12,7 @@ $(SUBDIRS):
 	$(MAKE) -C $@
 
 $(EXEC): $(wildcard *.cc) $(OBJECTS)
-	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $^ $(LDFLAGS) -o $@ -lcurl
 
 clean:
 	for dir in $(SUBDIRS); do \
@@ -21,4 +21,3 @@ clean:
 	$(RM) $(EXEC)
 
 .PHONY: $(SUBDIRS) $(EXEC)
-

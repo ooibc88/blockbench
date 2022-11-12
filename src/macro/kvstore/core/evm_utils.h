@@ -21,7 +21,7 @@ inline std::string encode_string(const std::string& str) {
   return ret;
 }
 
-unsigned int get_tip_block_number(const std::string& endpoint);
+int get_tip_block_number(const std::string& endpoint);
 
 unsigned int get_txn_block_number(const std::string& endpoint,
                                   const std::string& txn_hash);
